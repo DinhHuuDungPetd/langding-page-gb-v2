@@ -17,19 +17,19 @@ const images = [
         src: "/images/silder/Cover-FB-03.webp",
         alt: "Green Lab - Xét nghiệm chính xác, nhanh chóng",
         title: "Green Lab - Xét nghiệm chính xác, nhanh chóng",
-        priority: false
+        priority: true
     },
     {
         src: "/images/silder/Cover-FB-04.png",
         alt: "Green Lab - Đội ngũ chuyên gia hàng đầu",
         title: "Green Lab - Đội ngũ chuyên gia hàng đầu",
-        priority: false
+        priority: true
     },
     {
         src: "/images/silder/Cover-FB-05.png",
         alt: "Green Lab - Chứng nhận ISO 15189:2012",
         title: "Green Lab - Chứng nhận ISO 15189:2012",
-        priority: false
+        priority: true
     },
 ];
 
