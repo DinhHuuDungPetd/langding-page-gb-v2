@@ -54,7 +54,7 @@ export default function Blog() {
             </p>
 
             <Image
-                src="/images/background/background_11.jpg"
+                src="/images/background/background_11.webp"
                 alt="Green Lab riders"
                 width={1000}
                 height={600}
@@ -109,7 +109,7 @@ export default function Blog() {
                 Chị Hoa (40 tuổi, Hà Nội) nói: “Tôi nhận kết quả lúc 8h tối cùng ngày, còn được gọi hỏi thăm. Dịch vụ quá tốt!"bài viết
             </p>
             <Image
-                src="/images/background/background_12.jpg"
+                src="/images/background/background_12.webp"
                 alt="Green Lab lab"
                 width={1000}
                 height={600}

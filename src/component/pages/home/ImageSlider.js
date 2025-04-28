@@ -7,27 +7,27 @@ import { memo } from 'react';
 import { motion } from "framer-motion";
 
 const images = [
-    { 
-        src: "/images/silder/Cover-FB-02.png", 
-        alt: "Green Lab - Dịch vụ xét nghiệm tại nhà uy tín", 
+    {
+        src: "/images/silder/Cover-FB-02.png",
+        alt: "Green Lab - Dịch vụ xét nghiệm tại nhà uy tín",
         title: "Green Lab - Dịch vụ xét nghiệm tại nhà uy tín",
         priority: true
     },
-    { 
-        src: "/images/silder/Cover-FB-03.png", 
-        alt: "Green Lab - Xét nghiệm chính xác, nhanh chóng", 
+    {
+        src: "/images/silder/Cover-FB-03.webp",
+        alt: "Green Lab - Xét nghiệm chính xác, nhanh chóng",
         title: "Green Lab - Xét nghiệm chính xác, nhanh chóng",
         priority: false
     },
-    { 
-        src: "/images/silder/Cover-FB-04.png", 
-        alt: "Green Lab - Đội ngũ chuyên gia hàng đầu", 
+    {
+        src: "/images/silder/Cover-FB-04.png",
+        alt: "Green Lab - Đội ngũ chuyên gia hàng đầu",
         title: "Green Lab - Đội ngũ chuyên gia hàng đầu",
         priority: false
     },
-    { 
-        src: "/images/silder/Cover-FB-05.png", 
-        alt: "Green Lab - Chứng nhận ISO 15189:2012", 
+    {
+        src: "/images/silder/Cover-FB-05.png",
+        alt: "Green Lab - Chứng nhận ISO 15189:2012",
         title: "Green Lab - Chứng nhận ISO 15189:2012",
         priority: false
     },
@@ -41,9 +41,9 @@ const fadeInUp = {
 
 const ImageSlider = memo(() => {
     return (
-        <motion.div 
-            className="relative w-full mx-auto" 
-            role="region" 
+        <motion.div
+            className="relative w-full mx-auto"
+            role="region"
             aria-label="Image Slider"
             initial="initial"
             animate="animate"
@@ -53,10 +53,10 @@ const ImageSlider = memo(() => {
                 modules={[Autoplay, Pagination]}
                 spaceBetween={0}
                 slidesPerView={1}
-                autoplay={{ 
-                    delay: 3000, 
+                autoplay={{
+                    delay: 3000,
                     disableOnInteraction: false,
-                    pauseOnMouseEnter: true 
+                    pauseOnMouseEnter: true
                 }}
                 pagination={{
                     clickable: true,
@@ -67,7 +67,7 @@ const ImageSlider = memo(() => {
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <motion.div 
+                        <motion.div
                             className="relative w-full h-[80vh]"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}

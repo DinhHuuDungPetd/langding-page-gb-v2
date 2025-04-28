@@ -23,7 +23,7 @@ export default function Banner() {
                 className="absolute left-0 w-full h-[650px] md:h-[700px] xl:h-[500px] bg-gradient-to-b from-primary  to-midnight transform origin-bottom skew-x-[-3deg] -rotate-3 z-0 xl:top-38 md:top-27 top-18 flex justify-end items-center"
             >
                 <Image
-                    src="/images/background/background_2.PNG"
+                    src="/images/background/background_2.png"
                     alt="background"
                     width={512}
                     height={512}

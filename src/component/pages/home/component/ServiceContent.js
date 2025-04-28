@@ -26,7 +26,7 @@ export default function ServiceContent({ content }) {
                         <ul className="mt-4 text-left text-black space-y-2 ">
                             {content.features.map((feature, index) => (
                                 <li key={index} className="flex items-center text-md font-medium">
-                                    <span className="w-5 h-5 mr-2 rounded-full bg-green-500 flex items-center justify-center text-white">✓</span>
+                                    <span className="w-5 h-5 mr-2 rounded-full bg-primary flex items-center justify-center text-white">✓</span>
                                     {feature}
                                 </li>
                             ))}

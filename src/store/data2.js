@@ -3,7 +3,7 @@ export const services = [
         id: 1,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE",
         status: "ACTIVE"
@@ -12,7 +12,7 @@ export const services = [
         id: 2,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -20,7 +20,7 @@ export const services = [
         id: 3,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -28,7 +28,7 @@ export const services = [
         id: 4,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -36,7 +36,7 @@ export const services = [
         id: 5,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -44,7 +44,7 @@ export const services = [
         id: 6,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -52,7 +52,7 @@ export const services = [
         id: 7,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -60,7 +60,7 @@ export const services = [
         id: 8,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -68,7 +68,7 @@ export const services = [
         id: 9,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -76,7 +76,7 @@ export const services = [
         id: 10,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -84,7 +84,7 @@ export const services = [
         id: 11,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -92,7 +92,7 @@ export const services = [
         id: 12,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -100,7 +100,7 @@ export const services = [
         id: 13,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -108,7 +108,7 @@ export const services = [
         id: 14,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -116,7 +116,7 @@ export const services = [
         id: 15,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -124,7 +124,7 @@ export const services = [
         id: 16,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -132,7 +132,7 @@ export const services = [
         id: 17,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -140,7 +140,7 @@ export const services = [
         id: 18,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -148,7 +148,7 @@ export const services = [
         id: 19,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },
@@ -156,7 +156,7 @@ export const services = [
         id: 20,
         name: "Lorem ipsum",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        images: "/images/news/image.jpg",
+        images: "/images/news/image.webp",
         time: "2023-04-09",
         status: "ACTIVE"
     },

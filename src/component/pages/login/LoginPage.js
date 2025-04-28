@@ -126,12 +126,12 @@ export default function LoginPage() {
             </div>
 
             <div
-                className="hidden flex-col justify-center overflow-hidden bg-cover bg-center md:flex md:w-1/2 bg-[rgba(102,231,113,0.88)] bg-no-repeat bg-[url(/images/background/background.jpg)]  bg-blend-multiply"
+                className="hidden flex-col justify-center overflow-hidden bg-cover bg-center md:flex md:w-1/2 bg-[rgba(102,231,113,0.88)] bg-no-repeat bg-[url(/images/background/background.webp)]  bg-blend-multiply"
             >
                 <div className="relative w-full h-[80%] translate-x-[25%]">
                     <Image
                         className="rounded-[36px] shadow-[0_24px_88px_rgba(0,0,0,0.55)] object-cover"
-                        src="/images/nv/nv_8.jpg"
+                        src="/images/nv/nv_8.webp"
                         alt="Service Dashboard Mockup"
                         fill
                         priority

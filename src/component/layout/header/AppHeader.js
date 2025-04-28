@@ -27,7 +27,7 @@ export default function AppHeader() {
                         <div>
                             <Image
                                 className="lg:w-40 h-auto cursor-pointer"
-                                src="/images/logo/Green Lab Logo-03.png"
+                                src="/images/logo/Green-Lab-Logo-03.png"
                                 alt="Green Lab Logo"
                                 width={300}
                                 height={300}

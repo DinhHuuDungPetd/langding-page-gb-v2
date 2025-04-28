@@ -1,8 +1,6 @@
 import AppHeader from "@/component/layout/header/AppHeader";
 import AppFooter from "@/component/layout/AppFooter";
 import ContactFloatingButton from "@/component/ContactFloatingButton";
-import Link from "next/link";
-import Image from "next/image";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';

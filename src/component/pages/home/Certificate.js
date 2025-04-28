@@ -115,7 +115,7 @@ const CertificateComponent = memo(() => {
                         alt="Chứng chỉ ISO 15189:2012 VILAS MED 134 của Green Lab"
                         placeholder="blur"
                         quality={85}
-                        blurDataURL={"/images/introduce/sl-1.jpg"}
+                        blurDataURL={"/images/introduce/sl-1.webp"}
                         width={350}
                         height={800}
                         loading="lazy"

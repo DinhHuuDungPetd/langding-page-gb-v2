@@ -54,7 +54,7 @@ const ContactPage = memo(() => {
             variants={containerVariants}
         >
             <motion.div 
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(/images/background/background_9.jpg)] bg-blend-multiply"
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(/images/background/background_9.webp)] bg-blend-multiply"
                 variants={itemVariants}
             >
                 <div className="absolute bottom-4 left-20 text-white text-xl medium-italic z-9">
@@ -99,7 +99,7 @@ const ContactPage = memo(() => {
                         variants={itemVariants}
                     >
                         <Image
-                            src="/images/nv/nv_2.jpg"
+                            src="/images/nv/nv_2.webp"
                             alt="Trung tâm xét nghiệm Green Lab - Lấy mẫu tại trung tâm"
                             width={1000}
                             height={1000}

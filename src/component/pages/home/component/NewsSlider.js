@@ -6,23 +6,23 @@ import Image from "next/image";
 const MedicalSlider = () => {
     const images = [
         {
-            src: "/images/news/image.jpg",
+            src: "/images/news/image.webp",
             alt: "Original image",
         },
         {
-            src: "/images/news/image.jpg",
+            src: "/images/news/image.webp",
             alt: "Original image",
         },
         {
-            src: "/images/news/image.jpg",
+            src: "/images/news/image.webp",
             alt: "Original image",
         },
         {
-            src: "/images/news/image.jpg",
+            src: "/images/news/image.webp",
             alt: "Original image",
         },
         {
-            src: "/images/news/image.jpg",
+            src: "/images/news/image.webp",
             alt: "Original image",
         },
     ];

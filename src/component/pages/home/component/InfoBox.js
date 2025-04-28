@@ -75,7 +75,7 @@ export default function InfoBox() {
             <div className="bg-white w-[500px] h-[500px]">
                 <div className="relative w-full h-full">
                     <Image
-                        src="/images/background/Frame-logo-01.png"
+                        src="/images/background/Frame-logo-01.webp"
                         alt="Chứng chỉ ISO GREEN LAB"
                         fill
                         quality={100}
