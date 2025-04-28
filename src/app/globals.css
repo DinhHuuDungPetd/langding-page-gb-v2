@@ -38,7 +38,7 @@
 }
 @font-face {
     font-family: 'FZ Poppins';
-    src: url('/fonts/FZPoppins-BoldItalic.woff2') format('woff2');
+    src: url('/fonts/FzPoppins-BoldItalic.woff2') format('woff2');
     font-weight: 700;
     font-style: italic;
     font-display: swap;
@@ -47,7 +47,7 @@
 /* Font Italic */
 @font-face {
     font-family: 'FZ Poppins';
-    src: url('/fonts/FZPoppins-Italic.woff2') format('woff2');
+    src: url('/fonts/FzPoppins-Italic.woff2') format('woff2');
     font-weight: 400;
     font-style: italic;
     font-display: swap;
@@ -56,7 +56,7 @@
 /* Font Medium */
 @font-face {
     font-family: 'FZ Poppins';
-    src: url('/fonts/FZPoppins-Medium.woff2') format('woff2');
+    src: url('/fonts/FzPoppins-Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -65,7 +65,7 @@
 /* Font Medium Italic */
 @font-face {
     font-family: 'FZ Poppins';
-    src: url('/fonts/FZPoppins-MediumItalic.woff2') format('woff2');
+    src: url('/fonts/FzPoppins-MediumItalic.woff2') format('woff2');
     font-weight: 500;
     font-style: italic;
     font-display: swap;
@@ -74,7 +74,7 @@
 /* Font SemiBold Italic */
 @font-face {
     font-family: 'FZ Poppins';
-    src: url('/fonts/FZPoppins-SemiBoldItalic.woff2') format('woff2');
+    src: url('/fonts/FzPoppins-SemiBoldItalic.woff2') format('woff2');
     font-weight: 600;
     font-style: italic;
     font-display: swap;
@@ -83,7 +83,7 @@
 /* Font Regular (Thêm để đảm bảo có weight 400 normal) */
 @font-face {
     font-family: 'FZ Poppins';
-    src: url('/fonts/FZPoppins-Medium.woff2') format('woff2');
+    src: url('/fonts/FzPoppins-Medium.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -115,7 +115,7 @@ body {
             4px  4px 0 #36803E;
 }
 .page {
-    background-image: url("/images/background/Frame-01.webp");
+    background-image: url("https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825602/greenlab/fdfmofeeraqpaqfekyso.webp");
     background-repeat: no-repeat;
     background-size: cover;       /* Phủ kín toàn bộ element */
     background-position: bottom;  /* Căn giữa hình nền */
@@ -128,7 +128,7 @@ body {
     width: 100%;                 /* Chiều rộng 100% */
 }
 .page-2 {
-    background-image: url("/images/background/Frame-05.webp");
+    background-image: url("https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825606/greenlab/vudqazdmlwanwen23ywr.webp");
     background-repeat: no-repeat;
     background-size: cover;       /* Phủ kín toàn bộ element */
     background-position: bottom;  /* Căn giữa hình nền */
@@ -136,13 +136,14 @@ body {
 }
 
 .page-3 {
-    background-image: url("/images/background/SliderCongNghe-01.webp");
+    background-image: url("https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745826281/greenlab/eosdzekclxbrirkpbrzo.webp");
     background-repeat: no-repeat;
     background-size: cover;       /* Phủ kín toàn bộ element */
     background-position: bottom;  /* Căn giữa hình nền */
     width: 100%;
 }
 
+<<<<<<< HEAD
 .page-4 {
     position: relative; /* Đảm bảo ::before nằm trong .page */
     width: 100%; /* Chiều rộng 100% */
@@ -152,6 +153,8 @@ body {
     background-size: cover; /* Phủ kín toàn bộ element */
     background-position: center; /* Căn giữa hình nền */
 }
+=======
+>>>>>>> 32a0b2cbe52a9089ee97d40edc715c29edd827bb
 
 .active{
     background-color: #36803E;

@@ -4,7 +4,7 @@ import PopularNews from "@/component/pages/news-events/component/PopularNews";
 export default function NewsEvents() {
     return (
         <div>
-            <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(/images/background/background_6.webp)] bg-blend-multiply">
+            <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/kwicnww6fxa63f9fplra.webp)]  bg-blend-multiply">
                 <div className="absolute bottom-4 left-20 text-white text-xl medium-italic z-9">
                     Trang chủ &gt; <span className="font-normal">Tin tức - Sự kiện</span>
                 </div>

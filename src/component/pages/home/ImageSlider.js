@@ -8,28 +8,28 @@ import { motion } from "framer-motion";
 
 const images = [
     {
-        src: "/images/silder/Cover-FB-02.png",
+        src: "https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745824874/greenlab/wc6pkyiovseiygbjturx.png",
         alt: "Green Lab - Dịch vụ xét nghiệm tại nhà uy tín",
         title: "Green Lab - Dịch vụ xét nghiệm tại nhà uy tín",
         priority: true
     },
     {
-        src: "/images/silder/Cover-FB-03.webp",
+        src: "https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745824874/greenlab/wsvgzzmy2eq2a66ermov.png",
         alt: "Green Lab - Xét nghiệm chính xác, nhanh chóng",
         title: "Green Lab - Xét nghiệm chính xác, nhanh chóng",
-        priority: false
+        priority: true
     },
     {
-        src: "/images/silder/Cover-FB-04.png",
+        src: "https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745824874/greenlab/y3chbkjtg1ccoihyirur.png",
         alt: "Green Lab - Đội ngũ chuyên gia hàng đầu",
         title: "Green Lab - Đội ngũ chuyên gia hàng đầu",
-        priority: false
+        priority: true
     },
     {
-        src: "/images/silder/Cover-FB-05.png",
+        src: "https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745824873/greenlab/lcnzetgzfxrrjjzos0dd.webp",
         alt: "Green Lab - Chứng nhận ISO 15189:2012",
         title: "Green Lab - Chứng nhận ISO 15189:2012",
-        priority: false
+        priority: true
     },
 ];
 
@@ -79,12 +79,12 @@ const ImageSlider = memo(() => {
                                 title={image.title}
                                 fill
                                 priority={image.priority}
-                                loading={image.priority ? "eager" : "lazy"}
                                 quality={85}
                                 sizes="100vw"
                                 style={{
                                     objectFit: "cover",
                                 }}
+                                loading={"eager"}
                             />
                         </motion.div>
                     </SwiperSlide>

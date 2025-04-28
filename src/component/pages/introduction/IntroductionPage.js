@@ -77,8 +77,8 @@ const IntroductionPage = memo(() => {
             animate="visible"
             variants={containerVariants}
         >
-            <motion.div
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-[url(/images/background/background_1.webp)] bg-no-repeat bg-cover bg-blend-multiply"
+            <motion.div 
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825600/greenlab/aan50gixyarmomdlnyqb.webp)] bg-no-repeat bg-cover bg-blend-multiply"
                 variants={itemVariants}
             >
                 <div className="absolute bottom-4 left-20 text-white text-xl medium-italic z-9">

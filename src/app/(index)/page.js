@@ -1,5 +1,4 @@
 import HomePage from "@/component/pages/home/HomePage";
-import { Metadata } from 'next'
 
 export const metadata = {
   title: 'Trung Tâm Xét Nghiệm GREEN LAB',

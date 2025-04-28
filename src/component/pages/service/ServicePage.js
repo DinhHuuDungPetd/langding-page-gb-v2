@@ -41,7 +41,7 @@ export default function ServicePage() {
                 />
             </Head>
             <motion.div
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(/images/background/background_3.webp)] bg-blend-multiply"
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/vipav5ien5gkxekytrzd.webp)] bg-blend-multiply"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -107,6 +107,8 @@ export default function ServicePage() {
                                         className="w-full h-full object-cover hidden xl:block"
                                         sizes="(min-width: 1280px) 30vw, 0vw"
                                         quality={50}
+                                        priority = {true}
+                                        loading={"eager"}
                                     />
                                 </div>
                             </motion.div>
