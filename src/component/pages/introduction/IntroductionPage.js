@@ -3,6 +3,9 @@ import { memo } from 'react';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Image from "next/image"
+import Introduction_01 from "@/icons/Introduction_01"
+import Introduction_02 from "@/icons/Introduction_02"
+import Introduction_03 from "@/icons/Introduction_03"
 
 // Lazy load các component không cần thiết ngay lập tức
 const ImageSlider = dynamic(() => import("@/component/pages/introduction/component/ImageSlider"), {
@@ -48,19 +51,19 @@ const IntroductionPage = memo(() => {
 
     const visionCards = [
         {
-            icon: "/icons/2. Icon Gioi Thieu-01.png",
+            icon: <Introduction_01 />,
             alt: "Tầm nhìn Green Lab - Trung tâm xét nghiệm hàng đầu",
             title: "TẦM NHÌN",
             content: "Trở thành Trung tâm Xét nghiệm Y học hàng đầu Miền Bắc về chất lượng và dịch vụ, tiên phong trong cập nhật và ứng dụng công nghệ mới. Mãi là người bạn đồng hành đáng tin cậy và bền vững của cộng đồng."
         },
         {
-            icon: "/icons/2. Icon Gioi Thieu-02.png",
+            icon: <Introduction_02 />,
             alt: "Sứ mệnh Green Lab - Dịch vụ xét nghiệm chất lượng cao",
             title: "SỨ MỆNH",
             content: "Cung cấp dịch vụ Xét nghiệm Y học chất lượng cao, đa khoa và chuyên sâu, kết hợp dịch vụ nhanh chóng với chi phí hợp lý. Luôn đồng hành phục vụ và chăm sóc sức khoẻ cộng đồng."
         },
         {
-            icon: "/icons/2. Icon Gioi Thieu-03.png",
+            icon: <Introduction_03 />,
             alt: "Giá trị cốt lõi Green Lab - Chất lượng và chuyên môn",
             title: "GIÁ TRỊ CỐT LÕI",
             content: "Chất lượng và Chuyên môn: Cam kết cung cấp dịch vụ y tế với chất lượng cao. Tận tụy: Trân trọng từng khách hàng, nhân viên và đối tác. Đổi mới: Không ngừng vươn xa với công nghệ và dịch vụ ưu việt."
@@ -68,7 +71,7 @@ const IntroductionPage = memo(() => {
     ];
 
     return (
-        <motion.main 
+        <motion.main
             className="min-h-screen"
             initial="hidden"
             animate="visible"
@@ -83,7 +86,7 @@ const IntroductionPage = memo(() => {
                 </div>
             </motion.div>
 
-            <motion.h3 
+            <motion.h3
                 className="text-2xl sm:text-3xl text-primary text-center my-5 font-bold"
                 variants={itemVariants}
             >
@@ -92,18 +95,18 @@ const IntroductionPage = memo(() => {
 
             <Banner />
 
-            <motion.div 
+            <motion.div
                 className="flex flex-col xl:flex-row items-center mt-15 container mx-auto py-8 px-4 sm:px-6 lg:px-8"
                 variants={containerVariants}
             >
-                <motion.div 
+                <motion.div
                     className="w-full flex justify-center items-center"
                     variants={itemVariants}
                 >
                     <ImageSlider />
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                     className="w-full space-y-6 mt-8 xl:mt-0 xl:ml-8"
                     variants={containerVariants}
                 >
@@ -144,8 +147,8 @@ const IntroductionPage = memo(() => {
                 </motion.div>
             </motion.div>
 
-            <motion.div 
-                className="grid grid-cols-1 lg:grid-cols-3 gap-5 px-4 sm:px-6 lg:px-8 py-4 container mx-auto"
+            <motion.div
+                className="grid grid-cols-1 lg:grid-cols-3 gap-5 px-4 sm:px-6 lg:px-50 py-4 container mx-auto"
                 variants={containerVariants}
             >
                 {visionCards.map((card, index) => (
@@ -157,14 +160,7 @@ const IntroductionPage = memo(() => {
                         transition={{ duration: 0.3 }}
                     >
                         <div className="mb-4">
-                            <Image
-                                src={card.icon}
-                                alt={card.alt}
-                                width={512}
-                                height={512}
-                                className="w-45 object-contain"
-                                loading="lazy"
-                            />
+                            {card.icon}
                         </div>
                         <h3 className="text-xl uppercase font-bold mb-3">{card.title}</h3>
                         <div className="font-medium text-sm sm:text-md text-pretty">
@@ -174,23 +170,23 @@ const IntroductionPage = memo(() => {
                 ))}
             </motion.div>
 
-            <motion.section 
+            <motion.section
                 className="bg-mint px-4 sm:px-6 lg:px-8"
                 variants={containerVariants}
             >
-                <motion.h2 
+                <motion.h2
                     className="text-[20px] lg:text-3xl font-bold text-primary text-center my-2 uppercase"
                     variants={itemVariants}
                 >
                     Tại sao nên chọn GREEN LAB?
                 </motion.h2>
-                <motion.div 
+                <motion.div
                     className="my-10"
                     variants={itemVariants}
                 >
                     <MediaContent />
                 </motion.div>
-                <motion.div 
+                <motion.div
                     className="max-w-3/5 mx-auto rounded-xl overflow-hidden shadow-lg border mb-20"
                     variants={itemVariants}
                 >

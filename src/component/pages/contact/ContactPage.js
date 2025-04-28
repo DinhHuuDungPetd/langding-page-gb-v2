@@ -62,22 +62,22 @@ const ContactPage = memo(() => {
                 </div>
             </motion.div>
 
-            <motion.section 
-                className="bg-[#f3fbee] px-4 md:px-16 py-10"
+            <motion.section
+                className="bg-mint px-4 md:px-16 py-10"
                 variants={containerVariants}
             >
-                <motion.h2 
+                <motion.h2
                     className="text-center text-green-700 text-2xl font-bold uppercase mb-8"
                     variants={itemVariants}
                 >
                     Bản đồ chỉ dẫn đường đi
                 </motion.h2>
 
-                <motion.div 
+                <motion.div
                     className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
                     variants={containerVariants}
                 >
-                    <motion.div 
+                    <motion.div
                         className="w-full md:h-full rounded-xl overflow-hidden shadow-md"
                         variants={itemVariants}
                     >
@@ -94,7 +94,7 @@ const ContactPage = memo(() => {
                         />
                     </motion.div>
 
-                    <motion.div 
+                    <motion.div
                         className="flex flex-col items-start gap-4"
                         variants={itemVariants}
                     >
@@ -109,7 +109,7 @@ const ContactPage = memo(() => {
                             sizes="(max-width: 768px) 100vw, 50vw"
                         />
 
-                        <motion.article 
+                        <motion.article
                             className="mt-4"
                             variants={itemVariants}
                         >

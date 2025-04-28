@@ -4,18 +4,23 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
 import { FaPhoneVolume } from "react-icons/fa6";
+import Iso from "@/icons/Iso"
+import Logo_fb from "@/icons/Logo_fb"
+import Logo_tt from "@/icons/Logo_tt"
+import Logo_yt from "@/icons/Logo_yt"
+
 export default function AppFooter() {
     return (
         <footer className="bg-gradient-to-b from-primary to-midnight text-white px-5 md:px-16 py-10">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
                 <div className="md:col-span-5 mx-auto text-center md:text-left">
-                    <div className="flex items-center gap-2 mb-4">
-                        <Image src="/images/logo/Logo-05.png" alt="Green Lab" width={250} height={250}/>
-                        <div>
-                            <Image src="/icons/Iso-Vilas-med 134_W.png" alt="Green Lab" width={150} height={150} />
+                    <div className="flex items-center mb-4">
+                        <Image src="/images/logo/Logo-05.png" alt="Green Lab" width={270} height={270} />
+                        <div className="w-[40%] h-[40%]">
+                            <Iso />
                         </div>
                     </div>
-                    <p className="font-bold text-2xl">TRUNG TÂM XÉT NGHIỆM GREEN LAB</p>
+                    <p className="font-bold text-2xl mb-5">TRUNG TÂM XÉT NGHIỆM GREEN LAB</p>
                     <ul className="space-y-1">
                         <li className='flex gap-3 font-medium text-md'><FaMapMarkedAlt className="text-white" /> 121 Bùi Thị Xuân, Q. Hai Bà Trưng, Hà Nội</li>
                         <li className='flex gap-3 font-medium text-md'><MdOutlineEmail className="text-white" /> <a href="mailto:xetnghiemgreenlab@gmail.com" className="hover:underline">xetnghiemgreenlab@gmail.com</a></li>
@@ -62,11 +67,11 @@ export default function AppFooter() {
                         className="rounded-md border-none"
                     ></iframe>
 
-                    <div className="flex items-center gap-3 mt-4">
+                    <div className="flex items-center gap-2 mt-4">
                         <span className="text-xl font-medium">THEO DÕI GREEN LAB</span>
-                        <a href="https://www.facebook.com/tuyendunggreenlab"><Image src="/icons/Logo-02.png" alt="Facebook" width={40} height={40} /></a>
-                        {/* <a href="#"><Image src="/icons/Logo-03.png" alt="Tiktok" width={40} height={40} /></a> */}
-                        <a href="https://youtube.com/@ttxn.green lab?si=_mPNSoYqdKagvDjO"><Image src="/icons/Logo-04.png" alt="YouTube" width={40} height={40} /></a>
+                        <a href="https://www.facebook.com/tuyendunggreenlab" className="w-[10%] h-[30%]"><Logo_fb /></a>
+                        {/* <a href="#"><Logo_tt /></a> */}
+                        <a href="https://youtube.com/@ttxn.green lab?si=_mPNSoYqdKagvDjO" className="w-[10%] h-[30%]"><Logo_yt /></a>
                     </div>
                 </div>
             </div>

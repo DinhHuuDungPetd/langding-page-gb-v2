@@ -7,7 +7,7 @@ const Image = dynamic(() => import("next/image"), { ssr: false });
 const FormInput = memo(({ label, id, type = "text", placeholder, ...props }) => (
     <div>
         <label htmlFor={id} className="block text-white font-semibold mb-1">
-            {label}<span className="text-red-300">*</span>
+            {label}<span className="text-red-500">*</span>
         </label>
         <input
             id={id}
@@ -26,9 +26,9 @@ FormInput.displayName = 'FormInput';
 const TimeSlotSelect = memo(() => (
     <div>
         <label htmlFor="timeSlot" className="block text-white font-semibold mb-1">
-            Khung giờ:<span className="text-red-300">*</span>
+            Khung giờ:<span className="text-red-500">*</span>
         </label>
-        <select 
+        <select
             id="timeSlot"
             className="w-full bg-white border border-gray-300 px-4 py-2 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-white"
             required
@@ -58,10 +58,13 @@ const BookingForm = () => {
 
     return (
         <div className="w-full max-w-3xl p-6 bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-xl shadow-lg text-white mx-auto">
-            <h2 className="md:text-3xl font-bold mb-6 text-center text-base/8">
-                ĐẶT LỊCH <br />LẤY MẪU XÉT NGHIỆM
+            <h2 className="md:text-3xl font-bold mb-2 text-center text-base/8">
+                ĐẶT LỊCH
             </h2>
-            <form 
+            <h2 className="md:text-3xl font-bold mb-6 text-center text-base/8">
+                LẤY MẪU XÉT NGHIỆM
+            </h2>
+            <form
                 onSubmit={handleSubmit}
                 className="space-y-5"
                 aria-describedby="formDescription"
@@ -70,34 +73,34 @@ const BookingForm = () => {
                 <p id="formDescription" className="sr-only">
                     Mẫu đơn đặt lịch lấy mẫu xét nghiệm. Vui lòng điền đầy đủ thông tin trong các trường bắt buộc được đánh dấu bằng dấu sao.
                 </p>
-                
+
                 <FormInput
                     label="Họ và tên"
                     id="fullName"
                     placeholder="Họ tên khách hàng"
                 />
-                
+
                 <FormInput
                     label="Số điện thoại"
                     id="phone"
                     type="tel"
                     placeholder="Số điện thoại khách hàng"
                 />
-                
+
                 <FormInput
                     label="Địa chỉ"
                     id="address"
                     placeholder="Địa chỉ lấy mẫu xét nghiệm"
                 />
-                
+
                 <FormInput
                     label="Ngày lấy mẫu"
                     id="sampleDate"
                     type="date"
                 />
-                
+
                 <TimeSlotSelect />
-                
+
                 <FormInput
                     label="Email"
                     id="email"
@@ -107,7 +110,7 @@ const BookingForm = () => {
 
                 <div>
                     <label htmlFor="message" className="block text-white font-semibold mb-1">
-                        Nội dung:<span className="text-red-300">*</span>
+                        Nội dung:<span className="text-red-500">*</span>
                     </label>
                     <textarea
                         id="message"

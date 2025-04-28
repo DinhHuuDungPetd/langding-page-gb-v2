@@ -7,6 +7,7 @@ import { GrFormPrevious } from "react-icons/gr";
 import { GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
+import Home_12 from "@/icons/Home_12"
 
 export default function NewsCard() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -65,16 +66,13 @@ export default function NewsCard() {
                                         <div className="ml-4">
                                             <h3 className="text-[31px] lg:text-xl text-primary font-bold whitespace-nowrap ">{item.name}</h3>
                                             <p className="font-medium text-balance text-md">{item.description}</p>
-                                            <p className="flex items-center mt-2 gap-1.5 font-medium text-md text-gray-400">
-                                                <Image
-                                                    src="/icons/icon-trang-chu-12.png"
-                                                    alt={item.name}
-                                                    width={512}
-                                                    height={512}
-                                                    className="w-[5%] object-cover rounded-lg"
-                                                />
-                                                {item.time}
-                                            </p>
+                                            <div className="flex items-center mt-2 gap-1.5 font-medium text-md text-gray-600">
+                                                <p className="w-[30%] h-[20%]"><Home_12 /></p>
+                                                <p>
+                                                    {item.time}
+                                                </p>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </Link>

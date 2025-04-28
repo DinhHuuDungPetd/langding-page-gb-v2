@@ -25,7 +25,7 @@ export default function CircleComponent({ item, index }) {
                             <div className={`${styles.innerRing2} bg-gradient-to-t from-midnight to-green-600`}>
                                 <div className={styles.innerRing3}>
                                     <div className="icon-calendar">
-                                        <Icon src={item.icon} alt="dat lich" size={sizeIcon} />
+                                        {item.icon}
                                     </div>
                                 </div>
                             </div>

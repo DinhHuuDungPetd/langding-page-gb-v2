@@ -1,28 +1,32 @@
 import OrderComponent from "@/component/pages/home/Order";
 import CircleComponent from "@/component/Circle";
+import Book_01 from "@/icons/Book_01"
+import Book_02 from "@/icons/Book_02"
+import Book_03 from "@/icons/Book_03"
+import Book_04 from "@/icons/Book_04"
 export default function ServicePage() {
 
     const items = [
         {
             title: "Đăng ký lịch hẹn",
-            icon: "orders/4-Icon-Dat-Lich-01.png",
+            icon: <Book_01 />,
             content: "Qua tổng đài: 1900 636 588\nQua hotline: 0912 615 997\nQua website: greenlab.vn"
         },
         {
             title: "Lấy mẫu tận nơi",
-            icon: "orders/4-Icon-Dat-Lich-02.png",
+            icon: <Book_02 />,
             content: "Theo yêu cầu của khách hàng"
         },
         {
             title: "Trả kết quả",
-            icon: "orders/4-Icon-Dat-Lich-03.png",
+            icon: <Book_03 />,
             content: "Trực tiếp qua mail" +
                 "\n" +
                 "Trực tuyến website"
         },
         {
             title: "Tư vấn kết quả",
-            icon: "orders/4-Icon-Dat-Lich-04.png",
+            icon: <Book_04 />,
             content: "Khi có kết quả, khách hàng sẽ được đội ngũ bác sĩ giàu kinh nghiệm tư vấn về kết quả và đưa ra chế độ dinh dưỡng hợp lý."
         },
     ]
