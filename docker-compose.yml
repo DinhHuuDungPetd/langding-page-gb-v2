@@ -1,0 +1,9 @@
+services:
+  green-lab-fe:
+    container_name: green-lab-fe
+    build: .
+    ports:
+      - "3002:3002"
+    restart: always
+    environment:
+      - NODE_ENV=production

@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+@theme{
+    --color-primary: #36803E;
+    --color-midnight: #5AB147;
+    --color-central: #8CC63F;
+    --color-mint: #F8FFF8;
+}
+
+:root {
+  --font-poppins: 'Poppins', sans-serif;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+.medium {
+  font-weight: 500;
+  font-style: normal;
+}
+
+.medium-italic {
+  font-weight: 500;
+  font-style: italic;
+}
+
+.bold-italic {
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+    font-family: 'FZ Poppins';
+    src: url('/fonts/FZPoppins-BoldItalic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Font Italic */
+@font-face {
+    font-family: 'FZ Poppins';
+    src: url('/fonts/FZPoppins-Italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Font Medium */
+@font-face {
+    font-family: 'FZ Poppins';
+    src: url('/fonts/FZPoppins-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Font Medium Italic */
+@font-face {
+    font-family: 'FZ Poppins';
+    src: url('/fonts/FZPoppins-MediumItalic.woff2') format('woff2');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Font SemiBold Italic */
+@font-face {
+    font-family: 'FZ Poppins';
+    src: url('/fonts/FZPoppins-SemiBoldItalic.woff2') format('woff2');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Font Regular (Thêm để đảm bảo có weight 400 normal) */
+@font-face {
+    font-family: 'FZ Poppins';
+    src: url('/fonts/FZPoppins-Medium.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: 'FZ Poppins', Arial, sans-serif;
+    scroll-behavior: smooth;
+}
+.text-outline-2 {
+  text-shadow:
+    -2px -2px 0 #36803E,
+     2px -2px 0 #36803E,
+    -2px  2px 0 #36803E,
+     2px  2px 0 #36803E;
+}
+.text-outline-3 {
+  text-shadow:
+    -3px -3px 0 #36803E,
+    3px -3px 0 #36803E,
+    -3px  3px 0 #36803E,
+    3px  3px 0 #36803E;
+}
+.text-outline-4 {
+    text-shadow:
+            -4px -4px 0 #36803E,
+            4px -4px 0 #36803E,
+            -4px  4px 0 #36803E,
+            4px  4px 0 #36803E;
+}
+.page {
+    background-image: url("/images/background/Frame-01.webp");
+    background-repeat: no-repeat;
+    background-size: cover;       /* Phủ kín toàn bộ element */
+    background-position: bottom;  /* Căn giữa hình nền */
+    width: 100%;                 /* Chiều rộng 100% */
+}
+.page-color {
+    background-color:#F8FFF8;
+    width: 100%;                 /* Chiều rộng 100% */
+}
+.page-2 {
+    background-image: url("/images/background/Frame-05.webp");
+    background-repeat: no-repeat;
+    background-size: cover;       /* Phủ kín toàn bộ element */
+    background-position: bottom;  /* Căn giữa hình nền */
+    width: 100%;                 /* Chiều rộng 100% */
+}
+
+.page-3 {
+    background-image: url("/images/background/SliderCongNghe-01.webp");
+    background-repeat: no-repeat;
+    background-size: cover;       /* Phủ kín toàn bộ element */
+    background-position: bottom;  /* Căn giữa hình nền */
+    width: 100%;
+}
+
+.page-4 {
+    position: relative; /* Đảm bảo ::before nằm trong .page */
+    width: 100%; /* Chiều rộng 100% */
+    background-image: url("/images/background/Frame-01.webp");
+    background-repeat: no-repeat;
+    background-size: cover; /* Phủ kín toàn bộ element */
+    background-position: center; /* Căn giữa hình nền */
+}
+
+.active{
+    background-color: #36803E;
+    color: white;
+}
+
+.pulsate-fwd {
+	-webkit-animation: pulsate-fwd 0.5s ease-in-out infinite both;
+	        animation: pulsate-fwd 0.5s ease-in-out infinite both;
+}
+@-webkit-keyframes pulsate-fwd {
+    0% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+    50% {
+      -webkit-transform: scale(1.1);
+              transform: scale(1.1);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+  }
+  @keyframes pulsate-fwd {
+    0% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+    50% {
+      -webkit-transform: scale(1.1);
+              transform: scale(1.1);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+    }
+  }
+  
+.btn:link,
+.btn:visited {
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.btn{
+    transform: translateY(-3px);
+}
+.btn:hover {
+    transform: translateY(-5px) scale(1.2);
+}
+.btn::after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all 0.4s;
+}
+
+.btn-white::after {
+    background-color:green;
+    animation: at 0.8s ease-out infinite;
+}
+
+@keyframes at {
+    0% {
+        background-color:green;
+    }
+    100% {
+        transform: scaleX(1.4) scaleY(1.6);
+        opacity: 0;
+    }
+}
+
+/* Custom Swiper Navigation Buttons */
+.swiper-button-prev-custom,
+.swiper-button-next-custom {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.swiper-button-prev-custom svg,
+.swiper-button-next-custom svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Custom Swiper Pagination */
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  opacity: 1;
+  border-radius: 9999px;
+  background-color: #5ab147;
+  transition: all 0.3s;
+}
+
+.swiper-pagination-bullet:hover {
+  background-color: #5ab147;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #36803E;
+}
+
+/* Hide default Swiper navigation buttons */
+.swiper-button-prev,
+.swiper-button-next {
+  display: none;
+}

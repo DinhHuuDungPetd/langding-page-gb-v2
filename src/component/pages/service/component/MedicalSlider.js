@@ -1,0 +1,195 @@
+"use client";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import Image from "next/image"
+import "swiper/css";
+import "swiper/css/navigation";
+
+const MedicalSwiper = () => {
+    return (
+        <div className="relative container md:mx-auto lg:py-5 lg:px-5">
+            <Swiper
+                modules={[Navigation]}
+                spaceBetween={5}
+                slidesPerView={1}
+                navigation={{
+                    nextEl: ".swiper-button-next-custom",
+                    prevEl: ".swiper-button-prev-custom",
+                }}
+                breakpoints={{
+                    350: {
+                        slidesPerView: 1,
+                        spaceBetween: 5,
+                    },
+                    900: {
+                        slidesPerView: 2,
+                        spaceBetween: 5,
+                    },
+                    1600: {
+                        slidesPerView: 3,
+                        spaceBetween: 10,
+                    },
+                }}
+                className="w-full"
+            >
+                <SwiperSlide>
+                    <div className="relative bg-white border-3 border-central rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
+                        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                            <div className="w-20 h-20 rounded-full bg-gradient-to-b from-primary to-midnight border-4 border-central flex items-center justify-center shadow-md">
+                                <Image
+                                    src="/icons/3. Icon Dich Vu-01.png"
+                                    alt="Phòng đạt chuẩn"
+                                    width={512}
+                                    height={512}
+                                    className="w-[50%] h-[50%] object-contain"
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-10">
+                            <h3 className="font-fz-poppins font-bold text-xl uppercase text-primary  mb-2 text-pretty">XÉT NGHIỆM<br /> HÓA SINH</h3>
+                            <p className="font-fz-poppins font-midium text-md text-primary">Xem thêm <span>»</span></p>
+                        </div>
+                    </div>
+                    <div className="relative bg-white border-3 border-central bg-gradient-to-b from-primary to-midnight rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
+                        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                            <div className="w-20 h-20 rounded-full bg-white border-4 border-midnight flex items-center justify-center shadow-md">
+                                <Image
+                                    src="/icons/3. Icon Dich Vu-02.png"
+                                    alt="Phòng đạt chuẩn"
+                                    width={512}
+                                    height={512}
+                                    className="w-[50%] h-[50%] object-contain"
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-10">
+                            <h3 className="font-fz-poppins font-bold text-xl uppercase text-white  mb-2 text-pretty">XÉT NGHIỆM<br /> VI SINH</h3>
+                            <p className="font-fz-poppins font-midium text-md text-white">Xem thêm <span>»</span></p>
+                        </div>
+                    </div>
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <div className="relative bg-white border-3 border-central bg-gradient-to-b from-primary to-midnight rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
+                        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                            <div className="w-20 h-20 rounded-full bg-white border-4 border-midnight flex items-center justify-center shadow-md">
+                                <Image
+                                    src="/icons/3. Icon Dich Vu-04.png"
+                                    alt="Phòng đạt chuẩn"
+                                    width={512}
+                                    height={512}
+                                    className="w-[50%] h-[50%] object-contain"
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-10">
+                            <h3 className="font-fz-poppins font-bold text-xl uppercase text-white  mb-2 text-pretty">XÉT NGHIỆM <br /> HUYẾT HỌC</h3>
+                            <p className="font-fz-poppins font-midium text-md text-white">Xem thêm <span>»</span></p>
+                        </div>
+                    </div>
+                    <div className="relative bg-white border-3 border-central rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
+                        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                            <div className="w-20 h-20 rounded-full bg-gradient-to-b from-primary to-midnight border-4 border-central flex items-center justify-center shadow-md">
+                                <Image
+                                    src="/icons/3. Icon Dich Vu-03.png"
+                                    alt="Phòng đạt chuẩn"
+                                    width={512}
+                                    height={512}
+                                    className="w-[50%] h-[50%] object-contain"
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-10">
+                            <h3 className="font-fz-poppins font-bold text-xl uppercase text-primary  mb-2 text-pretty">XÉT NGHIỆM <br /> SINH HỌC PHÂN TỬ</h3>
+                            <p className="font-fz-poppins font-midium text-md text-primary">Xem thêm <span>»</span></p>
+                        </div>
+                    </div>
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <div className="relative bg-white border-3 border-central rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
+                        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                            <div className="w-20 h-20 rounded-full bg-gradient-to-b from-primary to-midnight border-4 border-central flex items-center justify-center shadow-md">
+                                <Image
+                                    src="/icons/3. Icon Dich Vu-07.png"
+                                    alt="Phòng đạt chuẩn"
+                                    width={512}
+                                    height={512}
+                                    className="w-[50%] h-[50%] object-contain"
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-10">
+                            <h3 className="font-fz-poppins font-bold text-xl uppercase text-primary  mb-2 text-pretty">XÉT NGHIỆM<br /> MIỄN DỊCH</h3>
+                            <p className="font-fz-poppins font-midium text-md text-primary">Xem thêm <span>»</span></p>
+                        </div>
+                    </div>
+                    <div className="relative bg-white border-3 border-central bg-gradient-to-b from-primary to-midnight rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
+                        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                            <div className="w-20 h-20 rounded-full bg-white border-4 border-midnight flex items-center justify-center shadow-md">
+                                <Image
+                                    src="/icons/3. Icon Dich Vu-06.png"
+                                    alt="Phòng đạt chuẩn"
+                                    width={512}
+                                    height={512}
+                                    className="w-[50%] h-[50%] object-contain"
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-10">
+                            <h3 className="font-fz-poppins font-bold text-xl uppercase text-white  mb-2 text-pretty">XÉT NGHIỆM<br /> GIẢI PHẪU BỆNH</h3>
+                            <p className="font-fz-poppins font-midium text-md text-white">Xem thêm <span>»</span></p>
+                        </div>
+                    </div>
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <div className="relative bg-white border-3 border-central bg-gradient-to-b from-primary to-midnight rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
+                        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                            <div className="w-20 h-20 rounded-full bg-white border-4 border-midnight flex items-center justify-center shadow-md">
+                                <Image
+                                    src="/icons/3. Icon Dich Vu-08.png"
+                                    alt="Phòng đạt chuẩn"
+                                    width={512}
+                                    height={512}
+                                    className="w-[50%] h-[50%] object-contain"
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-10">
+                            <h3 className="font-fz-poppins font-bold text-xl uppercase text-white  mb-2 text-pretty">XÉT NGHIỆM<br /> TẠI NHÀ</h3>
+                            <p className="font-fz-poppins font-midium text-md text-white">Xem thêm <span>»</span></p>
+                        </div>
+                    </div>
+                    <div className="relative bg-white border-3 border-central rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%] ">
+                        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
+                            <div className="w-20 h-20 rounded-full bg-gradient-to-b from-primary to-midnight border-4 border-central flex items-center justify-center shadow-md">
+                                <Image
+                                    src="/icons/3. Icon Dich Vu-05.png"
+                                    alt="Phòng đạt chuẩn"
+                                    width={512}
+                                    height={512}
+                                    className="w-[50%] h-[50%] object-contain"
+                                />
+                            </div>
+                        </div>
+                        <div className="mt-10">
+                            <h3 className="font-fz-poppins font-bold text-xl uppercase text-primary  mb-2 text-pretty">GÓI<br /> XÉT NGHIỆM</h3>
+                            <p className="font-fz-poppins font-midium text-md text-primary">Xem thêm <span>»</span></p>
+                        </div>
+                    </div>
+                </SwiperSlide>
+            </Swiper>
+            <div className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-primary p-2 rounded-full shadow-md cursor-pointer hover:bg-central transition-colors">
+                <FiChevronLeft className="text-white text-sm" />
+            </div>
+            <div className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-primary p-2 rounded-full shadow-md cursor-pointer hover:bg-central transition-colors">
+                <FiChevronRight className="text-white text-sm" />
+            </div>
+        </div >
+    );
+};
+
+export default MedicalSwiper;

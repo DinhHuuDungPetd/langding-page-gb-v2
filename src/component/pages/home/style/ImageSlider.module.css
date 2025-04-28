@@ -1,0 +1,24 @@
+/* ImageSlider.module.css */
+
+.swiper-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1px;
+}
+
+.swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+    border-radius: 9999px; /* rounded-full */
+    background-color: #5ab147;
+    transition: all 0.3s;
+}
+
+.swiper-pagination-bullet:hover {
+    background-color: #5ab147;
+}
+
+.swiper-pagination-bullet-active-custom {
+    background-color: #36803E;
+}

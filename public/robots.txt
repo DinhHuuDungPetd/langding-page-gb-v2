@@ -1,0 +1,13 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://greenlab.vn/sitemap.xml
+
+# Disallow admin and login pages
+Disallow: /admin/
+Disallow: /login/
+
+# Crawl delay
+Crawl-delay: 10 
