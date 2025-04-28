@@ -1,6 +1,9 @@
 import Icon from "@/component/Icon";
 import InfoBox from "@/component/pages/home/component/InfoBox";
 import AnimatedButton from "@/component/pages/home/component/AnimatedButton";
+import Home_11 from "@/icons/Home_11"
+import Home_12 from "@/icons/Home_12"
+import Home_13 from "@/icons/Home_13"
 
 export default function InfoComponent() {
     return (
@@ -22,22 +25,14 @@ export default function InfoComponent() {
             <div className='page-color'>
                 <div className=" container mx-auto flex items-center justify-center my-8 relative py-8">
                     <div className="flex flex-1 max-w-[300px] flex-col justify-center items-center gap-2 p-4">
-                        <Icon
-                            src={"icon-trang-chu-11.png"}
-                            alt={"Xét nghiệm greenlab"}
-                            size={84}
-                        />
+                        <Home_11 />
                         <h2 className="text-primary text-xl md:text-lg font-bold whitespace-nowrap uppercase">
                             Nhận báo giá
                         </h2>
                         <AnimatedButton text="Nhận ngay" href="#" />
                     </div>
                     <div className="flex relative flex-1 max-w-[300px] flex-col justify-center items-center gap-2 p-4 border-primary">
-                        <Icon
-                            src={"icon-trang-chu-12.png"}
-                            alt={"Xét nghiệm greenlab"}
-                            size={84}
-                        />
+                        <Home_12 />
                         <h2 className="text-primary text-xl md:text-lg font-bold whitespace-nowrap uppercase">
                             Đặt lịch tư vấn
                         </h2>
@@ -46,11 +41,7 @@ export default function InfoComponent() {
                         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-2/3 bg-primary"></div>
                     </div>
                     <div className="flex flex-1 max-w-[300px] flex-col justify-center items-center gap-2 p-4">
-                        <Icon
-                            src={"icon-trang-chu-13.png"}
-                            alt={"Xét nghiệm greenlab"}
-                            size={84}
-                        />
+                        <Home_13 />
                         <h2 className="text-primary text-xl md:text-lg font-bold whitespace-nowrap uppercase">
                             Nhận khuyến mãi
                         </h2>

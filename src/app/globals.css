@@ -120,6 +120,8 @@ body {
     background-size: cover;       /* Phủ kín toàn bộ element */
     background-position: bottom;  /* Căn giữa hình nền */
     width: 100%;                 /* Chiều rộng 100% */
+    background-color: #F8FFF8;
+    background-blend-mode: multiply;
 }
 .page-color {
     background-color:#F8FFF8;
@@ -145,6 +147,7 @@ body {
     position: relative; /* Đảm bảo ::before nằm trong .page */
     width: 100%; /* Chiều rộng 100% */
     background-image: url("/images/background/Frame-01.webp");
+    background-color: #F8FFF8;
     background-repeat: no-repeat;
     background-size: cover; /* Phủ kín toàn bộ element */
     background-position: center; /* Căn giữa hình nền */

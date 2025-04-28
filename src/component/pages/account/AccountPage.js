@@ -10,13 +10,13 @@ export default function Account() {
             </div>
             <section className="relative  py-12">
                 <div className="absolute inset-0">
-                    <div className="w-full h-full bg-no-repeat bg-cover bg-[url(/images/background/Frame-01.webp)] bg-mint" />
+                    <div className="w-full h-full bg-no-repeat bg-cover bg-[url(/images/background/Frame-01.webp)] bg-mint bg-blend-multiply" />
                 </div>
 
                 <div className="relative z-10 mx-auto flex flex-col xl:flex-row px-6 xl:px-20">
                     <div className="w-full xl:w-1/2 ">
                         <Image
-                            src="/images/nv/nv_6.webp"
+                            src="/images/nv/nv_6.png"
                             alt="Test Image"
                             width={800}
                             height={800}

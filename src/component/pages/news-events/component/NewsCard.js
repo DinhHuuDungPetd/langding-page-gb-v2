@@ -65,13 +65,13 @@ export default function NewsCard() {
                                         <div className="ml-4">
                                             <h3 className="text-[31px] lg:text-xl text-primary font-bold whitespace-nowrap ">{item.name}</h3>
                                             <p className="font-medium text-balance text-md">{item.description}</p>
-                                            <p className="flex items-center mt-2 gap-1.5 font-medium text-md text-gray-400">
+                                            <p className="flex items-center mt-2 gap-1.5 font-medium text-md text-gray-600">
                                                 <Image
                                                     src="/icons/icon-trang-chu-12.png"
                                                     alt={item.name}
                                                     width={512}
                                                     height={512}
-                                                    className="w-[5%] object-cover rounded-lg"
+                                                    className="w-[4%] object-cover rounded-lg"
                                                 />
                                                 {item.time}
                                             </p>

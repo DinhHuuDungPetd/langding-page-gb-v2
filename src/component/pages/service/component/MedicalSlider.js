@@ -6,6 +6,14 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import Image from "next/image"
 import "swiper/css";
 import "swiper/css/navigation";
+import Service_01 from "@/icons/Service_01"
+import Service_02 from "@/icons/Service_02"
+import Service_03 from "@/icons/Service_03"
+import Service_04 from "@/icons/Service_04"
+import Service_05 from "@/icons/Service_05"
+import Service_06 from "@/icons/Service_06"
+import Service_07 from "@/icons/Service_07"
+import Service_08 from "@/icons/Service_08"
 
 const MedicalSwiper = () => {
     return (
@@ -38,13 +46,7 @@ const MedicalSwiper = () => {
                     <div className="relative bg-white border-3 border-central rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
                         <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
                             <div className="w-20 h-20 rounded-full bg-gradient-to-b from-primary to-midnight border-4 border-central flex items-center justify-center shadow-md">
-                                <Image
-                                    src="/icons/3. Icon Dich Vu-01.png"
-                                    alt="Phòng đạt chuẩn"
-                                    width={512}
-                                    height={512}
-                                    className="w-[50%] h-[50%] object-contain"
-                                />
+                                <Service_01 />
                             </div>
                         </div>
                         <div className="mt-10">
@@ -55,13 +57,7 @@ const MedicalSwiper = () => {
                     <div className="relative bg-white border-3 border-central bg-gradient-to-b from-primary to-midnight rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
                         <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
                             <div className="w-20 h-20 rounded-full bg-white border-4 border-midnight flex items-center justify-center shadow-md">
-                                <Image
-                                    src="/icons/3. Icon Dich Vu-02.png"
-                                    alt="Phòng đạt chuẩn"
-                                    width={512}
-                                    height={512}
-                                    className="w-[50%] h-[50%] object-contain"
-                                />
+                                <Service_02 />
                             </div>
                         </div>
                         <div className="mt-10">
@@ -75,13 +71,7 @@ const MedicalSwiper = () => {
                     <div className="relative bg-white border-3 border-central bg-gradient-to-b from-primary to-midnight rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
                         <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
                             <div className="w-20 h-20 rounded-full bg-white border-4 border-midnight flex items-center justify-center shadow-md">
-                                <Image
-                                    src="/icons/3. Icon Dich Vu-04.png"
-                                    alt="Phòng đạt chuẩn"
-                                    width={512}
-                                    height={512}
-                                    className="w-[50%] h-[50%] object-contain"
-                                />
+                                <Service_04 />
                             </div>
                         </div>
                         <div className="mt-10">
@@ -92,13 +82,7 @@ const MedicalSwiper = () => {
                     <div className="relative bg-white border-3 border-central rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
                         <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
                             <div className="w-20 h-20 rounded-full bg-gradient-to-b from-primary to-midnight border-4 border-central flex items-center justify-center shadow-md">
-                                <Image
-                                    src="/icons/3. Icon Dich Vu-03.png"
-                                    alt="Phòng đạt chuẩn"
-                                    width={512}
-                                    height={512}
-                                    className="w-[50%] h-[50%] object-contain"
-                                />
+                                <Service_03 />
                             </div>
                         </div>
                         <div className="mt-10">
@@ -112,13 +96,7 @@ const MedicalSwiper = () => {
                     <div className="relative bg-white border-3 border-central rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
                         <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
                             <div className="w-20 h-20 rounded-full bg-gradient-to-b from-primary to-midnight border-4 border-central flex items-center justify-center shadow-md">
-                                <Image
-                                    src="/icons/3. Icon Dich Vu-07.png"
-                                    alt="Phòng đạt chuẩn"
-                                    width={512}
-                                    height={512}
-                                    className="w-[50%] h-[50%] object-contain"
-                                />
+                                <Service_07 />
                             </div>
                         </div>
                         <div className="mt-10">
@@ -129,13 +107,7 @@ const MedicalSwiper = () => {
                     <div className="relative bg-white border-3 border-central bg-gradient-to-b from-primary to-midnight rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
                         <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
                             <div className="w-20 h-20 rounded-full bg-white border-4 border-midnight flex items-center justify-center shadow-md">
-                                <Image
-                                    src="/icons/3. Icon Dich Vu-06.png"
-                                    alt="Phòng đạt chuẩn"
-                                    width={512}
-                                    height={512}
-                                    className="w-[50%] h-[50%] object-contain"
-                                />
+                                <Service_06 />
                             </div>
                         </div>
                         <div className="mt-10">
@@ -149,13 +121,7 @@ const MedicalSwiper = () => {
                     <div className="relative bg-white border-3 border-central bg-gradient-to-b from-primary to-midnight rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%]">
                         <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
                             <div className="w-20 h-20 rounded-full bg-white border-4 border-midnight flex items-center justify-center shadow-md">
-                                <Image
-                                    src="/icons/3. Icon Dich Vu-08.png"
-                                    alt="Phòng đạt chuẩn"
-                                    width={512}
-                                    height={512}
-                                    className="w-[50%] h-[50%] object-contain"
-                                />
+                                <Service_08 />
                             </div>
                         </div>
                         <div className="mt-10">
@@ -166,13 +132,7 @@ const MedicalSwiper = () => {
                     <div className="relative bg-white border-3 border-central rounded-2xl pt-12 pb-5 text-center shadow-sm m-10 w-[80%] ">
                         <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
                             <div className="w-20 h-20 rounded-full bg-gradient-to-b from-primary to-midnight border-4 border-central flex items-center justify-center shadow-md">
-                                <Image
-                                    src="/icons/3. Icon Dich Vu-05.png"
-                                    alt="Phòng đạt chuẩn"
-                                    width={512}
-                                    height={512}
-                                    className="w-[50%] h-[50%] object-contain"
-                                />
+                                <Service_05 />
                             </div>
                         </div>
                         <div className="mt-10">

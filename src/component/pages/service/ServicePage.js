@@ -88,7 +88,7 @@ export default function ServicePage() {
                         </motion.div>
 
                         <motion.div
-                            className="relative z-10 grid grid-cols-1 xl:grid-cols-2 gap-5 py-10 xl:px-70"
+                            className="relative z-10 grid grid-cols-1 xl:grid-cols-2 gap-5 py-18 xl:px-70"
                             variants={containerVariants}
                             initial="hidden"
                             animate="visible"
