@@ -107,6 +107,8 @@ export default function ServicePage() {
                                         className="w-full h-full object-cover hidden xl:block"
                                         sizes="(min-width: 1280px) 30vw, 0vw"
                                         quality={50}
+                                        priority = {true}
+                                        loading={"eager"}
                                     />
                                 </div>
                             </motion.div>

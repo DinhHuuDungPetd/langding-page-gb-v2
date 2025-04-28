@@ -1,5 +1,4 @@
 import IntroductionPage from "@/component/pages/introduction/IntroductionPage";
-import { Metadata } from 'next'
 
 export const metadata = {
   title: 'Về Green Lab – Chất lượng từ tâm huyết',

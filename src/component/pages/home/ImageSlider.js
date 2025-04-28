@@ -79,12 +79,12 @@ const ImageSlider = memo(() => {
                                 title={image.title}
                                 fill
                                 priority={image.priority}
-                                loading={image.priority ? "eager" : "lazy"}
                                 quality={85}
                                 sizes="100vw"
                                 style={{
                                     objectFit: "cover",
                                 }}
+                                loading={"eager"}
                             />
                         </motion.div>
                     </SwiperSlide>

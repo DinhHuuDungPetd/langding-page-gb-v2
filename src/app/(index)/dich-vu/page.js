@@ -1,5 +1,4 @@
 import ServicePage from "@/component/pages/service/ServicePage";
-import { Metadata } from 'next'
 
 export const metadata = {
   title: 'Dịch vụ xét nghiệm đa dạng tại Green Lab',

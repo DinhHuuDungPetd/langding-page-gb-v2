@@ -1,5 +1,4 @@
 import ContactPage from "@/component/pages/contact/ContactPage";
-import { Metadata } from 'next'
 
 export const metadata = {
   title: 'Liên hệ Green Lab – Hỗ trợ 24/7',
