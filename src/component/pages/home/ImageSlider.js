@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 const images = [
     {
-        src: "/images/silder/Cover-FB-02.png",
+        src: "https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745824874/greenlab/wc6pkyiovseiygbjturx.png",
         alt: "Green Lab - Dịch vụ xét nghiệm tại nhà uy tín",
         title: "Green Lab - Dịch vụ xét nghiệm tại nhà uy tín",
         priority: true
