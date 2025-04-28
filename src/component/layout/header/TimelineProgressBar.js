@@ -135,7 +135,7 @@ export default function TimelineProgressBar() {
     return (
         <div
             id="timeline-progress"
-            className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-green-900 to-green-400 w-0 opacity-0 z-[9999]"
+            className="fixed top-0 left-0 h-[8px] bg-gradient-to-r from-green-900 to-green-400 w-0 opacity-0 z-[9999]"
             style={{
                 transition: "width 1.5s ease, opacity 0.3s ease",
             }}
