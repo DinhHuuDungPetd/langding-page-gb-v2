@@ -14,19 +14,19 @@ const images = [
         priority: true
     },
     {
-        src: "/images/silder/Cover-FB-03.webp",
+        src: "https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745824874/greenlab/wsvgzzmy2eq2a66ermov.png",
         alt: "Green Lab - Xét nghiệm chính xác, nhanh chóng",
         title: "Green Lab - Xét nghiệm chính xác, nhanh chóng",
         priority: true
     },
     {
-        src: "/images/silder/Cover-FB-04.png",
+        src: "https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745824874/greenlab/y3chbkjtg1ccoihyirur.png",
         alt: "Green Lab - Đội ngũ chuyên gia hàng đầu",
         title: "Green Lab - Đội ngũ chuyên gia hàng đầu",
         priority: true
     },
     {
-        src: "/images/silder/Cover-FB-05.png",
+        src: "https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745824873/greenlab/lcnzetgzfxrrjjzos0dd.webp",
         alt: "Green Lab - Chứng nhận ISO 15189:2012",
         title: "Green Lab - Chứng nhận ISO 15189:2012",
         priority: true
