@@ -6,147 +6,147 @@ import Image from "next/image";
 const MedicalSlider = () => {
     const images = [
         {
-            src: "/images/partner/Benh-vien-da-khoa-Sai-Gon-Phan-Rang.jpg",
+            src: "/images/partner/Benh-vien-da-khoa-Sai-Gon-Phan-Rang.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/Benh-vien-Phu-san-Tam-Phuc-.jpg",
+            src: "/images/partner/Benh-vien-Phu-san-Tam-Phuc.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Buu-dien.jpg",
+            src: "/images/partner/BV-Buu-dien.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-da-khoa-Ha-Noi-cao-Bang.jpg",
+            src: "/images/partner/BV-da-khoa-Ha-Noi-cao-Bang.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Da-Khoa-Ha-Noi-Dong-Van.jpg",
+            src: "/images/partner/BV-Da-Khoa-Ha-Noi-Dong-Van.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-da-khoa-Ha-Noi.jpg",
+            src: "/images/partner/BV-da-khoa-Ha-Noi.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-da-khoa-hung-ha.jpg",
+            src: "/images/partner/BV-da-khoa-hung-ha.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Da-khoa-Minh-Thien.jpg",
+            src: "/images/partner/BV-Da-khoa-Minh-Thien.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-da-khoa-nong-nghiep.jpg",
+            src: "/images/partner/BV-da-khoa-nong-nghiep.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-da-khoa-Phuong-Dong.jpg",
+            src: "/images/partner/BV-da-khoa-Phuong-Dong.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-da-khoa-quoc-te-Bac-Ha.jpg",
+            src: "/images/partner/BV-da-khoa-quoc-te-Bac-Ha.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-da-khoa-quoc-te-Hop-Luc.jpg",
+            src: "/images/partner/BV-da-khoa-quoc-te-Hop-Luc.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Da-khoa-Tam-Anh.jpg",
+            src: "/images/partner/BV-Da-khoa-Tam-Anh.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-da-khoa-thao-nguyen.jpg",
+            src: "/images/partner/BV-da-khoa-thao-nguyen.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Da-khoa-tinh-Bac-Giang.jpg",
+            src: "/images/partner/BV-Da-khoa-tinh-Bac-Giang.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-da-khoa-Tri-Duc-Thanh---Thanh-Hoa.jpg",
+            src: "/images/partner/BV-da-khoa-Tri-Duc-Thanh---Thanh-Hoa.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Dai-hoc-Phenikaa.jpg",
+            src: "/images/partner/BV-Dai-hoc-Phenikaa.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-dai-hoc-y-duoc-buon-ma-thuot.jpg",
+            src: "/images/partner/BV-dai-hoc-y-duoc-buon-ma-thuot.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-dong-do.jpg",
+            src: "/images/partner/BV-dong-do.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/Bv-Duc-Phuc.jpg",
+            src: "/images/partner/Bv-Duc-Phuc.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Hoan-My-Vinh.jpg",
+            src: "/images/partner/BV-Hoan-My-Vinh.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Huu-Nghi-Lac-Viet.jpg",
+            src: "/images/partner/BV-Huu-Nghi-Lac-Viet.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Nam-hoc-va-Hiem-muon-Ha-Noi.jpg",
+            src: "/images/partner/BV-Nam-hoc-va-Hiem-muon-Ha-Noi.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-phu-san---Nhi-Da-Nang.jpg",
+            src: "/images/partner/BV-phu-san---Nhi-Da-Nang.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-phu-san-An-Thinh.jpg",
+            src: "/images/partner/BV-phu-san-An-Thinh.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Phu-san-Hai-Duong.jpg",
+            src: "/images/partner/BV-Phu-san-Hai-Duong.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-phu-san-thien-an.jpg",
+            src: "/images/partner/BV-phu-san-thien-an.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-quoc-te-Thai-nguyen.jpg",
+            src: "/images/partner/BV-quoc-te-Thai-nguyen.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Quoc-te-Vinh-Phuc.jpg",
+            src: "/images/partner/BV-Quoc-te-Vinh-Phuc.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-San--nhi-bac-giang.jpg",
+            src: "/images/partner/BV-San--nhi-bac-giang.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/bv-San-nhi-Bac-Ninh.jpg",
+            src: "/images/partner/bv-San-nhi-Bac-Ninh.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-san-nhi-Phu-Tho.jpg",
+            src: "/images/partner/BV-san-nhi-Phu-Tho.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/BV-Ung-Buou-Hung-Viet.jpg",
+            src: "/images/partner/BV-Ung-Buou-Hung-Viet.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/Da-Khoa-Quoc-Te-Viet---Nga.jpg",
+            src: "/images/partner/Da-Khoa-Quoc-Te-Viet---Nga.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/Phong-kham-4womwnclinic.jpg",
+            src: "/images/partner/Phong-kham-4womwnclinic.webp",
             alt: "Original image",
         },
         {
-            src: "/images/partner/Phong-kham-Hieu-Le.jpg",
+            src: "/images/partner/Phong-kham-Hieu-Le.webp",
             alt: "Original image",
         }
     ]

@@ -6,7 +6,7 @@ export default function OrderComponent() {
             <div className="relative z-10 mx-auto flex flex-col xl:flex-row px-6 xl:px-20 gap-8">
                 <div className="w-1/3 flex items-center">
                     <img
-                        src="/images/order/order.png"
+                        src="/images/order/order.webp"
                         alt="Nhân viên chăm sóc khách hàng green lab"
                         className="w-full h-full object-left object-cover"
                     />

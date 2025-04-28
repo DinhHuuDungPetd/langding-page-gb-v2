@@ -30,7 +30,7 @@ export default function ServicePage() {
 
     return (
         <div>
-            <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(/images/background/background_7.PNG)] bg-blend-multiply">
+            <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(/images/background/background_7.webp)] bg-blend-multiply">
                 <div className="absolute bottom-4 left-20 text-white text-2xl medium-italic z-9">
                     Trang chủ &gt; <span className="font-normal">Đặt lịch xét nghiệm</span>
                 </div>

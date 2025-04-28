@@ -7,17 +7,17 @@ import Image from "next/image";
 const TechnologyComponent = memo(() => {
     const images = [
         {
-            src: "/images/technology/t-1.jpg",
+            src: "/images/technology/t-1.webp",
             alt: "Công nghệ xét nghiệm hiện đại tại Green Lab - Máy móc tự động hóa",
             title: "Công nghệ xét nghiệm hiện đại tại Green Lab"
         },
         {
-            src: "/images/technology/t-2.jpg",
+            src: "/images/technology/t-2.webp",
             alt: "Phòng xét nghiệm tiêu chuẩn quốc tế tại Green Lab",
             title: "Phòng xét nghiệm tiêu chuẩn quốc tế"
         },
         {
-            src: "/images/technology/t-3.jpg",
+            src: "/images/technology/t-3.webp",
             alt: "Quy trình xét nghiệm tự động hóa tại Green Lab",
             title: "Quy trình xét nghiệm tự động hóa"
         },

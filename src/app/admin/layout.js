@@ -18,7 +18,7 @@ export default function AdminLayout({ children }) {
         <Link href="/" className="mb-4">
           <Image
             className="lg:w-52 h-auto cursor-pointer"
-            src="/images/logo/Green Lab Logo-03.png"
+            src="/images/logo/Green-Lab-Logo-03.png"
             alt="Green Lab Logo"
             width={512}
             height={512}

@@ -40,13 +40,13 @@ export default function ServicePage() {
                     as="image"
                 />
             </Head>
-            <motion.div 
+            <motion.div
                 className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(/images/background/background_3.webp)] bg-blend-multiply"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
             >
-                <motion.div 
+                <motion.div
                     className="absolute bottom-4 left-20 text-white text-xl italic z-9"
                     initial={{ x: -50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -58,14 +58,14 @@ export default function ServicePage() {
             <div className="relative w-full min-h-screen bg-mint overflow-hidden">
                 <div className="class_1 relative">
                     <div className="relative w-full h-full xl:h-[1000px] px-6 overflow-hidden">
-                        <motion.div 
+                        <motion.div
                             className="absolute top-0 right-0 w-[30%] h-[45%] opacity-30 z-0 mx-30"
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 0.3, scale: 1 }}
                             transition={{ duration: 0.8 }}
                         >
                             <Image
-                                src="/images/nv/nv_3.png"
+                                src="/images/nv/nv_3.webp"
                                 alt="Doctor Transparent"
                                 fill
                                 className="w-full h-full object-cover hidden xl:block"
@@ -73,27 +73,27 @@ export default function ServicePage() {
                                 quality={50}
                             />
                         </motion.div>
-                        <motion.div 
+                        <motion.div
                             className="absolute bottom-0 right-0 w-[80%] lg:w-[30%] h-[50%] opacity-50 z-0"
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 0.5, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
                         >
                             <Image
-                                src="/images/background/bgn.png"
+                                src="/images/background/bgn.webp"
                                 alt="Decor Icon"
                                 fill
                                 className="w-full h-full object-contain"
                             />
                         </motion.div>
 
-                        <motion.div 
+                        <motion.div
                             className="relative z-10 grid grid-cols-1 xl:grid-cols-2 gap-5 py-10 xl:px-70"
                             variants={containerVariants}
                             initial="hidden"
                             animate="visible"
                         >
-                            <motion.div 
+                            <motion.div
                                 className="w-[75%] flex h-[650px] justify-center mr-10 border-1 border-primary rounded-tr-[200px] relative"
                                 variants={itemVariants}
                                 whileHover={{ scale: 1.02 }}
@@ -101,7 +101,7 @@ export default function ServicePage() {
                             >
                                 <div className="absolute w-full bottom-8 left-8 h-[650px] rounded-tr-[200px] bg-green-100 flex justify-center items-center overflow-hidden">
                                     <Image
-                                        src={"/images/nv/nv_6.jpg"}
+                                        src={"/images/nv/nv_7.webp"}
                                         alt={"Image"}
                                         fill
                                         className="w-full h-full object-cover hidden xl:block"
@@ -110,12 +110,12 @@ export default function ServicePage() {
                                     />
                                 </div>
                             </motion.div>
-                            <motion.div 
+                            <motion.div
                                 className="w-full h-full xl:mt-[15%] md:flex md:items-center md:justify-center xl:items-start xl:justify-start"
                                 variants={itemVariants}
                             >
                                 <div className="max-w-[700px] text-justify">
-                                    <motion.div 
+                                    <motion.div
                                         className="flex items-center justify-center my-6 gap-3"
                                         variants={itemVariants}
                                     >
@@ -125,7 +125,7 @@ export default function ServicePage() {
                                                 <span className="w-16 h-[2px] bg-[#36803E]"></span>
                                             </div>
                                         </div>
-                                        <motion.h2 
+                                        <motion.h2
                                             className="text-[31px] lg:text-3xl text-primary font-bold whitespace-nowrap uppercase"
                                             variants={itemVariants}
                                             whileHover={{ scale: 1.05 }}
@@ -141,7 +141,7 @@ export default function ServicePage() {
                                         </div>
                                     </motion.div>
 
-                                    <motion.p 
+                                    <motion.p
                                         className="leading-relaxed font-medium xl:text-md"
                                         variants={itemVariants}
                                         whileHover={{ scale: 1.02 }}
@@ -157,7 +157,7 @@ export default function ServicePage() {
                         </motion.div>
                     </div>
                 </div>
-                <motion.div 
+                <motion.div
                     className="absolute top-[40%] left-[55%] transform -translate-x-1/2 z-20 pointer-events-none hidden xl:flex justify-center"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -168,14 +168,14 @@ export default function ServicePage() {
                     </div>
                 </motion.div>
             </div>
-            <motion.div 
+            <motion.div
                 className="bg-mint py-5"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
             >
-                <motion.h2 
+                <motion.h2
                     className="text-[20px] lg:text-3xl font-bold text-primary text-center uppercase"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.2 }}

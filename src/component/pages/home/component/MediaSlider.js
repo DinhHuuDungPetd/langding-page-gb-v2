@@ -6,23 +6,23 @@ import Image from "next/image";
 const MedicalSlider = () => {
     const images = [
         {
-            src: "/images/bao-chi/Dan_tri_logo.png",
+            src: "/images/bao-chi/Dan_tri_logo.webp",
             alt: "Original image",
         },
         {
-            src: "/images/bao-chi/Suc-khoe-Doi-song-Logo.jpeg",
+            src: "/images/bao-chi/Suc-khoe-Doi-song-Logo.webp",
             alt: "Original image",
         },
         {
-            src: "/images/bao-chi/tuoitre-online-logo.png",
+            src: "/images/bao-chi/tuoitre-online-logo.webp",
             alt: "Original image",
         },
         {
-            src: "/images/bao-chi/VnExpress.net_Logo.png",
+            src: "/images/bao-chi/VnExpress.net_Logo.webp",
             alt: "Original image",
         },
         {
-            src: "/images/bao-chi/VTV3_logo_2013_final.png",
+            src: "/images/bao-chi/VTV3_logo_2013_final.webp",
             alt: "Original image",
         },
     ]

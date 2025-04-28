@@ -6,19 +6,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 const ExpertComponent = memo(() => {
     const experts = [
         {
-            src: "/images/expert/bs-1.png",
+            src: "/images/expert/bs-1.webp",
             alt: "Bác sĩ chuyên gia Green Lab - Chuyên gia huyết học",
             width: 350,
             height: 350
         },
         {
-            src: "/images/expert/bs-2.png",
+            src: "/images/expert/bs-2.webp",
             alt: "Bác sĩ chuyên gia Green Lab - Chuyên gia xét nghiệm",
             width: 350,
             height: 350
         },
         {
-            src: "/images/expert/bs-3.png",
+            src: "/images/expert/bs-3.webp",
             alt: "Bác sĩ chuyên gia Green Lab - Chuyên gia tư vấn",
             width: 350,
             height: 350

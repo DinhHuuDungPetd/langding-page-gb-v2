@@ -75,7 +75,7 @@ const IntroductionPage = memo(() => {
             variants={containerVariants}
         >
             <motion.div 
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-[url(/images/background/background_1.PNG)] bg-no-repeat bg-cover bg-blend-multiply"
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-[url(/images/background/background_1.webp)] bg-no-repeat bg-cover bg-blend-multiply"
                 variants={itemVariants}
             >
                 <div className="absolute bottom-4 left-20 text-white text-xl medium-italic z-9">

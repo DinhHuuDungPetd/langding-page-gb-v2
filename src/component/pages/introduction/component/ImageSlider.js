@@ -4,9 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 
 const images = [
-    "/images/introduce/sl-1.jpg",
-    "/images/introduce/sl-2.jpg",
-    "/images/introduce/sl-3.jpg",
+    "/images/introduce/sl-1.webp",
+    "/images/introduce/sl-2.webp",
+    "/images/introduce/sl-3.webp",
 ];
 
 const ImageSlider = () => {
@@ -37,7 +37,7 @@ const ImageSlider = () => {
                                 quality={75}
                                 priority={index === 0}
                                 placeholder="blur"
-                                blurDataURL={"/images/introduce/sl-1.jpg"}
+                                blurDataURL={"/images/introduce/sl-1.webp"}
                             />
                         </div>
                     </SwiperSlide>
