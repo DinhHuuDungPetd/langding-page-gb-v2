@@ -7,7 +7,7 @@ import { GrFormPrevious } from "react-icons/gr";
 import { GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
-import Home_12 from "@/icons/Home_12"
+import Home_14 from "@/icons/Home_14"
 
 export default function NewsCard() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -64,14 +64,11 @@ export default function NewsCard() {
                                             className="w-[30%] object-cover rounded-lg"
                                         />
                                         <div className="ml-4">
-                                            <h3 className="text-[31px] lg:text-xl text-primary font-bold whitespace-nowrap ">{item.name}</h3>
+                                            <h3 className=" lg:text-xl text-primary font-bold whitespace-nowrap ">{item.name}</h3>
                                             <p className="font-medium text-balance text-md">{item.description}</p>
-                                            <div className="flex items-center mt-2 gap-1.5 font-medium text-md text-gray-600">
-                                                <p className="w-[30%] h-[20%]"><Home_12 /></p>
-                                                <p>
-                                                    {item.time}
-                                                </p>
-
+                                            <div className="flex items-start mt-2 gap-1.5 font-medium text-xs text-gray-600 w-1/3">
+                                                <Home_14 />
+                                                <p className="self-center mt-1">{item.time}</p>
                                             </div>
                                         </div>
                                     </div>

@@ -2,7 +2,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import Image from "next/image";
-import Home_12 from "@/icons/Home_12"
+import Home_14 from "@/icons/Home_14"
 
 const MedicalSlider = () => {
     const images = [
@@ -69,9 +69,9 @@ const MedicalSlider = () => {
                             {/* Phần nội dung */}
                             <div className="w-1/2 p-2">
                                 <h3 className="text-sm font-semibold">Lorem Ipsum</h3>
-                                <div className="flex items-center mt-2 gap-1.5 font-medium text-xs text-gray-600">
-                                    <p className="w-[30%] h-[20%]"><Home_12 /></p>
-                                    <p>2023-02-05</p>
+                                <div className="flex items-start mt-2 gap-1.5 font-medium text-xs text-gray-600">
+                                    <Home_14 />
+                                    <p className="self-center mt-1">2023-02-05</p>
                                 </div>
                                 <p className="text-xs text-black text-justify leading-relaxed line-clamp-7">
                                     Lorem Ipsum is simply dummy text of the printing

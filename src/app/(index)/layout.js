@@ -11,13 +11,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-   <>
-     <AppHeader />
-     <main>
-       <section>{children}</section>
-       <ContactFloatingButton />
-     </main>
-     <AppFooter />
-   </>
+    <>
+      <AppHeader />
+      <main>
+        <section>{children}</section>
+        <ContactFloatingButton />
+      </main>
+      <AppFooter />
+    </>
   );
 }
