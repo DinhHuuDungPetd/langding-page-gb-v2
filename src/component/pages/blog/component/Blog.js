@@ -36,15 +36,14 @@ export default function Blog() {
             </p>
 
 
-            <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 medium-italic text-base/8 text-md text-pretty">
-                <li>Quy trình xét nghiệm tại nhà Greenlab gồm những gì?</li>
-                <li>Tại sao quy trình Green Lab lại đơn giản và nhanh?</li>
-                <li>Bảng giá dịch vụ xét nghiệm</li>
-                <li>Bảng giá dịch vụ xét nghiệm</li>
+            <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 medium-italic text-base/8 text-md text-pretty space-y-2">
+                <li><a href="#quy-trinh" className="hover:underline">Quy trình xét nghiệm tại nhà Green lab gồm những gì?</a></li>
+                <li><a href="#tai-sao-nhanh" className="hover:underline">Tại sao quy trình Green Lab lại đơn giản và nhanh?</a></li>
+                <li><a href="#so-sanh-voi-quy-trinh-truyen-thong" className="hover:underline">So sánh với quy trình truyền thống</a></li>
             </ul>
 
 
-            <h2 className="text-lg bold-italic text-primary mb-4 text-pretty">Quy trình xét nghiệm tại nhà Greenlab gồm những gì?</h2>
+            <h2 id="quy-trinh" className="text-lg bold-italic text-primary mb-4 text-pretty">Quy trình xét nghiệm tại nhà Green lab gồm những gì?</h2>
             <p className="mb-4 medium text-md ">
                 Green Lab – đơn vị tiên phong tại Hà Nội – đã tối ưu hóa quy trình xét nghiệm tại nhà thành 3 bước đơn giản:
             </p>
@@ -117,7 +116,7 @@ export default function Blog() {
             />
 
             {/* Section 2 */}
-            <h2 className="text-lg bold-italic text-primary mb-4 text-pretty">Tại sao quy trình Green Lab lại đơn giản và nhanh?</h2>
+            <h2 id="tai-sao-nhanh" className="text-lg bold-italic text-primary mb-4 text-pretty">Tại sao quy trình Green Lab lại đơn giản và nhanh?</h2>
             <p className="mb-4 font-medium text-md">
                 <strong>
                     1. Công nghệ hiện đại
@@ -151,7 +150,7 @@ export default function Blog() {
                 Dù bạn ở nội thành Hà Nội hay cần xét nghiệm gấp, Green Lab đều đáp ứng.
                 Quy trình phù hợp cho cả cá nhân và gia đình – đặt một lần, lấy mẫu cùng lúc cho nhiều người.
             </p>
-            <h2 className="text-lg bold-italic text-primary text-pretty">So sánh với quy trình truyền thống</h2>
+            <h2 id="so-sanh-voi-quy-trinh-truyen-thong" className="text-lg bold-italic text-primary text-pretty">So sánh với quy trình truyền thống</h2>
             <p className="mb-4 font-medium text-md text-pretty">
                 Bệnh viện/MEDLATEC: Đi lại, xếp hàng, chờ 2-3 ngày lấy kết quả, chi phí cao hơn (1-1,5 triệu).
             </p>

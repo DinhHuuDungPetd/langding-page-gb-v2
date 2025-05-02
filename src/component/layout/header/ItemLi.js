@@ -10,7 +10,6 @@ export default function ItemLi({ item }) {
                 className={`text-center block py-7 2xl:text-lg text-sm px-4 h-full hover:bg-central hover:text-white transition-all  font-medium 
                 ${pathname === item.href ? "active" : ""}`}
                 href={item.href || "/"}
-
             >
                 {item.name}
             </Link>

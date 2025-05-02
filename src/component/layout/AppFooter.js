@@ -38,12 +38,12 @@ export default function AppFooter() {
                     <ul className="space-y-2 px-10">
                         {[
                             { name: 'Trang chủ', href: '/' },
-                            { name: 'Giới thiệu', href: '/introduction' },
-                            { name: 'Dịch vụ xét nghiệm', href: '/service' },
-                            { name: 'Đặt lịch xét nghiệm', href: '/order' },
-                            { name: 'Kết quả xét nghiệm', href: '/account' },
-                            { name: 'Tin tức – Sự kiện', href: '/news-events' },
-                            { name: 'Liên hệ', href: '/contact' },
+                            { name: 'Giới thiệu', href: '/gioi-thieu' },
+                            { name: 'Dịch vụ xét nghiệm', href: '/dich-vu' },
+                            { name: 'Đặt lịch xét nghiệm', href: '/dat-lich' },
+                            { name: 'Kết quả xét nghiệm', href: '/tra-cuu' },
+                            { name: 'Tin tức – Sự kiện', href: '/tin-tuc-su-kien' },
+                            { name: 'Liên hệ', href: '/lien-he' },
                         ].map((item, i) => (
                             <li key={i}>
                                 <Link href={item.href} className="hover:underline">{item.name}</Link>
