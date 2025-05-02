@@ -9,7 +9,7 @@ export default function RelatedPosts() {
 
     return (
         <div className="w-full">
-            <div className="max-w-[900px] mx-auto py-4 px-2 flex flex-wrap justify-between gap-y-6">
+            <div className="mx-auto py-4 px-2 flex flex-wrap justify-between gap-y-6">
                 {latestNews && latestNews.length > 0 ? (
                     latestNews.map((item, index) => (
                         <div

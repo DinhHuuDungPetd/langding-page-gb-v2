@@ -14,7 +14,7 @@ export default function BlogPage() {
                 <div className="flex flex-col lg:flex-row gap-8">
                     <div className="w-full lg:w-2/3 ">
                         <Blog />
-                        <div className="max-w-4xl mx-auto px-4 py-2 container">
+                        <div className=" mx-auto px-4 py-2 container">
                             <h3 className="font-bold text-2xl text-primary uppercase">Các bài viết liên quan</h3>
                             <RelatedPosts />
                         </div>
