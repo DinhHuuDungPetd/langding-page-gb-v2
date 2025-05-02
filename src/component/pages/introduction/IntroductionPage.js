@@ -2,7 +2,7 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
-import Image from "next/image"
+
 import Introduction_01 from "@/icons/Introduction_01"
 import Introduction_02 from "@/icons/Introduction_02"
 import Introduction_03 from "@/icons/Introduction_03"
@@ -77,7 +77,7 @@ const IntroductionPage = memo(() => {
             animate="visible"
             variants={containerVariants}
         >
-            <motion.div 
+            <motion.div
                 className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825600/greenlab/aan50gixyarmomdlnyqb.webp)] bg-no-repeat bg-cover bg-blend-multiply"
                 variants={itemVariants}
             >
@@ -96,7 +96,7 @@ const IntroductionPage = memo(() => {
             <Banner />
 
             <motion.div
-                className="flex flex-col xl:flex-row items-center mt-15 container mx-auto py-8 px-4 sm:px-6 lg:px-8"
+                className="flex flex-col xl:flex-row w-2/3 items-center mt-15 container mx-auto py-8 px-4 sm:px-6 lg:px-8"
                 variants={containerVariants}
             >
                 <motion.div
@@ -107,7 +107,7 @@ const IntroductionPage = memo(() => {
                 </motion.div>
 
                 <motion.div
-                    className="w-full space-y-6 mt-8 xl:mt-0 xl:ml-8"
+                    className="space-y-6 mt-8 xl:mt-0 xl:ml-8"
                     variants={containerVariants}
                 >
                     <motion.article variants={itemVariants}>

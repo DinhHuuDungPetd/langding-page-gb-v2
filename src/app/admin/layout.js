@@ -11,7 +11,7 @@ export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   return (
-    <div className="admin-container grid grid-cols-6 min-h-screen gap-3 shadow-md">
+    <div className="admin-container grid grid-cols-8 min-h-screen gap-3 shadow-md">
 
       <div className={`admin-sidebar col-span-6 xl:col-span-1 bg-mint p-4 transition-all duration-300
   ${sidebarOpen ? 'block' : 'hidden'} xl:flex flex-col items-center justify-start text-center`}>
@@ -38,7 +38,7 @@ export default function AdminLayout({ children }) {
       </div>
 
 
-      <div className="admin-content col-span-6 xl:col-span-5 ">
+      <div className="admin-content col-span-6 xl:col-span-7 ">
 
         <div className="admin-header flex items-center justify-between bg-white p-4 shadow-md">
           <button

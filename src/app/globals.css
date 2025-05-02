@@ -265,3 +265,12 @@ body {
 .swiper-button-next {
   display: none;
 }
+html {
+  scroll-behavior: smooth;
+}
+[id]::before {
+  content: "";
+  display: block;
+  height: 80px;
+  margin-top: -80px;
+}
