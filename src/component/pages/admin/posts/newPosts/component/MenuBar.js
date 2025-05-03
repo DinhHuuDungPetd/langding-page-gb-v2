@@ -9,6 +9,7 @@ import {
     LuHeading1,
     LuHeading2,
     LuHeading3,
+    LuHeading4,
     LuHighlighter,
     LuListOrdered,
 } from "react-icons/lu";
@@ -49,6 +50,11 @@ export default function MenuBar({ editor }) {
             icon: <LuHeading3 className="size-4" />,
             onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
             pressed: editor.isActive("heading", { level: 3 }),
+        },
+        {
+            icon: <LuHeading4 className="size-4" />,
+            onClick: () => editor.chain().focus().toggleHeading({ level: 4 }).run(),
+            pressed: editor.isActive("heading", { level: 4 }),
         },
         {
             icon: <HiBold className="size-4" />,
@@ -99,13 +105,13 @@ export default function MenuBar({ editor }) {
             icon: <BiLink className="size-4" />,
             onClick: () => {
                 const url = window.prompt("Nhập URL:");
-        
+
                 if (url) {
                     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
                 }
             },
             pressed: editor.isActive("link"),
-        },        
+        },
         {
             icon: (
                 <input

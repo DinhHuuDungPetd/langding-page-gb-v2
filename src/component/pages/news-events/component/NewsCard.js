@@ -1,21 +1,34 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from 'react';
 import Image from "next/image";
-import { services } from "@/store/data2";
 import { MdFirstPage } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 import { GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
 import Home_14 from "@/icons/Home_14"
+import axios from 'axios';
 
 export default function NewsCard() {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const [blogs, setBlogs] = useState([]);
+    useEffect(() => {
+        axios.get(`${baseUrl}/blogs`)
+            .then(response => {
+                console.log(response.data);
+                setBlogs(response.data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }, []);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
 
-    const news = services;
 
-    const sortedNews = [...news].sort((a, b) => a.name.localeCompare(b.name));
+
+    const sortedNews = [...blogs].sort((a, b) => a.title.localeCompare(b.title));
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -46,6 +59,13 @@ export default function NewsCard() {
 
         return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
     };
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // tháng bắt đầu từ 0
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
 
     return (
         <>
@@ -54,21 +74,21 @@ export default function NewsCard() {
                     currentItems.map((item, index) => (
                         <div key={`table-news-${index}`}>
                             <div className="flex flex-col lg:flex-row items-center justify-between py-4 px-4 border-b border-primary">
-                                <Link href="/tin-tuc-su-kien/bai-viet">
+                                <Link href={`/tin-tuc-su-kien/${item.id}`}>
                                     <div className="flex items-center">
                                         <Image
                                             src={item.images}
-                                            alt={item.name}
+                                            alt={item.title}
                                             width={1000}
                                             height={1000}
                                             className="w-[30%] object-cover rounded-lg"
                                         />
                                         <div className="ml-4">
-                                            <h3 className=" lg:text-xl text-primary font-bold whitespace-nowrap ">{item.name}</h3>
+                                            <h3 className=" lg:text-xl text-primary font-bold whitespace-nowrap ">{item.title}</h3>
                                             <p className="font-medium text-balance text-md">{item.description}</p>
                                             <div className="flex items-start mt-2 gap-1.5 font-medium text-xs text-gray-600 w-1/3">
                                                 <Home_14 />
-                                                <p className="self-center mt-1">{item.time}</p>
+                                                <p className="self-center mt-1">{formatDate(item.time)}</p>
                                             </div>
                                         </div>
                                     </div>

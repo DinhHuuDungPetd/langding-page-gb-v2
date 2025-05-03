@@ -69,9 +69,9 @@ export default function AppFooter() {
 
                     <div className="flex items-center gap-2 mt-4">
                         <span className="text-xl font-medium">THEO DÕI GREEN LAB</span>
-                        <a href="https://www.facebook.com/tuyendunggreenlab" className="w-[10%] h-[30%]"><Logo_fb /></a>
+                        <a href="https://www.facebook.com/greenlab.real" className="w-[10%] h-[30%]"><Logo_fb /></a>
                         {/* <a href="#"><Logo_tt /></a> */}
-                        <a href="https://youtube.com/@ttxn.green lab?si=_mPNSoYqdKagvDjO" className="w-[10%] h-[30%]"><Logo_yt /></a>
+                        <a href="https://www.youtube.com/@ttxn.greenlab" className="w-[10%] h-[30%]"><Logo_yt /></a>
                     </div>
                 </div>
             </div>
