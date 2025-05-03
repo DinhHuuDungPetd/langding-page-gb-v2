@@ -1,0 +1,196 @@
+"use client";
+import React from "react";
+import Image from "next/image";
+import styles from "@/component/style/BlogContent.module.css";
+
+
+const slugify = (text) =>
+    text
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+
+
+const renderTextWithMarks = (textObj) => {
+    let content = textObj.text;
+    const marks = textObj.marks || [];
+    let style = {};
+
+    marks.forEach((mark) => {
+        switch (mark.type) {
+            case "bold":
+                content = <strong>{content}</strong>;
+                break;
+            case "italic":
+                content = <em>{content}</em>;
+                break;
+            case "underline":
+                content = <u>{content}</u>;
+                break;
+            case "strike":
+                content = <s>{content}</s>;
+                break;
+            case "code":
+                content = <code>{content}</code>;
+                break;
+            case "textStyle":
+                if (mark.attrs?.color) {
+                    style.color = mark.attrs.color;
+                }
+                break;
+        }
+    });
+
+    const linkMark = marks.find((m) => m.type === "link");
+    if (linkMark) {
+        return (
+            <a
+                href={linkMark.attrs.href}
+                target={linkMark.attrs.target || "_blank"}
+                rel={linkMark.attrs.rel || "noopener noreferrer"}
+                className="text-blue-600 underline"
+                style={style}
+            >
+                {content}
+            </a>
+        );
+    }
+
+    return <span style={style}>{content}</span>;
+};
+
+// Main renderer
+export default function PreviewContent({ postJson }) {
+    const levelOneItems = postJson?.content?.filter(
+        (section) => section.type === "heading" && section.attrs?.level === 1
+    );
+
+    const renderContent = (section, index) => {
+        const textAlign = section.attrs?.textAlign || "left";
+        const alignStyle = textAlign ? { textAlign } : {};
+
+        switch (section.type) {
+            case "heading": {
+                const level = section.attrs?.level || 1;
+                const contentArray = section.content || [];
+                const slug =
+                    level === 1 && contentArray[0]?.text
+                        ? slugify(contentArray[0].text)
+                        : undefined;
+                const HeadingTag = `h${Math.min(level, 4)}`;
+                const headingClassMap = {
+                    1: "text-2xl font-bold mt-8 mb-4",
+                    2: "text-xl font-semibold mt-6 mb-3",
+                    3: "text-lg font-medium mt-5 mb-2",
+                    4: "text-base font-medium mt-4 mb-2",
+                };
+
+                return (
+                    <HeadingTag
+                        key={index}
+                        id={slug}
+                        className={headingClassMap[level] || ""}
+                        style={alignStyle}
+                    >
+                        {contentArray.map((textObj, i) => (
+                            <React.Fragment key={i}>
+                                {renderTextWithMarks(textObj)}
+                            </React.Fragment>
+                        ))}
+                    </HeadingTag>
+                );
+            }
+
+            case "paragraph": {
+                const contentArray = section.content;
+
+                const isEmpty =
+                    !contentArray ||
+                    contentArray.length === 0 ||
+                    contentArray.every(
+                        (part) =>
+                            (part.type === "text" && (!part.text || part.text.trim() === "")) ||
+                            part.type === "hardBreak"
+                    );
+
+                if (isEmpty) return null;
+
+                return (
+                    <p key={index} className="mb-4 leading-relaxed text-gray-700" style={alignStyle}>
+                        {contentArray.map((part, idx) => {
+                            if (part.type === "hardBreak") return <br key={idx} />;
+                            return (
+                                <React.Fragment key={idx}>
+                                    {renderTextWithMarks(part)}
+                                </React.Fragment>
+                            );
+                        })}
+                    </p>
+                );
+            }
+
+
+            case "bulletList": {
+                return (
+                    <ul key={index} className="list-disc list-inside my-4 pl-5">
+                        {section.content?.map((item, itemIdx) => (
+                            <li key={itemIdx}>
+                                {item.content?.map((sub, subIdx) =>
+                                    renderContent(sub, `${index}-${itemIdx}-${subIdx}`)
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                );
+            }
+
+            case "image": {
+                return (
+                    <div key={index} className="my-6">
+                        <Image
+                            src="/images/background/background_11.webp"
+                            alt={section.attrs?.alt || "Green Lab image"}
+                            width={1000}
+                            height={600}
+                            className="rounded shadow"
+                        />
+                    </div>
+                );
+            }
+
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <div className={styles.container}>
+
+            <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 text-md space-y-2">
+                {levelOneItems?.map((section, index) => {
+                    const text = section.content?.[0]?.text || "";
+                    const slug = slugify(text);
+                    return (
+                        <li key={index}>
+                            <a
+                                href={`#${slug}`}
+                                className="hover:underline"
+                                style={{
+                                    color: "var(--color-primary)",
+                                    fontWeight: 500,
+                                    fontSize: "1rem",
+                                }}
+                            >
+                                {text}
+                            </a>
+                        </li>
+                    );
+                })}
+            </ul>
+
+
+            {postJson?.content?.map((section, index) => renderContent(section, index))}
+        </div>
+    );
+}
