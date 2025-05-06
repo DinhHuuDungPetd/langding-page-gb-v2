@@ -19,7 +19,7 @@ import { HiBold } from "react-icons/hi2";
 import { BiLink } from "react-icons/bi";
 
 import React from "react";
-import { imageFileMap } from "@/component/pages/admin/posts/newPosts/component/customTiptap/imageFileMap";
+import { imageFileMap } from "@/component/pages/admin/posts/component/customTiptap/imageFileMap";
 
 
 export default function MenuBar({ editor }) {
@@ -162,7 +162,15 @@ export default function MenuBar({ editor }) {
             ),
             onClick: () => { },
             pressed: false,
-        }
+        },
+        {
+            icon: <span className="text-sm font-semibold">Box</span>,
+            onClick: () => {
+                editor.chain().focus().insertContent(`<div class="green-box"><p>Nội dung trong ô xanh</p></div>`).run();
+            },
+            pressed: false,
+        },
+
 
     ];
 
