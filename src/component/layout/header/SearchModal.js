@@ -2,11 +2,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiX } from "react-icons/fi";
+import { useRouter } from 'next/navigation';
 
 export default function SearchModal() {
     const [isOpen, setIsOpen] = useState(false);
     const [query, setQuery] = useState("");
     const [history, setHistory] = useState([]);
+    const router = useRouter();
 
     useEffect(() => {
         const saved = localStorage.getItem("search_history");
@@ -15,7 +17,6 @@ export default function SearchModal() {
         }
     }, []);
 
-    // Lưu lại lịch sử
     const saveSearch = (text) => {
         if (!text.trim()) return;
 
@@ -27,6 +28,7 @@ export default function SearchModal() {
 
     const handleSearch = () => {
         saveSearch(query);
+        router.push(`/tin-tuc-su-kien?search=${encodeURIComponent(query)}`);
         setIsOpen(false);
     };
 
