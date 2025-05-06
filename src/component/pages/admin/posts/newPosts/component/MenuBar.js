@@ -19,8 +19,11 @@ import { HiBold } from "react-icons/hi2";
 import { BiLink } from "react-icons/bi";
 
 import React from "react";
+import { imageFileMap } from "@/component/pages/admin/posts/newPosts/component/customTiptap/imageFileMap";
+
 
 export default function MenuBar({ editor }) {
+
     if (!editor) {
         return null;
     }
@@ -141,10 +144,15 @@ export default function MenuBar({ editor }) {
                         onChange={(e) => {
                             const files = e.target.files;
                             if (!files) return;
-
+                            const name = prompt("Nhập Tiêu đề ảnh:");
                             Array.from(files).forEach(file => {
                                 const url = URL.createObjectURL(file);
-                                editor.chain().focus().setImage({ src: url }).run();
+                                imageFileMap.set(url, file); // lưu ảnh blob
+                                editor.chain().focus().setImage({
+                                    src: url,
+                                    alt: name,
+                                    title: name
+                                }).run();
                             });
 
                             e.target.value = "";
@@ -154,7 +162,7 @@ export default function MenuBar({ editor }) {
             ),
             onClick: () => { },
             pressed: false,
-        },
+        }
 
     ];
 

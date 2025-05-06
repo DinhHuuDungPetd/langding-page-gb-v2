@@ -5,22 +5,12 @@ import axios from "axios";
 import { MdFirstPage, MdLastPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
-export default function TableRelatedPosts({ selectedBlogIds, setSelectedBlogIds }) {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const [blogs, setBlogs] = useState([]);
+export default function TableRelatedPosts({ blogs, selectedBlogIds, setSelectedBlogIds }) {
     const [isAllChecked, setIsAllChecked] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
 
-    useEffect(() => {
-        axios.get(`${baseUrl}/blogs`)
-            .then((response) => {
-                setBlogs(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching blogs:", error);
-            });
-    }, []);
+
 
     const handleCheckAll = (event) => {
         const isChecked = event.target.checked;
@@ -56,7 +46,7 @@ export default function TableRelatedPosts({ selectedBlogIds, setSelectedBlogIds 
         return selectedBlogIds.some((blog) => blog.id === id);
     };
 
-    const sortedBlogs = [...blogs].sort((a, b) => a.title.localeCompare(b.title));
+    const sortedBlogs = [...blogs].sort((a, b) => a.time.localeCompare(b.time));
     const totalPages = Math.ceil(sortedBlogs.length / itemsPerPage);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;

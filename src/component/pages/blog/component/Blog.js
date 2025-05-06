@@ -1,15 +1,197 @@
+"use client"
+import React from "react";
 import Image from "next/image";
-import "@/component/pages/blog/component/styles.scss";
-import { FaCalendarAlt, FaUser, FaEye } from 'react-icons/fa'
+import styles from "@/component/style/BlogContent.module.css";
+import { FaCalendarAlt, FaUser, FaEye } from 'react-icons/fa';
 
-export default function Blog() {
+const slugify = (text) =>
+    text
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+
+
+const renderTextWithMarks = (textObj) => {
+    let content = textObj.text;
+    const marks = textObj.marks || [];
+    let style = {};
+
+    marks.forEach((mark) => {
+        switch (mark.type) {
+            case "bold":
+                content = <strong>{content}</strong>;
+                break;
+            case "italic":
+                content = <em>{content}</em>;
+                break;
+            case "underline":
+                content = <u>{content}</u>;
+                break;
+            case "strike":
+                content = <s>{content}</s>;
+                break;
+            case "code":
+                content = <code>{content}</code>;
+                break;
+            case "textStyle":
+                if (mark.attrs?.color) {
+                    style.color = mark.attrs.color;
+                }
+                break;
+        }
+    });
+
+    const linkMark = marks.find((m) => m.type === "link");
+    if (linkMark) {
+        return (
+            <a
+                href={linkMark.attrs.href}
+                target={linkMark.attrs.target || "_blank"}
+                rel={linkMark.attrs.rel || "noopener noreferrer"}
+                className="text-blue-600 underline"
+                style={style}
+            >
+                {content}
+            </a>
+        );
+    }
+
+    return <span style={style}>{content}</span>;
+};
+
+export default function Blog2({ blog }) {
+
+    const levelOneItems = blog?.postJson?.content?.filter(section => section.attrs?.level === 1);
+
+    const renderContent = (section, index) => {
+        const textAlign = section.attrs?.textAlign || "left";
+        const alignStyle = textAlign ? { textAlign } : {};
+
+        switch (section.type) {
+            case "heading": {
+                const level = section.attrs?.level || 1;
+                const contentArray = section.content || [];
+                const slug =
+                    level === 1 && contentArray[0]?.text
+                        ? slugify(contentArray[0].text)
+                        : undefined;
+                const HeadingTag = `h${Math.min(level, 4)}`;
+                const headingClassMap = {
+                    1: "text-2xl font-bold mt-8 mb-4",
+                    2: "text-xl font-semibold mt-6 mb-3",
+                    3: "text-lg font-medium mt-5 mb-2",
+                    4: "text-base font-medium mt-4 mb-2",
+                };
+
+                return (
+                    <HeadingTag
+                        key={index}
+                        id={slug}
+                        className={headingClassMap[level] || ""}
+                        style={alignStyle}
+                    >
+                        {contentArray.map((textObj, i) => (
+                            <React.Fragment key={i}>
+                                {renderTextWithMarks(textObj)}
+                            </React.Fragment>
+                        ))}
+                    </HeadingTag>
+                );
+            }
+
+            case "paragraph": {
+                const contentArray = section.content;
+
+                const isEmpty =
+                    !contentArray ||
+                    contentArray.length === 0 ||
+                    contentArray.every(
+                        (part) =>
+                            (part.type === "text" && (!part.text || part.text.trim() === "")) ||
+                            part.type === "hardBreak"
+                    );
+
+                if (isEmpty) return null;
+
+                return (
+                    <p key={index} className="mb-4 leading-relaxed text-gray-700" style={alignStyle}>
+                        {contentArray.map((part, idx) => {
+                            if (part.type === "hardBreak") return <br key={idx} />;
+                            return (
+                                <React.Fragment key={idx}>
+                                    {renderTextWithMarks(part)}
+                                </React.Fragment>
+                            );
+                        })}
+                    </p>
+                );
+            }
+
+
+            case "bulletList": {
+                return (
+                    <ul key={index} className="list-disc my-4 pl-5">
+                        {section.content?.map((item, itemIdx) => (
+                            <li key={itemIdx}>
+                                {item.content?.map((sub, subIdx) =>
+                                    renderContent(sub, `${index}-${itemIdx}-${subIdx}`)
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                );
+            }
+
+            case "orderedList": {
+                return (
+                    <ol key={index} className="list-decimal my-4 pl-5">
+                        {section.content?.map((item, itemIdx) => (
+                            <li key={itemIdx}>
+                                {item.content?.map((sub, subIdx) =>
+                                    renderContent(sub, `${index}-${itemIdx}-${subIdx}`)
+                                )}
+                            </li>
+                        ))}
+                    </ol >
+                );
+            }
+
+            case "image": {
+                return (
+                    <div key={index} className="my-6">
+                        <Image
+                            src={section.attrs?.src}
+                            alt={section.attrs?.alt || "Green Lab image"}
+                            title={section.attrs?.title || "Green Lab image"}
+                            width={1000}
+                            height={600}
+                            className="rounded shadow"
+                        />
+                    </div>
+                );
+            }
+
+            default:
+                return null;
+        }
+    };
+
+    const formatDate = (isoDate) => {
+        const date = new Date(isoDate);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // tháng bắt đầu từ 0
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
     return (
-        <div className=" blog">
+        <div className={`${styles.blogContent} px-4 py-6 max-w-5xl mx-auto`}>
 
             <div className="flex flex-wrap items-center medium-italic text-gray-400 text-sm space-x-4 border-b pb-4 mb-4 px-4">
                 <div className="flex items-center space-x-2">
                     <FaCalendarAlt className="text-green-700" size={30} />
-                    <span>Ngày đăng: 09/04/2025</span>
+                    <span>Ngày đăng: {formatDate(blog?.time)}</span>
                 </div>
                 <div className="h-4 border-l border-gray-300 mx-2" />
                 <div className="flex items-center space-x-2">
@@ -19,172 +201,42 @@ export default function Blog() {
                 <div className="h-4 border-l border-gray-300 mx-2" />
                 <div className="flex items-center space-x-2">
                     <FaEye className="text-green-700" size={30} />
-                    <span>121 lượt xem</span>
+                    <span>{blog.views}</span>
                 </div>
             </div>
 
-            <h1>
-                Quy Trình Xét Nghiệm Tại Nhà Green Lab – Đơn Giản & Nhanh Chóng
-            </h1>
+            <h5 className="text-3xl font-medium text-primary mb-3">{blog?.title}</h5>
 
-
-            <h5 className="mb-4 medium-italic text-md text-pretty text-gray-500 text-base/8">
-                Bạn muốn kiểm tra sức khỏe nhưng ngại thủ tục rườm rà ở bệnh viện?
-                Quy trình xét nghiệm tại nhà của Green Lab sẽ khiến bạn bất ngờ vì sự đơn giản và nhanh chóng.
-                Không cần xếp hàng, không mất thời gian chờ đợi – chỉ vài bước là bạn đã có kết quả chính xác ngay tại nhà.
-                Với gói tổng quát chỉ 800K, Green Lab mang đến trải nghiệm y tế hiện đại, tiện lợi trong năm 2025.
-                Hãy cùng tìm hiểu chi tiết nhé!
+            <h5 className="mb-4 medium-italic text-md text-pretty text-gray-500">
+                {blog?.description}
             </h5>
 
-
             <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 medium-italic text-base/8 text-md text-pretty space-y-2">
-                <li><a href="#quy-trinh" className="hover:underline">Quy trình xét nghiệm tại nhà Green lab gồm những gì?</a></li>
-                <li><a href="#tai-sao-nhanh" className="hover:underline">Tại sao quy trình Green Lab lại đơn giản và nhanh?</a></li>
-                <li><a href="#so-sanh-voi-quy-trinh-truyen-thong" className="hover:underline">So sánh với quy trình truyền thống</a></li>
+                {levelOneItems?.map((section, index) => {
+                    const text = section.content?.[0]?.text || "";
+                    const slug = slugify(text);
+                    return (
+                        <li key={index}>
+                            <a
+                                href={`#${slug}`}
+                                className="hover:underline"
+                                style={{
+                                    color: "var(--color-primary)",
+                                    fontWeight: 500,
+                                    fontStyle: "normal",
+                                    fontSize: "1 rem",
+                                }}
+                            >
+                                {text}
+                            </a>
+
+                        </li>
+                    );
+                })}
             </ul>
 
-
-            <h1 id="quy-trinh">Quy trình xét nghiệm tại nhà Green lab gồm những gì?</h1>
-            <p>
-                Green Lab – đơn vị tiên phong tại Hà Nội – đã tối ưu hóa quy trình xét nghiệm tại nhà thành 3 bước đơn giản:
-            </p>
-            <p>
-                Đặt lịch, lấy mẫu, nhận kết quả. Dịch vụ này không chỉ tiện lợi mà còn đảm bảo chất lượng với công nghệ Roche và Siemens,
-                chuẩn <strong>ISO 15189:2012</strong>. Dù bạn cần xét nghiệm tổng quát, tiểu đường, hay tầm soát ung thư, mọi thứ đều được thực hiện nhanh gọn ngay tại nhà bạn.
-            </p>
-
-            <Image
-                src="/images/background/background_11.webp"
-                alt="Green Lab riders"
-                width={1000}
-                height={600}
-                className="image"
-            />
-
-            <h3>Bước 1: Đăng lịch dễ dàng</h3>
-            <p>
-                Bạn chỉ cần gọi hotline 1900 63 65 88 hoặc truy cập website Greenlab.vn. Chọn gói xét nghiệm phù hợp:
-            </p>
-
-            <br />
-
-            <h2>
-                1. GÓI TỔNG QUÁT 800K (MÁU, MỠ MÁU, GAN, THẬN)
-            </h2>
-            <h2>
-                2. GÓI CHUYÊN SÂU (1,2-1,5 TRIỆU CHO TIỂU ĐƯỜNG, UNG THƯ)
-            </h2>
-            <h2>
-                3. GÓI GIA ĐÌNH (GIẢM GIÁ KHI ĐẶT NHIỀU NGƯỜI)
-            </h2>
-
-            <p>
-                Sau đó, chọn thời gian và địa điểm. Nhân viên Green Lab sẽ liên hệ xác nhận trong vòng 15 phút.
-            </p>
-            <p>
-                Chị Lan (35 tuổi, Hà Nội) chia sẻ: “Tôi đặt lịch qua web lúc 10h sáng, 10h15 đã có người gọi lại. Quá nhanh!"
-            </p>
-
-            <br />
-
-            <h3>Bước 2: Lấy mẫu xét nghiệm</h3>
-            <p>
-                Đúng giờ hẹn, nhân viên Green Lab đến nhà bạn với trang bị bảo hộ đầy đủ, đảm bảo an toàn.
-                Quá trình lấy mẫu chỉ mất 15-30 phút, tùy loại xét nghiệm (máu, nước tiểu...).
-                Bạn không cần chuẩn bị gì phức tạp – chỉ cần nhịn ăn (nếu xét nghiệm đường huyết) hoặc uống đủ nước theo hướng dẫn.
-            </p>
-            <p>
-                Anh Tuấn (38 tuổi) kể: “Nhân viên đến lúc 7h sáng, lấy mẫu xong trước khi tôi đi làm. Không hề rắc rối!"
-            </p>
-
-            <br />
-
-            <h3>Bước 3: Nhận kết quả xét nghiệm</h3>
-            <p>
-                Sau khi lấy mẫu, Green Lab xử lý bằng công nghệ Roche và Siemens, đảm bảo kết quả chính xác theo chuẩn
-                ISO 15189:2012. Bạn nhận kết quả qua email hoặc ứng dụng trong 24 giờ – nếu cần gấp,
-                tùy chọn siêu tốc 4 giờ chỉ thêm 200-300K. Kết quả đi kèm giải thích chi tiết, và nếu cần, nhân viên sẽ tư vấn miễn phí.
-            </p>
-            <p>
-                Chị Hoa (40 tuổi, Hà Nội) nói: “Tôi nhận kết quả lúc 8h tối cùng ngày, còn được gọi hỏi thăm. Dịch vụ quá tốt!"bài viết
-            </p>
-            <Image
-                src="/images/background/background_12.webp"
-                alt="Green Lab lab"
-                width={1000}
-                height={600}
-                className="image"
-            />
-
-
-            <h1 id="tai-sao-nhanh">Tại sao quy trình Green Lab lại đơn giản và nhanh?</h1>
-            <p>
-                <strong>
-                    1. Công nghệ hiện đại
-                </strong>
-            </p>
-            <p>
-                Máy móc từ Roche và Siemens giúp rút ngắn thời gian phân tích mà vẫn đảm bảo độ chính xác.
-            </p>
-            <p>
-                Đội ngũ do PGS.TS Nguyễn Quang Tùng – Chuyên gia huyết học – cố vấn, giám sát chặt chẽ mọi khâu.
-            </p>
-            <br />
-
-            <p>
-                <strong>
-                    2. Tối ưu hóa dịch vụ
-                </strong>
-            </p>
-            <p>
-                Green Lab loại bỏ các bước không cần thiết như xếp hàng, chờ đợi ở bệnh viện.
-                Nhân viên được đào tạo để lấy mẫu nhanh, an toàn, và thân thiện với khách hàng.
-            </p>
-            <br />
-
-            <p>
-                <strong>
-                    3. Linh hoạt cho mọi nhu cầu
-                </strong>
-            </p>
-            <p>
-                Dù bạn ở nội thành Hà Nội hay cần xét nghiệm gấp, Green Lab đều đáp ứng.
-                Quy trình phù hợp cho cả cá nhân và gia đình – đặt một lần, lấy mẫu cùng lúc cho nhiều người.
-            </p>
-            <h1 id="so-sanh-voi-quy-trinh-truyen-thong">So sánh với quy trình truyền thống</h1>
-            <p>
-                Bệnh viện/MEDLATEC: Đi lại, xếp hàng, chờ 2-3 ngày lấy kết quả, chi phí cao hơn (1-1,5 triệu).
-            </p>
-            <p>
-                Green Lab: Ở nhà, 15-30 phút lấy mẫu, kết quả 24 giờ, chỉ 800K.
-            </p>
-            <p>
-                Anh Minh (42 tuổi) nhận xét: “Đi bệnh viện mất nửa ngày, còn Green Lab xong trong 20 phút.
-                800K mà tiện thế này thì không có gì để chê!"
-            </p>
-
-
-            <div className="note-box bg-primary rounded-2xl border-l-4 border-primary px-4 py-2 text-sm text-white">
-                <h2 className="text-white">Lưu ý trước khi xét nghiệm:</h2>
-                <p>
-                    Để quy trình suôn sẻ, bạn nên:
-                </p>
-                <ul className="list-disc list-inside font-medium text-md mb-4 text-pretty text-base /8">
-                    <li>Chọn thời gian rảnh để nhân viên đến lấy mẫu.</li>
-                    <li>Tuân thủ hướng dẫn (nhịn ăn, uống nước...) trước khi xét nghiệm.</li>
-                    <li>Kiểm tra kết quả và liên hệ Green Lab nếu cần giải thích thêm.</li>
-                    <li>Kết luận: Sức khỏe dễ dàng hơn bao giờ hết.</li>
-                </ul>
-                <p>
-                    Quy trình xét nghiệm tại nhà của Green Lab đơn giản, nhanh chóng,
-                    và hiệu quả – chỉ 3 bước là bạn đã chăm sóc sức khỏe xong xuôi.
-                    Với 800K – giảm còn 720K nếu đặt trong 7 ngày tới – bạn nhận được dịch vụ chuẩn quốc tế ngay tại nhà.
-                    Gọi 1900 63 65 88 hoặc truy cập vào website Greenlab.vn để đặt lịch ngay hôm nay.
-                </p>
-                <p>
-                    Green Lab - sức khỏe không còn là gánh nặng!
-                </p>
-            </div>
+            {blog.postJson.content?.map((section, index) => renderContent(section, index))}
         </div >
-    )
+    );
 }
+

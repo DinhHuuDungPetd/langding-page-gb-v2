@@ -9,26 +9,15 @@ import Link from "next/link";
 import Home_14 from "@/icons/Home_14"
 import axios from 'axios';
 
-export default function NewsCard() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const [blogs, setBlogs] = useState([]);
-    useEffect(() => {
-        axios.get(`${baseUrl}/blogs`)
-            .then(response => {
-                console.log(response.data);
-                setBlogs(response.data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }, []);
+export default function NewsCard({blogs}) {
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
 
 
-
-    const sortedNews = [...blogs].sort((a, b) => a.title.localeCompare(b.title));
+    const filteredBlogs = blogs.filter(blog => blog.status === true);
+    const sortedNews = [...filteredBlogs].sort((a, b) => new Date(b.time) - new Date(a.time));
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -62,7 +51,7 @@ export default function NewsCard() {
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // tháng bắt đầu từ 0
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
     };
@@ -76,18 +65,21 @@ export default function NewsCard() {
                             <div className="flex flex-col lg:flex-row items-center justify-between py-4 px-4 border-b border-primary">
                                 <Link href={`/tin-tuc-su-kien/${item.id}`}>
                                     <div className="flex items-center">
-                                        <Image
-                                            src={item.images}
-                                            alt={item.title}
-                                            width={1000}
-                                            height={1000}
-                                            className="w-[30%] object-cover rounded-lg"
-                                        />
+                                        <div className="relative w-48 h-32 rounded-lg overflow-hidden shrink-0">
+                                            <Image
+                                                src={item.images}
+                                                alt={item.titleImage}
+                                                title={item.titleImage}
+                                                fill
+                                                className="object-cover rounded-lg"
+                                            />
+                                        </div>
                                         <div className="ml-4">
-                                            <h3 className=" lg:text-xl text-primary font-bold whitespace-nowrap ">{item.title}</h3>
-                                            <p className="font-medium text-balance text-md">{item.description}</p>
-                                            <div className="flex items-start mt-2 gap-1.5 font-medium text-xs text-gray-600 w-1/3">
-                                                <Home_14 />
+                                            <h3 className="lg:text-xl text-primary font-bold  overflow-hidden text-ellipsis max-w-full">
+                                                {item.title}
+                                            </h3>
+                                            <p className="font-medium text-balance text-md line-clamp-2">{item.description}</p>
+                                            <div className="flex items-start mt-2 gap-1.5 font-medium text-xs text-gray-600">
                                                 <p className="self-center mt-1">{formatDate(item.time)}</p>
                                             </div>
                                         </div>
@@ -95,6 +87,7 @@ export default function NewsCard() {
                                 </Link>
                             </div>
                         </div>
+
                     ))
                 ) : (
                     <div className="text-center py-4 text-gray-500">Không có dữ liệu</div>

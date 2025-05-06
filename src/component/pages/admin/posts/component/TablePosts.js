@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { services } from "@/store/data2";
 import { MdFirstPage } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 import { GrFormNext } from "react-icons/gr";
@@ -9,29 +8,25 @@ import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
 import axios from 'axios';
 
-export default function TablePosts() {
+export default function TablePosts({ blogs, getBlogs }) {
+
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const [blogs, setBlogs] = useState([]);
-    useEffect(() => {
-        axios.get(`${baseUrl}/blogs`)
-            .then(response => {
-                console.log(response.data);
-                setBlogs(response.data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }, []);
 
     const handleUpdateStatus = async (id, isChecked) => {
-
+        try {
+            await axios.patch(`${baseUrl}/blogs/${id}`, { status: isChecked });
+            await getBlogs();
+        } catch (error) {
+            console.error('Error updating blog status:', error);
+        }
     };
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 7;
 
 
-    const sortedNews = [...blogs].sort((a, b) => a?.title?.localeCompare(b?.title));
+    const sortedNews = [...blogs].sort((a, b) => a?.time?.localeCompare(b?.time));
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -105,7 +100,7 @@ export default function TablePosts() {
                                     <label className="relative inline-flex items-center cursor-pointer">
                                         <input
                                             type="checkbox"
-                                            // checked={item.status === 'ACTIVE'}
+                                            checked={item.status === true}
                                             onChange={(e) => handleUpdateStatus(item.id, e.target.checked)}
                                             className="sr-only peer"
                                         />
@@ -119,10 +114,9 @@ export default function TablePosts() {
                                 </td>
                                 <td className="px-4 py-3">
                                     <div className="flex gap-2">
-                                        <Link href={`/admin/posts/edit/${item.id}`}>
-                                            <button className="text-blue-500 hover:text-blue-700 font-medium">Sửa</button>
+                                        <Link href={`/admin/posts/updatePosts/${item.id}`}>
+                                            <button className="text-blue-500 hover:text-blue-700 font-medium cursor-pointer">Sửa</button>
                                         </Link>
-                                        <button className="text-red-500 hover:text-red-700 font-medium">Xóa</button>
                                     </div>
                                 </td>
                             </tr>

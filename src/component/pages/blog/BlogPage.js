@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Blog from "@/component/pages/blog/component/Blog2";
+import Blog from "@/component/pages/blog/component/Blog";
 import RelatedPosts from "@/component/pages/blog/component/RelatedPosts";
 import BookingForm from "@/component/pages/news-events/component/BookingForm";
 import PopularNews from "@/component/pages/news-events/component/PopularNews";
@@ -11,13 +11,28 @@ export default function BlogPage({ params }) {
     const id = parseInt(slug, 10);
 
     const [blog, setBlog] = useState(null);
-
+    const [blogsRelated, setBlogsRelated] = useState(null);
     useEffect(() => {
         if (!isNaN(id)) {
             axios.get(`${baseUrl}/blogs/${id}`)
                 .then(response => {
-                    console.log(response.data);
                     setBlog(response.data);
+                    const updatedViews = response.data.views + 1;
+                    axios.put(`${baseUrl}/blogs/${id}`, {
+                        ...response.data,
+                        views: updatedViews
+                    })
+                        .catch(error => {
+                            console.error('Error updating views:', error);
+                        });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            axios.get(`${baseUrl}/blogs_related?id_blog=${id}`)
+                .then(response => {
+                    setBlogsRelated(response.data[0].related_blog_id);
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -40,8 +55,12 @@ export default function BlogPage({ params }) {
                     <div className="w-full lg:w-2/3 ">
                         {blog ? <Blog blog={blog} /> : 'Loading...'}
                         <div className=" mx-auto px-4 py-2 container">
-                            <h3 className="font-bold text-2xl text-primary uppercase">Các bài viết liên quan</h3>
-                            <RelatedPosts />
+                            {Array.isArray(blogsRelated) && blogsRelated.length > 0 && (
+                                <div>
+                                    <h3 className="font-bold text-2xl text-primary uppercase">Các bài viết liên quan</h3>
+                                    <RelatedPosts blogsRelated={blogsRelated} />
+                                </div>
+                            )}
                         </div>
                     </div>
 

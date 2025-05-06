@@ -1,22 +1,12 @@
-
-
 import { CiImageOn } from "react-icons/ci";
-import { MdOutlineCloudUpload } from "react-icons/md";
 import { useState } from "react";
 import Image from "next/image";
 
-export default function UpImage() {
-    const [previewImage, setPreviewImage] = useState("");
+export default function UpImage({ previewImage, setPreviewImage, titleText, setTitleText, setUpFile }) {
 
-    const handleFileUpload = (file) => {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const arrayBuffer = e.target.result;
-            const bytes = new Uint8Array(arrayBuffer);
-            // setProduct((prev) => ({ ...prev, image: Array.from(bytes) }));// Lưu byte[]
-        };
-        reader.readAsArrayBuffer(file); // Đọc file dưới dạng ArrayBuffer
-        setPreviewImage(URL.createObjectURL(file)); // Xem trước ảnh
+    const handleFileUpload = async (file) => {
+        setPreviewImage(URL.createObjectURL(file));
+        setUpFile(file);
     };
 
     const handleFileChange = (event) => {
@@ -25,6 +15,7 @@ export default function UpImage() {
             handleFileUpload(file);
         }
     };
+
     const handleDrop = (event) => {
         event.preventDefault();
         const file = event.dataTransfer.files[0];
@@ -32,6 +23,7 @@ export default function UpImage() {
             handleFileUpload(file);
         }
     };
+
     const handleDragOver = (event) => {
         event.preventDefault();
     };
@@ -40,15 +32,14 @@ export default function UpImage() {
         document.getElementById("uploadFileInput").click();
     };
 
-
     return (
-        <div className=" text-white p-6 rounded-lg w-full max-w-2/3 mx-auto">
+        <div className="text-white p-6 rounded-lg w-full max-w-2/3 mx-auto">
             <input
                 type="file"
                 id="uploadFileInput"
                 style={{ display: "none" }}
                 onChange={handleFileChange}
-                accept='image/*'
+                accept="image/*"
             />
             <div
                 className="preview-image justify-center text-center p-3"
@@ -60,28 +51,43 @@ export default function UpImage() {
                     borderStyle: "dashed",
                     borderWidth: "2px",
                     borderColor: "LightGray",
-                    minHeight: "100px"
+                    minHeight: "100px",
                 }}
             >
                 <div className="flex flex-col items-center space-y-6">
                     {previewImage ? (
-                        <Image
-                            src={previewImage}
-                            width={500}
-                            height={300}
-                            className="rounded shadow image"
-                        />
+                        <>
+                            <Image
+                                src={previewImage}
+                                alt={titleText || "Preview"}
+                                title={titleText}
+                                width={500}
+                                height={300}
+                                className="rounded shadow image"
+                            />
+                            <div className="mt-4 w-full max-w-md">
+                                <input
+                                    type="text"
+                                    placeholder="Title cho ảnh"
+                                    value={titleText}
+                                    onChange={(e) => setTitleText(e.target.value)}
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="w-full p-2 rounded bg-white text-black"
+                                />
+                            </div>
+                        </>
                     ) : (
                         <>
                             <div className="text-gray-400">
                                 <CiImageOn size={200} />
                             </div>
-                            <p className='p-3 text-primary  font-medium'>Kéo thả file hoặc nhấn vào đây để upload</p>
+                            <p className="p-3 text-primary font-medium">
+                                Kéo thả file hoặc nhấn vào đây để upload
+                            </p>
                         </>
                     )}
                 </div>
             </div>
         </div>
-
     );
 }

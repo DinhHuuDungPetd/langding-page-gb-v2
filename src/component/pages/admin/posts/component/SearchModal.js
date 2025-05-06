@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiX } from "react-icons/fi";
 
-export default function SearchModal() {
+export default function SearchModal({ searchName, setSearchName }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [query, setQuery] = useState("");
     const [history, setHistory] = useState([]);
 
     useEffect(() => {
@@ -22,11 +21,11 @@ export default function SearchModal() {
         const updatedHistory = [text, ...history.filter((item) => item !== text)].slice(0, 10);
         setHistory(updatedHistory);
         localStorage.setItem("search_history", JSON.stringify(updatedHistory));
-        setQuery("");
+        setSearchName("");
     };
 
     const handleSearch = () => {
-        saveSearch(query);
+        saveSearch(searchName);
         setIsOpen(false);
     };
 
@@ -40,10 +39,10 @@ export default function SearchModal() {
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-white"
+                className="flex items-center gap-2 px-4 py-2 bg-white cursor-pointer"
             >
                 <FiSearch className="text-xl text-gray-600" />
-                <span className="text-md font-medium text-gray-600">Tìm kiếm bài viết</span>
+                <span className="text-md font-medium text-gray-600">{searchName || "Tìm kiếm bài viết"}</span>
             </button>
 
             <AnimatePresence>
@@ -69,8 +68,8 @@ export default function SearchModal() {
                                 <input
                                     type="text"
                                     placeholder="Nhập từ khoá..."
-                                    value={query}
-                                    onChange={(e) => setQuery(e.target.value)}
+                                    value={searchName}
+                                    onChange={(e) => setSearchName(e.target.value)}
                                     onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                                     className="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-central"
                                 />
@@ -84,7 +83,7 @@ export default function SearchModal() {
                                             <li
                                                 key={index}
                                                 className="flex justify-between items-center px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer"
-                                                onClick={() => setQuery(item)}
+                                                onClick={() => setSearchName(item)}
                                             >
                                                 <span>{item}</span>
                                                 <FiX

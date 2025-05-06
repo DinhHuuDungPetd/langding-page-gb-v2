@@ -21,17 +21,19 @@ import PreviewJson from "@/component/pages/admin/posts/newPosts/component/Previe
 import PreviewCode from "@/component/pages/admin/posts/newPosts/component/PreviewCode"
 
 
-export default function PostsPage() {
+export default function PostsPage({ params }) {
+    const { slug } = params;
+    const id = parseInt(slug, 10);
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const [blogs, setBlogs] = useState([]);
+    const [blogsRelated, setblogsRelated] = useState(null);
     const [postJson, setPostJson] = useState(null);
-    const [postHtml, setPostHtml] = useState(null);
     const [upFile, setUpFile] = useState(null);
-    const [previewImage, setPreviewImage] = useState("");
     const [titleText, setTitleText] = useState("");
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [selectedBlogIds, setSelectedBlogIds] = useState([]);
+    const [previewImage, setPreviewImage] = useState("");
     const editor = useEditor({
         extensions: [
             StarterKit.configure({
@@ -70,22 +72,37 @@ export default function PostsPage() {
             },
         },
         onUpdate: ({ editor }) => {
-            setPostHtml(editor.getHTML());
             setPostJson(editor.getJSON());
         },
     });
+
     useEffect(() => {
         const fetchPostData = async () => {
             try {
+                const response = await axios.get(`${baseUrl}/blogs/${id}`);
+                const response2 = await axios.get(`${baseUrl}/blogs_related?id_blog=${id}`);
                 const response3 = await axios.get(`${baseUrl}/blogs`)
-                setBlogs(response3.data);
+                const filteredBlogs = response3.data.filter(blog => blog.id !== id.toString());
+
+                setBlogs(filteredBlogs);
+                setblogsRelated(response2.data[0])
+
+                if (editor) {
+                    editor.commands.setContent(response.data.postJson.content);
+                    setPostJson(response.data.postJson);
+                    setTitle(response.data.title);
+                    setDescription(response.data.description);
+                    setSelectedBlogIds(response2.data[0].related_blog_id || []);
+                    setPreviewImage(response.data.images);
+                    setTitleText(response.data.titleImage); l
+                }
             } catch (error) {
                 console.error("Error fetching post data:", error);
             }
         };
 
         fetchPostData();
-    }, []);
+    }, [id, editor]);
     const processEditorImages = async (editorJson, imageFileMap) => {
         const walk = async (node) => {
 
@@ -132,7 +149,6 @@ export default function PostsPage() {
     const handleSave = async () => {
         const now = new Date();
         const formattedTime = now.toISOString();
-        const idblog = String(Math.floor(Math.random() * 1000000));
 
         if (!title.trim()) {
             alert("Vui lòng nhập tiêu đề bài viết!");
@@ -149,10 +165,6 @@ export default function PostsPage() {
             return;
         }
 
-        if (!upFile) {
-            alert("Vui lòng tải lên ảnh tiêu đề!");
-            return;
-        }
         if (!titleText) {
             alert("Vui lòng nhập tiêu đề ảnh!");
             return;
@@ -161,37 +173,41 @@ export default function PostsPage() {
 
         let uploadedImageUrl = "";
 
-        try {
-            uploadedImageUrl = await uploadToCloudinary(upFile);
-            console.log("Uploaded URL:", uploadedImageUrl);
-        } catch (err) {
-            console.error("Upload failed, cancel saving.");
-            alert
-            return;
+        if (upFile) {
+            try {
+                uploadedImageUrl = await uploadToCloudinary(upFile);
+                console.log("Uploaded URL:", uploadedImageUrl);
+            } catch (err) {
+                console.error("Upload failed, cancel saving.");
+                alert("Image upload failed, please try again.");
+                return;
+            }
+        } else {
+            console.log("No image uploaded, using existing image.");
         }
 
         const blog = {
-            id: idblog,
+            id: id,
             title: title,
             titleImage: titleText,
             description: description,
             time: formattedTime,
-            images: uploadedImageUrl,
+            images: uploadedImageUrl || previewImage,
             views: 0,
             status: true,
             postJson: processedJson,
         };
 
         const blog_related = {
-            id_blog: idblog,
+            id_blog: id,
             related_blog_id: selectedBlogIds.map(item => ({ id: item.id }))
         };
 
         try {
-            await axios.post(`${baseUrl}/blogs`, blog);
+            await axios.patch(`${baseUrl}/blogs/${id}`, blog);
 
             if (selectedBlogIds.length > 0) {
-                await axios.post(`${baseUrl}/blogs_related`, blog_related);
+                await axios.put(`${baseUrl}/blogs_related/${blogsRelated.id}`, blog_related);
 
                 for (const related of selectedBlogIds) {
                     const getRes = await axios.get(`${baseUrl}/blogs_related?id_blog=${related.id}`);
@@ -199,9 +215,9 @@ export default function PostsPage() {
 
                     if (existing) {
                         const currentList = existing.related_blog_id || [];
-                        const isExist = currentList.some(item => item.id === idblog);
+                        const isExist = currentList.some(item => item.id === id);
                         if (!isExist) {
-                            currentList.push({ id: idblog });
+                            currentList.push({ id: id });
                             await axios.put(`${baseUrl}/blogs_related/${existing.id}`, {
                                 ...existing,
                                 related_blog_id: currentList
@@ -210,11 +226,11 @@ export default function PostsPage() {
                     } else {
                         await axios.post(`${baseUrl}/blogs_related`, {
                             id_blog: related.id,
-                            related_blog_id: [{ id: idblog }]
+                            related_blog_id: [{ id: id }]
                         });
                     }
                 }
-                alert("Thêm bài viết thành công!");
+                alert("Cập nhật bài viết thành công!");
                 window.location.href = "/admin/posts";
             }
 
@@ -228,7 +244,7 @@ export default function PostsPage() {
     return (
         <div className={styles.container}>
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl text-primary font-bold">Thêm bài viết mới</h1>
+                <h1 className="text-2xl text-primary font-bold">Cập nhật bài viết mới</h1>
                 <div className="mx-10">
                     <button
                         onClick={handleSave}
@@ -248,6 +264,7 @@ export default function PostsPage() {
                 <input
                     type="text"
                     placeholder="Nhập tiêu đề bài viết ...."
+                    value={title}
                     className="w-full border bg-gray-50 placeholder-gray-400 border-gray-300 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#38803E]"
                     onChange={(event) => setTitle(event.target.value)}
                 />
@@ -259,6 +276,7 @@ export default function PostsPage() {
                 <textarea
                     id="note"
                     placeholder="Nhập miêu tả bài viết ...."
+                    value={description}
                     className="w-full h-[150px] bg-gray-50 border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-1 focus:ring-primary resize-none placeholder-gray-400 text-sm"
                     onChange={(event) => setDescription(event.target.value)}
                 >
@@ -273,14 +291,14 @@ export default function PostsPage() {
                     <PreviewConten postJson={postJson} />
                 </div>
             </div>
-            {/* <div className="flex gap-2 mb-10">
-                <div className="w-1/2 border rounded-md">
+            <div className="flex gap-2 mb-10">
+                {/* <div className="w-1/2 border rounded-md">
                     <PreviewCode postHtml={postHtml} />
-                </div>
-                <div className="w-1/2 border rounded-md">
+                </div> */}
+                {/* <div className="w-1/2 border rounded-md">
                     <PreviewJson postJson={postJson} />
-                </div>
-            </div> */}
+                </div> */}
+            </div>
             <h1 className="text-2xl text-primary font-bold">Bài viết liên quan</h1>
             <TableRelatedPosts blogs={blogs} selectedBlogIds={selectedBlogIds} setSelectedBlogIds={setSelectedBlogIds} />
         </div>

@@ -60,7 +60,7 @@ const renderTextWithMarks = (textObj) => {
     return <span style={style}>{content}</span>;
 };
 
-// Main renderer
+
 export default function PreviewContent({ postJson }) {
     const levelOneItems = postJson?.content?.filter(
         (section) => section.type === "heading" && section.attrs?.level === 1
@@ -133,7 +133,7 @@ export default function PreviewContent({ postJson }) {
 
             case "bulletList": {
                 return (
-                    <ul key={index} className="list-disc list-inside my-4 pl-5">
+                    <ul key={index} className="list-disc my-4 pl-5">
                         {section.content?.map((item, itemIdx) => (
                             <li key={itemIdx}>
                                 {item.content?.map((sub, subIdx) =>
@@ -145,12 +145,27 @@ export default function PreviewContent({ postJson }) {
                 );
             }
 
+            case "orderedList": {
+                return (
+                    <ol key={index} className="list-decimal my-4 pl-5">
+                        {section.content?.map((item, itemIdx) => (
+                            <li key={itemIdx}>
+                                {item.content?.map((sub, subIdx) =>
+                                    renderContent(sub, `${index}-${itemIdx}-${subIdx}`)
+                                )}
+                            </li>
+                        ))}
+                    </ol >
+                );
+            }
+
             case "image": {
                 return (
                     <div key={index} className="my-6">
                         <Image
-                            src="/images/background/background_11.webp"
+                            src={section.attrs?.src}
                             alt={section.attrs?.alt || "Green Lab image"}
+                            title={section.attrs?.title || "Green Lab image"}
                             width={1000}
                             height={600}
                             className="rounded shadow"
