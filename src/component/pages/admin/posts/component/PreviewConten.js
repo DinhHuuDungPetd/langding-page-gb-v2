@@ -117,7 +117,7 @@ export default function PreviewContent({ postJson }) {
                 if (isEmpty) return null;
 
                 return (
-                    <p key={index} className="mb-4 leading-relaxed text-gray-700" style={alignStyle}>
+                    <p key={index} className="mb-4 leading-relaxed " style={alignStyle}>
                         {contentArray.map((part, idx) => {
                             if (part.type === "hardBreak") return <br key={idx} />;
                             return (
@@ -170,6 +170,15 @@ export default function PreviewContent({ postJson }) {
                             height={600}
                             className="rounded shadow"
                         />
+                    </div>
+                );
+            }
+            case "greenBox": {
+                return (
+                    <div key={index} className="green-box bg-primary text-white p-4 rounded-md space-y-4">
+                        {section.content?.map((subSection, subIndex) =>
+                            renderContent(subSection, `${index}-greenbox-${subIndex}`)
+                        )}
                     </div>
                 );
             }

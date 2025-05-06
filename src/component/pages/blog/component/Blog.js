@@ -115,7 +115,7 @@ export default function Blog2({ blog }) {
                 if (isEmpty) return null;
 
                 return (
-                    <p key={index} className="mb-4 leading-relaxed text-gray-700" style={alignStyle}>
+                    <p key={index} className="mb-4 leading-relaxed" style={alignStyle}>
                         {contentArray.map((part, idx) => {
                             if (part.type === "hardBreak") return <br key={idx} />;
                             return (
@@ -171,6 +171,15 @@ export default function Blog2({ blog }) {
                     </div>
                 );
             }
+            case "greenBox": {
+                return (
+                    <div key={index} className="green-box bg-primary text-white p-4 rounded-md space-y-4">
+                        {section.content?.map((subSection, subIndex) =>
+                            renderContent(subSection, `${index}-greenbox-${subIndex}`)
+                        )}
+                    </div>
+                );
+            }
 
             default:
                 return null;
@@ -205,7 +214,7 @@ export default function Blog2({ blog }) {
                 </div>
             </div>
 
-            <h5 className="text-3xl font-medium text-primary mb-3">{blog?.title}</h5>
+            <h5 className="text-3xl font-bold text-primary mb-3">{blog?.title}</h5>
 
             <h5 className="mb-4 medium-italic text-md text-pretty text-gray-500">
                 {blog?.description}

@@ -1,25 +1,17 @@
 "use client";
 
-import { useEditor } from "@tiptap/react";
 import { useEffect, useState } from "react";
-import StarterKit from "@tiptap/starter-kit";
 import React from "react";
-import Color from "@tiptap/extension-color";
-import TextAlign from "@tiptap/extension-text-align";
-import Highlight from "@tiptap/extension-highlight";
-import TextStyle from "@tiptap/extension-text-style";
-import Link from "@tiptap/extension-link";
 import axios from "axios";
-import UpImage from "@/component/pages/admin/posts/newPosts/component/UpImage";
-import TableRelatedPosts from "@/component/pages/admin/posts/newPosts/component/TableRelatedPosts"
-import EditContent from "@/component/pages/admin/posts/newPosts/component/EditContent"
-import PreviewConten from "@/component/pages/admin/posts/newPosts/component/PreviewConten"
+import UpImage from "@/component/pages/admin/posts/component/UpImage";
+import TableRelatedPosts from "@/component/pages/admin/posts/component/TableRelatedPosts"
+import EditContent from "@/component/pages/admin/posts/component/EditContent"
+import PreviewConten from "@/component/pages/admin/posts/component/PreviewConten"
 import styles from "@/component/style/BlogContent.module.css";
-import CustomImage from "@/component/pages/admin/posts/newPosts/component/customTiptap/CustomImage";
-import { imageFileMap } from "@/component/pages/admin/posts/newPosts/component/customTiptap/imageFileMap";
-import PreviewJson from "@/component/pages/admin/posts/newPosts/component/PreviewJson"
-import PreviewCode from "@/component/pages/admin/posts/newPosts/component/PreviewCode"
-
+import { imageFileMap } from "@/component/pages/admin/posts/component/customTiptap/imageFileMap";
+import PreviewJson from "@/component/pages/admin/posts/component/PreviewJson"
+import PreviewCode from "@/component/pages/admin/posts/component/PreviewCode"
+import { createEditor } from '@/component/pages/admin/posts/component/editorConfig';
 
 export default function PostsPage({ params }) {
     const { slug } = params;
@@ -34,44 +26,10 @@ export default function PostsPage({ params }) {
     const [description, setDescription] = useState("");
     const [selectedBlogIds, setSelectedBlogIds] = useState([]);
     const [previewImage, setPreviewImage] = useState("");
-    const editor = useEditor({
-        extensions: [
-            StarterKit.configure({
-                heading: {},
-                bulletList: {
-                    HTMLAttributes: {
-                        class: "list-disc ml-3",
-                    },
-                },
-                orderedList: {
-                    HTMLAttributes: {
-                        class: "list-decimal ml-3",
-                    },
-                },
-                link: false,
-            }),
-            TextAlign.configure({
-                types: ["heading", "paragraph"],
-            }),
-            Color.configure({ types: ["textStyle"] }),
-            TextStyle,
-            Highlight,
-            CustomImage,
-
-            Link.configure({
-                openOnClick: false,
-                autolink: true,
-                linkOnPaste: true,
-            }),
-        ],
-        content: "",
-        editorProps: {
-            attributes: {
-                class:
-                    "min-h-[156px] border rounded-md bg-slate-50 py-2 px-3 prose max-w-none",
-            },
-        },
+    const editor = createEditor({
+        content: '',
         onUpdate: ({ editor }) => {
+            setPostHtml(editor.getHTML());
             setPostJson(editor.getJSON());
         },
     });
