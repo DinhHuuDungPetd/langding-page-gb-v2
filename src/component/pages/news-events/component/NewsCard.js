@@ -6,8 +6,6 @@ import { GrFormPrevious } from "react-icons/gr";
 import { GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
-import Home_14 from "@/icons/Home_14"
-import axios from 'axios';
 
 export default function NewsCard({blogs}) {
 

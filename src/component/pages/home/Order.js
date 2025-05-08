@@ -5,8 +5,10 @@ export default function OrderComponent() {
         <section className="relative page py-12">
             <div className="relative z-10 mx-auto flex flex-col xl:flex-row px-6 xl:px-20 gap-8">
                 <div className="w-1/3 flex items-center">
-                    <img
+                    <Image
                         src="/images/order/order.webp"
+                        width={900}
+                        height={900}
                         alt="Nhân viên chăm sóc khách hàng green lab"
                         className="w-full h-full object-left object-cover"
                     />

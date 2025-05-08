@@ -1,13 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState } from "react";
 import { MdFirstPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
 import axios from 'axios';
 
-export default function TablePosts({ setLoading, blogs, getBlogs }) {
+export default function TableCategorys({ setLoading, categorys, getCategorys }) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,16 +15,16 @@ export default function TablePosts({ setLoading, blogs, getBlogs }) {
     const handleUpdateStatus = async (id, isChecked) => {
         try {
             setLoading(true);
-            await axios.patch(`${baseUrl}/blogs/${id}`, { status: isChecked });
-            await getBlogs();
+            await axios.patch(`${baseUrl}/categorys/${id}`, { status: isChecked });
+            await getCategorys();
         } catch (error) {
-            console.error("Error updating blog status:", error);
+            console.error("Error updating catagory status:", error);
         } finally {
             setLoading(false);
         }
     };
 
-    const sortedNews = [...blogs].sort((a, b) => a?.time?.localeCompare(b?.time));
+    const sortedNews = [...categorys].sort((a, b) => a?.time?.localeCompare(b?.time));
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = sortedNews.slice(indexOfFirstItem, indexOfLastItem);
@@ -66,8 +65,6 @@ export default function TablePosts({ setLoading, blogs, getBlogs }) {
                     <tr>
                         <th className="px-4 py-3 font-medium text-xl">#</th>
                         <th className="px-4 py-3 font-medium text-xl">Tên</th>
-                        <th className="px-4 py-3 font-medium text-xl">Mô tả</th>
-                        <th className="px-4 py-3 font-medium text-xl">Hình ảnh</th>
                         <th className="px-4 py-3 font-medium text-xl">Thời gian</th>
                         <th className="px-4 py-3 font-medium text-xl">Trạng thái</th>
                         <th className="px-4 py-3 font-medium text-xl">Hành động</th>
@@ -78,17 +75,7 @@ export default function TablePosts({ setLoading, blogs, getBlogs }) {
                         currentItems.map((item, index) => (
                             <tr key={`table-post-${index}`} className="border-b hover:bg-green-100">
                                 <td className="px-4 py-3 font-medium">{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                                <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.title}</td>
-                                <td className="px-4 py-3 font-medium text-md w-1/4 break-words whitespace-normal">{item.description}</td>
-                                <td className="px-4 py-3">
-                                    <Image
-                                        src={item.images}
-                                        alt="Ảnh bài viết"
-                                        width={200}
-                                        height={60}
-                                        className="rounded-md object-cover"
-                                    />
-                                </td>
+                                <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.name}</td>
                                 <td className="px-4 py-3">{formatDate(item.time)}</td>
                                 <td className="px-4 py-3">
                                     <label className="relative inline-flex items-center cursor-pointer">
@@ -108,7 +95,7 @@ export default function TablePosts({ setLoading, blogs, getBlogs }) {
                                 </td>
                                 <td className="px-4 py-3">
                                     <div className="flex gap-2">
-                                        <Link href={`/admin/posts/updatePosts/${item.id}`}>
+                                        <Link href={`/admin/categorys/edit/${item.id}`}>
                                             <button className="text-blue-500 hover:text-blue-700 font-medium cursor-pointer" onClick={() => setLoading(true)}>Sửa</button>
                                         </Link>
                                     </div>
@@ -117,7 +104,7 @@ export default function TablePosts({ setLoading, blogs, getBlogs }) {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan={7} className="text-center py-4 text-gray-500">Không có dữ liệu</td>
+                            <td colSpan={5} className="text-center py-4 text-gray-500">Không có dữ liệu</td>
                         </tr>
                     )}
                 </tbody>

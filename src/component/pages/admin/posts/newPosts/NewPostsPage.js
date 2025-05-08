@@ -12,9 +12,11 @@ import { imageFileMap } from "@/component/pages/admin/posts/component/customTipt
 import PreviewJson from "@/component/pages/admin/posts/component/PreviewJson"
 import PreviewCode from "@/component/pages/admin/posts/component/PreviewCode"
 import { createEditor } from '@/component/pages/admin/posts/component/editorConfig';
-
+import CustomSelect from '@/component/CustomSelect'
+import FullScreenLoader from "@/component/FullScreenLoader";
 export default function PostsPage() {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState([]);
     const [postJson, setPostJson] = useState(null);
     const [postHtml, setPostHtml] = useState(null);
@@ -24,6 +26,8 @@ export default function PostsPage() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [selectedBlogIds, setSelectedBlogIds] = useState([]);
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
+    const [categorys, setCategorys] = useState([]);
     const editor = createEditor({
         content: '',
         onUpdate: ({ editor }) => {
@@ -34,14 +38,17 @@ export default function PostsPage() {
     useEffect(() => {
         const fetchPostData = async () => {
             try {
-                const response3 = await axios.get(`${baseUrl}/blogs`)
-                setBlogs(response3.data);
+                const response1 = await axios.get(`${baseUrl}/blogs`)
+                const response2 = await axios.get(`${baseUrl}/categorys`)
+                setBlogs(response1.data);
+                setCategorys(response2.data)
             } catch (error) {
                 console.error("Error fetching post data:", error);
             }
         };
 
         fetchPostData();
+        setLoading(false);
     }, []);
     const processEditorImages = async (editorJson, imageFileMap) => {
         const walk = async (node) => {
@@ -87,6 +94,7 @@ export default function PostsPage() {
 
 
     const handleSave = async () => {
+        console.log("selectedCategoryIds", selectedCategoryIds)
         const now = new Date();
         const formattedTime = now.toISOString();
         const idblog = String(Math.floor(Math.random() * 1000000));
@@ -145,6 +153,7 @@ export default function PostsPage() {
         };
 
         try {
+            setLoading(true);
             await axios.post(`${baseUrl}/blogs`, blog);
 
             if (selectedBlogIds.length > 0) {
@@ -171,19 +180,40 @@ export default function PostsPage() {
                         });
                     }
                 }
-                alert("Thêm bài viết thành công!");
-                window.location.href = "/admin/posts";
-            }
 
-            console.log('Lưu blog và cập nhật liên kết thành công!');
+            }
+            for (const relatedId of selectedCategoryIds) {
+                const getRes = await axios.get(`${baseUrl}/categorys/${relatedId}`);
+                const existing = getRes.data;
+
+                if (existing) {
+                    const currentList = existing.id_bogs || [];
+
+                    const isExist = currentList.some(item => item.id === idblog);
+
+                    if (!isExist) {
+                        currentList.push({ id: idblog, priority: "0" });
+
+                        await axios.put(`${baseUrl}/categorys/${relatedId}`, {
+                            ...existing,
+                            id_bogs: currentList
+                        });
+                    }
+                }
+            }
+            alert("Thêm bài viết thành công!");
+            window.location.href = "/admin/posts";
         } catch (error) {
             console.error('Lỗi khi lưu blog:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
 
     return (
         <div className={styles.container}>
+            {loading && <FullScreenLoader />}
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl text-primary font-bold">Thêm bài viết mới</h1>
                 <div className="mx-10">
@@ -198,16 +228,21 @@ export default function PostsPage() {
                 </div>
             </div>
             <hr className="mb-5" />
-            <div>
-                <label className="block text-primary font-medium mb-1">
-                    Tiêu đề bài viết:<span className="text-red-500">*</span>
-                </label>
-                <input
-                    type="text"
-                    placeholder="Nhập tiêu đề bài viết ...."
-                    className="w-full border bg-gray-50 placeholder-gray-400 border-gray-300 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#38803E]"
-                    onChange={(event) => setTitle(event.target.value)}
-                />
+            <div className="flex mb-5 w-full gap-4">
+                <div className="w-full">
+                    <label className="block text-primary font-medium mb-1">
+                        Tiêu đề bài viết:<span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Nhập tiêu đề bài viết ...."
+                        className="w-full border bg-gray-50 placeholder-gray-400 border-gray-300 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#38803E]"
+                        onChange={(event) => setTitle(event.target.value)}
+                    />
+                </div>
+                <div className="w-full">
+                    <CustomSelect categorys={categorys} selectedCategoryIds={selectedCategoryIds} setSelectedCategoryIds={setSelectedCategoryIds} />
+                </div>
             </div>
             <div>
                 <label className="block text-primary font-medium mb-1">
@@ -230,14 +265,14 @@ export default function PostsPage() {
                     <PreviewConten postJson={postJson} />
                 </div>
             </div>
-            <div className="flex gap-2 mb-10">
+            {/* <div className="flex gap-2 mb-10">
                 <div className="w-1/2 border rounded-md">
                     <PreviewCode postHtml={postHtml} />
                 </div>
                 <div className="w-1/2 border rounded-md">
                     <PreviewJson postJson={postJson} />
                 </div>
-            </div>
+            </div> */}
             <h1 className="text-2xl text-primary font-bold">Bài viết liên quan</h1>
             <TableRelatedPosts blogs={blogs} selectedBlogIds={selectedBlogIds} setSelectedBlogIds={setSelectedBlogIds} />
         </div>

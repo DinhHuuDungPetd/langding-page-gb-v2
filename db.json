@@ -1261,7 +1261,7 @@
       "time": "2025-05-06T02:13:57.727Z",
       "images": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746497696/tb8chdiejpugxvhyuvra.jpg",
       "views": 13,
-      "status": false,
+      "status": true,
       "postJson": {
         "type": "doc",
         "content": [
@@ -1285,9 +1285,9 @@
       "title": "Quy Trình Xét Nghiệm Tại Nhà Green Lab – Đơn Giản & Nhanh Chóng",
       "titleImage": "xet nghiem",
       "description": "Bạn muốn kiểm tra sức khỏe nhưng ngại thủ tục rườm rà ở bệnh viện? Quy trình xét nghiệm tại nhà của Green Lab sẽ khiến bạn bất ngờ vì sự đơn giản và nhanh chóng. Không cần xếp hàng, không mất thời gian chờ đợi – chỉ vài bước là bạn đã có kết quả chính xác ngay tại nhà. Với gói tổng quát chỉ 800K, Green Lab mang đến trải nghiệm y tế hiện đại, tiện lợi trong năm 2025. Hãy cùng tìm hiểu chi tiết nhé!",
-      "time": "2025-05-06T08:09:48.400Z",
+      "time": "2025-05-07T02:06:19.724Z",
       "images": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746519050/qptfyjpon1wovvqfvmo8.jpg",
-      "views": 18,
+      "views": 0,
       "status": true,
       "postJson": {
         "type": "doc",
@@ -2488,6 +2488,506 @@
           }
         ]
       }
+    },
+    {
+      "id": "345121",
+      "title": "Quy Trình Xét Nghiệm Tại Nhà Green Lab – Đơn Giản & Nhanh Chóng",
+      "titleImage": "lay-mau",
+      "description": "Bạn muốn kiểm tra sức khỏe nhưng ngại thủ tục rườm rà ở bệnh viện? Quy trình xét nghiệm tại nhà của Green Lab sẽ khiến bạn bất ngờ vì sự đơn giản và nhanh chóng. Không cần xếp hàng, không mất thời gian chờ đợi – chỉ vài bước là bạn đã có kết quả chính xác ngay tại nhà. Với gói tổng quát chỉ 800K, Green Lab mang đến trải nghiệm y tế hiện đại, tiện lợi trong năm 2025. Hãy cùng tìm hiểu chi tiết nhé!",
+      "time": "2025-05-08T03:24:45.166Z",
+      "images": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746671407/ihitrnxjzqjoiyfknqqp.jpg",
+      "views": 0,
+      "status": true,
+      "postJson": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "heading",
+            "attrs": {
+              "textAlign": "left",
+              "level": 1
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "textStyle",
+                    "attrs": {
+                      "color": "rgb(34, 109, 66)"
+                    }
+                  },
+                  {
+                    "type": "bold"
+                  },
+                  {
+                    "type": "italic"
+                  }
+                ],
+                "text": "Quy trình xét nghiệm tại nhà Green lab gồm những gì?"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Green Lab – đơn vị tiên phong tại Hà Nội – đã tối ưu hóa quy trình xét nghiệm tại nhà thành 3 bước đơn giản:"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Đặt lịch, lấy mẫu, nhận kết quả. Dịch vụ này không chỉ tiện lợi mà còn đảm bảo chất lượng với công nghệ Roche và Siemens, chuẩn ISO 15189:2012. Dù bạn cần xét nghiệm tổng quát, tiểu đường, hay tầm soát ung thư, mọi thứ đều được thực hiện nhanh gọn ngay tại nhà bạn."
+              }
+            ]
+          },
+          {
+            "type": "image",
+            "attrs": {
+              "src": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746437509/aayu1pyfgc0b1xy36nct.jpg",
+              "alt": "lay-mau",
+              "title": "lay-mau"
+            }
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "textAlign": "left",
+              "level": 3
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ],
+                "text": "Bước 1: Đăng lịch dễ dàng"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Bạn chỉ cần gọi hotline 1900 63 65 88 hoặc truy cập website "
+              },
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "http://Greenlab.vn",
+                      "target": "_blank",
+                      "rel": "noopener noreferrer nofollow",
+                      "class": null
+                    }
+                  }
+                ],
+                "text": "Greenlab.vn"
+              },
+              {
+                "type": "text",
+                "text": ". Chọn gói xét nghiệm phù hợp:"
+              }
+            ]
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "textAlign": "left",
+              "level": 3
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "textStyle",
+                    "attrs": {
+                      "color": "rgb(28, 95, 57)"
+                    }
+                  },
+                  {
+                    "type": "bold"
+                  }
+                ],
+                "text": "1. GÓI TỔNG QUÁT 800K (MÁU, MỠ MÁU, GAN, THẬN)"
+              }
+            ]
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "textAlign": "left",
+              "level": 3
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "textStyle",
+                    "attrs": {
+                      "color": "rgb(28, 95, 57)"
+                    }
+                  },
+                  {
+                    "type": "bold"
+                  }
+                ],
+                "text": "2. GÓI CHUYÊN SÂU (1,2-1,5 TRIỆU CHO TIỂU ĐƯỜNG, UNG THƯ)"
+              }
+            ]
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "textAlign": "left",
+              "level": 3
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "textStyle",
+                    "attrs": {
+                      "color": "rgb(28, 95, 57)"
+                    }
+                  },
+                  {
+                    "type": "bold"
+                  }
+                ],
+                "text": "3. GÓI GIA ĐÌNH (GIẢM GIÁ KHI ĐẶT NHIỀU NGƯỜI)"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Sau đó, chọn thời gian và địa điểm. Nhân viên Green Lab sẽ liên hệ xác nhận trong vòng 15 phút."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Chị Lan (35 tuổi, Hà Nội) chia sẻ: “Tôi đặt lịch qua web lúc 10h sáng, 10h15 đã có người gọi lại. Quá nhanh!\""
+              }
+            ]
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "textAlign": "left",
+              "level": 3
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ],
+                "text": "Bước 2: Lấy mẫu xét nghiệm"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Đúng giờ hẹn, nhân viên Green Lab đến nhà bạn với trang bị bảo hộ đầy đủ, đảm bảo an toàn. Quá trình lấy mẫu chỉ mất 15-30 phút, tùy loại xét nghiệm (máu, nước tiểu...). Bạn không cần chuẩn bị gì phức tạp – chỉ cần nhịn ăn (nếu xét nghiệm đường huyết) hoặc uống đủ nước theo hướng dẫn."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Anh Tuấn (38 tuổi) kể: “Nhân viên đến lúc 7h sáng, lấy mẫu xong trước khi tôi đi làm. Không hề rắc rối!\""
+              }
+            ]
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "textAlign": "left",
+              "level": 3
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ],
+                "text": "Bước 3: Nhận kết quả xét nghiệm"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Sau khi lấy mẫu, Green Lab xử lý bằng công nghệ Roche và Siemens, đảm bảo kết quả chính xác theo chuẩn ISO 15189:2012. Bạn nhận kết quả qua email hoặc ứng dụng trong 24 giờ – nếu cần gấp, tùy chọn siêu tốc 4 giờ chỉ thêm 200-300K. Kết quả đi kèm giải thích chi tiết, và nếu cần, nhân viên sẽ tư vấn miễn phí."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Chị Hoa (40 tuổi, Hà Nội) nói: “Tôi nhận kết quả lúc 8h tối cùng ngày, còn được gọi hỏi thăm. Dịch vụ quá tốt!\"bài viết"
+              }
+            ]
+          },
+          {
+            "type": "image",
+            "attrs": {
+              "src": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746437512/ozneaylii2tbjtkpovf9.jpg",
+              "alt": "xet nghiem",
+              "title": "xet nghiem"
+            }
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "textAlign": "left",
+              "level": 1
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "textStyle",
+                    "attrs": {
+                      "color": "rgb(31, 97, 59)"
+                    }
+                  },
+                  {
+                    "type": "bold"
+                  },
+                  {
+                    "type": "italic"
+                  }
+                ],
+                "text": "Tại sao quy trình Green Lab lại đơn giản và nhanh?"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ],
+                "text": "1. Công nghệ hiện đại"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Máy móc từ Roche và Siemens giúp rút ngắn thời gian phân tích mà vẫn đảm bảo độ chính xác."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Đội ngũ do PGS.TS Nguyễn Quang Tùng – Chuyên gia huyết học – cố vấn, giám sát chặt chẽ mọi khâu."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ],
+                "text": "2. Tối ưu hóa dịch vụ"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Green Lab loại bỏ các bước không cần thiết như xếp hàng, chờ đợi ở bệnh viện. Nhân viên được đào tạo để lấy mẫu nhanh, an toàn, và thân thiện với khách hàng."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ],
+                "text": "3. Linh hoạt cho mọi nhu cầu"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Dù bạn ở nội thành Hà Nội hay cần xét nghiệm gấp, Green Lab đều đáp ứng. Quy trình phù hợp cho cả cá nhân và gia đình – đặt một lần, lấy mẫu cùng lúc cho nhiều người."
+              }
+            ]
+          },
+          {
+            "type": "heading",
+            "attrs": {
+              "textAlign": "left",
+              "level": 1
+            },
+            "content": [
+              {
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "textStyle",
+                    "attrs": {
+                      "color": "rgb(36, 122, 72)"
+                    }
+                  },
+                  {
+                    "type": "bold"
+                  },
+                  {
+                    "type": "italic"
+                  }
+                ],
+                "text": "So sánh với quy trình truyền thống"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Bệnh viện/MEDLATEC: Đi lại, xếp hàng, chờ 2-3 ngày lấy kết quả, chi phí cao hơn (1-1,5 triệu)."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Green Lab: Ở nhà, 15-30 phút lấy mẫu, kết quả 24 giờ, chỉ 800K."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "type": "text",
+                "text": "Anh Minh (42 tuổi) nhận xét: “Đi bệnh viện mất nửa ngày, còn Green Lab xong trong 20 phút. 800K mà tiện thế này thì không có gì để chê!\""
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "blogs_related": [
@@ -2515,6 +3015,15 @@
         },
         {
           "id": "446535"
+        },
+        {
+          "id": 446535
+        },
+        {
+          "id": "345121"
+        },
+        {
+          "id": 345121
         }
       ]
     },
@@ -2538,6 +3047,15 @@
         },
         {
           "id": "446535"
+        },
+        {
+          "id": 446535
+        },
+        {
+          "id": "345121"
+        },
+        {
+          "id": 345121
         }
       ],
       "id": "b822"
@@ -2563,6 +3081,12 @@
         },
         {
           "id": 204930
+        },
+        {
+          "id": "345121"
+        },
+        {
+          "id": 345121
         }
       ]
     },
@@ -2639,31 +3163,132 @@
       ]
     },
     {
-      "id": "b7d9",
-      "id_blog": "446535",
+      "id_blog": 446535,
       "related_blog_id": [
         {
           "id": "896019"
         },
         {
           "id": "204930"
+        },
+        {
+          "id": "345121"
+        },
+        {
+          "id": 345121
         }
-      ]
+      ],
+      "id": "b7d9"
+    },
+    {
+      "id_blog": 345121,
+      "related_blog_id": [
+        {
+          "id": "896019"
+        },
+        {
+          "id": "204930"
+        },
+        {
+          "id": "446535"
+        },
+        {
+          "id": "907392"
+        }
+      ],
+      "id": "1579"
     }
   ],
   "settings": {
-    "type": "",
-    "title": "",
-    "description": "",
-    "urlVideo": "",
+    "id": "1",
+    "type": "video",
+    "title": "3",
+    "description": "3",
+    "urlVideo": "https://res.cloudinary.com/dgfwxibj4/video/upload/v1746525721/cnvzxo2vg55hjl5qylzt.mp4",
     "urlImage": "",
-    "phoneNumber": "",
-    "phoneNumberExtra": "",
-    "email": "",
-    "address": "",
-    "urlAddress": "",
-    "facebook": "",
-    "zalo": "",
-    "youtube": ""
-  }
+    "phoneNumber": "3",
+    "phoneNumberExtra": "3",
+    "email": "admin@gmail.com",
+    "address": "Số nhà 20 Phố Hồng Đô",
+    "urlAddress": "http://localhost:3000/admin/settings",
+    "facebook": "http://localhost:3000/admin/settings",
+    "zalo": "http://localhost:3000/admin/settings",
+    "youtube": "http://localhost:3000/admin/settings"
+  },
+  "categorys": [
+    {
+      "id": "2a8f",
+      "name": "Nội bộ công ty",
+      "time": "2025-05-07T06:39:27.600Z",
+      "sideBanner": {
+        "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746600031/gdtgpmo7hfovji9bea6l.jpg",
+        "title": "lay-mau"
+      },
+      "promoBanner": {
+        "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746600033/mks0crde6zlh3mqcjgev.jpg",
+        "title": "xet-nghiem"
+      },
+      "priority": "0",
+      "status": true,
+      "id_bogs": [
+        {
+          "id": "204930",
+          "priority": "0"
+        },
+        {
+          "id": "896019",
+          "priority": "1"
+        },
+        {
+          "id": "446535",
+          "priority": "0"
+        },
+        {
+          "id": "345121",
+          "priority": "0"
+        },
+        {
+          "id": "907392",
+          "priority": "2"
+        }
+      ]
+    },
+    {
+      "id": "cd57",
+      "name": "Đặt lịch",
+      "time": "2025-05-08T01:41:21.997Z",
+      "sideBanner": {
+        "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746686189/jqrryb4d87knkditkae6.jpg",
+        "title": "xet-nghiem"
+      },
+      "promoBanner": {
+        "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746686189/thcnaldlxovcu7nftv9t.jpg",
+        "title": "xet-nghiem"
+      },
+      "priority": "0",
+      "status": true,
+      "id_bogs": [
+        {
+          "id": "345121",
+          "priority": "3"
+        },
+        {
+          "id": "896019",
+          "priority": "1"
+        },
+        {
+          "id": "445768",
+          "priority": "0"
+        },
+        {
+          "id": "627763",
+          "priority": "0"
+        },
+        {
+          "id": "446535",
+          "priority": "2"
+        }
+      ]
+    }
+  ]
 }
