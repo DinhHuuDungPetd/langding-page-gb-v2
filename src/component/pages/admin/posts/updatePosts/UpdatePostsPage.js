@@ -12,11 +12,13 @@ import { imageFileMap } from "@/component/pages/admin/posts/component/customTipt
 import PreviewJson from "@/component/pages/admin/posts/component/PreviewJson"
 import PreviewCode from "@/component/pages/admin/posts/component/PreviewCode"
 import { createEditor } from '@/component/pages/admin/posts/component/editorConfig';
-
+import CustomSelect from '@/component/CustomSelect'
+import FullScreenLoader from "@/component/FullScreenLoader";
 export default function PostsPage({ params }) {
     const { slug } = params;
     const id = parseInt(slug, 10);
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState([]);
     const [blogsRelated, setblogsRelated] = useState(null);
     const [postJson, setPostJson] = useState(null);
@@ -26,6 +28,8 @@ export default function PostsPage({ params }) {
     const [description, setDescription] = useState("");
     const [selectedBlogIds, setSelectedBlogIds] = useState([]);
     const [previewImage, setPreviewImage] = useState("");
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
+    const [categorys, setCategorys] = useState([]);
     const editor = createEditor({
         content: '',
         onUpdate: ({ editor }) => {
@@ -40,10 +44,18 @@ export default function PostsPage({ params }) {
                 const response = await axios.get(`${baseUrl}/blogs/${id}`);
                 const response2 = await axios.get(`${baseUrl}/blogs_related?id_blog=${id}`);
                 const response3 = await axios.get(`${baseUrl}/blogs`)
+                const response4 = await axios.get(`${baseUrl}/categorys`)
                 const filteredBlogs = response3.data.filter(blog => blog.id !== id.toString());
+                const matchingCategoryIds = response4.data
+                    .filter(category =>
+                        category.id_bogs.some(bog => bog.id === id.toString())
+                    )
+                    .map(category => category.id);
 
                 setBlogs(filteredBlogs);
                 setblogsRelated(response2.data[0])
+                setCategorys(response4.data)
+                setSelectedCategoryIds(matchingCategoryIds)
 
                 if (editor) {
                     editor.commands.setContent(response.data.postJson.content);
@@ -52,7 +64,7 @@ export default function PostsPage({ params }) {
                     setDescription(response.data.description);
                     setSelectedBlogIds(response2.data[0].related_blog_id || []);
                     setPreviewImage(response.data.images);
-                    setTitleText(response.data.titleImage); l
+                    setTitleText(response.data.titleImage);
                 }
             } catch (error) {
                 console.error("Error fetching post data:", error);
@@ -60,6 +72,7 @@ export default function PostsPage({ params }) {
         };
 
         fetchPostData();
+        setLoading(false);
     }, [id, editor]);
     const processEditorImages = async (editorJson, imageFileMap) => {
         const walk = async (node) => {
@@ -162,6 +175,7 @@ export default function PostsPage({ params }) {
         };
 
         try {
+            setLoading(true);
             await axios.patch(`${baseUrl}/blogs/${id}`, blog);
 
             if (selectedBlogIds.length > 0) {
@@ -188,19 +202,62 @@ export default function PostsPage({ params }) {
                         });
                     }
                 }
-                alert("Cập nhật bài viết thành công!");
-                window.location.href = "/admin/posts";
+            }
+            const response = await axios.get(`${baseUrl}/categorys`);
+            const previousCategoryIds = response.data
+                .filter(category => category.id_bogs?.some(bog => bog.id === id.toString()))
+                .map(category => category.id);
+
+            const removedCategoryIds = previousCategoryIds.filter(
+                prevId => !selectedCategoryIds.includes(prevId)
+            );
+
+            for (const removedId of removedCategoryIds) {
+                const getRes = await axios.get(`${baseUrl}/categorys/${removedId}`);
+                const existing = getRes.data;
+
+                if (existing) {
+                    const updatedList = (existing.id_bogs || []).filter(bog => bog.id !== id.toString());
+
+                    await axios.put(`${baseUrl}/categorys/${removedId}`, {
+                        ...existing,
+                        id_bogs: updatedList
+                    });
+                }
             }
 
-            console.log('Lưu blog và cập nhật liên kết thành công!');
+            for (const relatedId of selectedCategoryIds) {
+                const getRes = await axios.get(`${baseUrl}/categorys/${relatedId}`);
+                const existing = getRes.data;
+
+                if (existing) {
+                    const currentList = existing.id_bogs || [];
+
+                    const isExist = currentList.some(item => item.id === id);
+
+                    if (!isExist) {
+                        currentList.push({ id: id.toString(), priority: "0" });
+
+                        await axios.put(`${baseUrl}/categorys/${relatedId}`, {
+                            ...existing,
+                            id_bogs: currentList
+                        });
+                    }
+                }
+            }
+            alert("Thêm bài viết thành công!");
+            window.location.href = "/admin/posts";
         } catch (error) {
             console.error('Lỗi khi lưu blog:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
 
     return (
         <div className={styles.container}>
+            {loading && <FullScreenLoader />}
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl text-primary font-bold">Cập nhật bài viết mới</h1>
                 <div className="mx-10">
@@ -215,17 +272,22 @@ export default function PostsPage({ params }) {
                 </div>
             </div>
             <hr className="mb-5" />
-            <div>
-                <label className="block text-primary font-medium mb-1">
-                    Tiêu đề bài viết:<span className="text-red-500">*</span>
-                </label>
-                <input
-                    type="text"
-                    placeholder="Nhập tiêu đề bài viết ...."
-                    value={title}
-                    className="w-full border bg-gray-50 placeholder-gray-400 border-gray-300 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#38803E]"
-                    onChange={(event) => setTitle(event.target.value)}
-                />
+            <div className="flex mb-5 w-full gap-4">
+                <div className="w-full">
+                    <label className="block text-primary font-medium mb-1">
+                        Tiêu đề bài viết:<span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Nhập tiêu đề bài viết ...."
+                        value={title}
+                        className="w-full border bg-gray-50 placeholder-gray-400 border-gray-300 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#38803E]"
+                        onChange={(event) => setTitle(event.target.value)}
+                    />
+                </div>
+                <div className="w-full">
+                    <CustomSelect categorys={categorys} selectedCategoryIds={selectedCategoryIds} setSelectedCategoryIds={setSelectedCategoryIds} />
+                </div>
             </div>
             <div>
                 <label className="block text-primary font-medium mb-1">

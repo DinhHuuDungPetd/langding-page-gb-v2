@@ -10,6 +10,7 @@ export default function SearchModal({ searchName, setSearchName }) {
         setIsOpen(false);
     };
 
+
     return (
         <>
             <button
