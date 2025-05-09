@@ -45,6 +45,31 @@ export const createEditor = ({ content = '', onUpdate }) => {
                 class:
                     'min-h-[156px] border rounded-md bg-slate-50 py-2 px-3 prose max-w-none',
             },
+            handleDOMEvents: {
+                paste: async (view, event) => {
+                    const items = Array.from(event.clipboardData?.items || []);
+                    for (const item of items) {
+                        if (item.type.indexOf('image') === 0) {
+                            const file = item.getAsFile();
+                            if (!file) continue;
+
+                            try {
+                                const imageUrl = await uploadToCloudinary(file); // ⬅️ hàm upload ảnh
+                                view.state.tr.insert(view.state.selection.from, view.state.schema.nodes.image.create({ src: imageUrl }));
+                                view.dispatch(view.state.tr);
+                            } catch (err) {
+                                console.error('Upload image failed:', err);
+                            }
+
+                            // Ngăn dán mặc định nếu là ảnh
+                            return true;
+                        }
+                    }
+
+                    return false; // để xử lý các dán khác bình thường
+                },
+            },
+
         },
         onUpdate,
     });

@@ -2,7 +2,7 @@ import { CiImageOn } from "react-icons/ci";
 import { useState } from "react";
 import Image from "next/image";
 
-export default function UpImage({ previewImage, setPreviewImage, titleText, setTitleText, setUpFile }) {
+export default function UpImage({ previewImage, setPreviewImage, titleText, setTitleText, setUpFile, inputId }) {
 
     const handleFileUpload = async (file) => {
         setPreviewImage(URL.createObjectURL(file));
@@ -29,14 +29,14 @@ export default function UpImage({ previewImage, setPreviewImage, titleText, setT
     };
 
     const handleRowClick = () => {
-        document.getElementById("uploadFileInput").click();
+        document.getElementById(`uploadFileInput-${inputId}`).click();
     };
 
     return (
-        <div className="text-white p-6 rounded-lg w-full max-w-2/3 mx-auto">
+        <div className="text-white p-6 rounded-lg w-full  mx-auto">
             <input
                 type="file"
-                id="uploadFileInput"
+                id={`uploadFileInput-${inputId}`}
                 style={{ display: "none" }}
                 onChange={handleFileChange}
                 accept="image/*"

@@ -1,20 +1,39 @@
 "use client";
-import { useEffect, useState } from 'react';
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { MdFirstPage } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 import { GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
+import axios from "axios";
 import Link from "next/link";
+export default function RelatedPosts({ blogsRelated }) {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const [relatedData, setRelatedData] = useState([]);
 
-export default function NewsCard({blogs}) {
+    useEffect(() => {
+        const fetchRelatedData = async () => {
+            if (!blogsRelated?.length) return;
+            const fetchPromises = blogsRelated.map((item) =>
+                axios.get(`${baseUrl}/blogs/${item.id}`)
+                    .then((res) => res.data)
+                    .catch((err) => {
+                        console.error("Error fetching related blog:", err);
+                        return null;
+                    })
+            );
+            const results = await Promise.all(fetchPromises);
+            const filtered = results.filter(Boolean);
+            setRelatedData(filtered);
+        };
 
+        fetchRelatedData();
 
+    }, [blogsRelated]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 7;
+    const itemsPerPage = 4;
 
-
-    const filteredBlogs = blogs.filter(blog => blog.status === true);
+    const filteredBlogs = relatedData.filter(blog => blog.status === true);
     const sortedNews = [...filteredBlogs].sort((a, b) => new Date(b.time) - new Date(a.time));
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -46,52 +65,33 @@ export default function NewsCard({blogs}) {
 
         return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
     };
-    const formatDate = (isoDate) => {
-        const date = new Date(isoDate);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-    };
-
     return (
-        <>
-            <div>
-                {currentItems && currentItems.length > 0 ? (
+        <div className="w-full">
+            <div className="mx-auto py-4 px-2 flex flex-wrap justify-start gap-x-6">
+                {currentItems.length > 0 ? (
                     currentItems.map((item, index) => (
-                        <div key={`table-news-${index}`}>
-                            <div className="flex flex-col lg:flex-row items-center justify-between py-4 px-4 border-b border-primary">
-                                <Link href={`/tin-tuc-su-kien/${item.id}`}>
-                                    <div className="flex items-center">
-                                        <div className="relative w-48 h-32 rounded-lg overflow-hidden shrink-0">
-                                            <Image
-                                                src={item.images}
-                                                alt={item.titleImage}
-                                                title={item.titleImage}
-                                                fill
-                                                className="object-cover rounded-lg"
-                                            />
-                                        </div>
-                                        <div className="ml-4">
-                                            <h3 className="lg:text-xl text-primary font-bold  overflow-hidden text-ellipsis max-w-full">
-                                                {item.title}
-                                            </h3>
-                                            <p className="font-medium text-balance text-md line-clamp-2">{item.description}</p>
-                                            <div className="flex items-start mt-2 gap-1.5 font-medium text-xs text-gray-600">
-                                                <p className="self-center mt-1">{formatDate(item.time)}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Link>
+                        <Link href={`/tin-tuc-su-kien/${item.id}`} key={`related-post-${index}`} className="w-[22%] text-center">
+                            <div className="relative w-full h-[150px] rounded-lg overflow-hidden">
+                                <Image
+                                    src={item.imageTitle.url}
+                                    alt={item.imageTitle.title || "Related post"}
+                                    title={item.imageTitle.title || ""}
+                                    fill
+                                    className="object-cover rounded-lg transition-transform duration-500 ease-in-out hover:scale-110"
+                                />
                             </div>
-                        </div>
-
+                            <h3
+                                className="text-lg text-primary hover:text-midnight font-bold font-fz-poppins mt-4 truncate max-w-full cursor-default"
+                                title={item.title}
+                            >
+                                {item.title}
+                            </h3>
+                        </Link>
                     ))
                 ) : (
-                    <div className="text-center py-4 text-gray-500">Không có dữ liệu</div>
+                    <p className="text-center text-gray-500 w-full">No related posts found</p>
                 )}
             </div>
-
             <div className="flex flex-col items-center justify-center py-8 px-4">
                 <div className="flex gap-2">
                     <button
@@ -114,7 +114,7 @@ export default function NewsCard({blogs}) {
                             key={page}
                             onClick={() => handleClickPage(page)}
                             className={`w-10 h-10 border-1 rounded-full flex items-center justify-center transition 
-                                ${page === currentPage
+                        ${page === currentPage
                                     ? "bg-midnight text-white border-primary"
                                     : "border-primary hover:bg-central hover:text-white"
                                 }`}
@@ -126,23 +126,22 @@ export default function NewsCard({blogs}) {
                     <button
                         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                         disabled={currentPage === totalPages}
-                        className={`w-10 h-10 border-1 border-primary  flex items-center justify-center rounded-full transition 
-                            ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-central hover:text-white"}
-                        `}
+                        className={`w-10 h-10 border-1 border-primary flex items-center justify-center rounded-full transition 
+                    ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-central hover:text-white"}`}
                     >
                         <GrFormNext />
                     </button>
                     <button
                         onClick={() => setCurrentPage(totalPages)}
                         disabled={currentPage === totalPages}
-                        className={`w-10 h-10 border-1 border-primary  flex items-center justify-center rounded-full transition 
-                            ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-central hover:text-white"}
-                        `}
+                        className={`w-10 h-10 border-1 border-primary flex items-center justify-center rounded-full transition 
+                    ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-central hover:text-white"}`}
                     >
                         <MdLastPage />
                     </button>
                 </div>
             </div>
-        </>
+        </div>
+
     );
 }

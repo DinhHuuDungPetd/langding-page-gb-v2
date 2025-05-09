@@ -9,8 +9,6 @@ import EditContent from "@/component/pages/admin/posts/component/EditContent"
 import PreviewConten from "@/component/pages/admin/posts/component/PreviewConten"
 import styles from "@/component/style/BlogContent.module.css";
 import { imageFileMap } from "@/component/pages/admin/posts/component/customTiptap/imageFileMap";
-import PreviewJson from "@/component/pages/admin/posts/component/PreviewJson"
-import PreviewCode from "@/component/pages/admin/posts/component/PreviewCode"
 import { createEditor } from '@/component/pages/admin/posts/component/editorConfig';
 import CustomSelect from '@/component/CustomSelect'
 import FullScreenLoader from "@/component/FullScreenLoader";
@@ -23,17 +21,22 @@ export default function PostsPage({ params }) {
     const [blogsRelated, setblogsRelated] = useState(null);
     const [postJson, setPostJson] = useState(null);
     const [upFile, setUpFile] = useState(null);
+    const [upFileSideBanner, setUpFileSideBanner] = useState(null);
+    const [upFilePromoBanner, setUpFilePromoBanner] = useState(null);
+    const [titleTextSideBanner, setTitleTextSideBanner] = useState("");
+    const [titleTextPromoBanner, setTitleTextPromoBanner] = useState("");
+    const [previewSideBanner, setPreviewSideBanner] = useState("");
+    const [previewPromoBanner, setPreviewPromoBanner] = useState("");
+    const [previewImage, setPreviewImage] = useState("");
     const [titleText, setTitleText] = useState("");
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [selectedBlogIds, setSelectedBlogIds] = useState([]);
-    const [previewImage, setPreviewImage] = useState("");
     const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
     const [categorys, setCategorys] = useState([]);
     const editor = createEditor({
         content: '',
         onUpdate: ({ editor }) => {
-            setPostHtml(editor.getHTML());
             setPostJson(editor.getJSON());
         },
     });
@@ -53,7 +56,9 @@ export default function PostsPage({ params }) {
                     .map(category => category.id);
 
                 setBlogs(filteredBlogs);
-                setblogsRelated(response2.data[0])
+
+                setblogsRelated(response2.data[0] || [])
+                console.log(response2.data[0])
                 setCategorys(response4.data)
                 setSelectedCategoryIds(matchingCategoryIds)
 
@@ -62,9 +67,13 @@ export default function PostsPage({ params }) {
                     setPostJson(response.data.postJson);
                     setTitle(response.data.title);
                     setDescription(response.data.description);
-                    setSelectedBlogIds(response2.data[0].related_blog_id || []);
-                    setPreviewImage(response.data.images);
-                    setTitleText(response.data.titleImage);
+                    setSelectedBlogIds(response2.data[0]?.related_blog_id || []);
+                    setPreviewImage(response.data.imageTitle.url);
+                    setTitleText(response.data.imageTitle.title);
+                    setPreviewSideBanner(response.data.sideBanner.url);
+                    setPreviewPromoBanner(response.data.promoBanner.url);
+                    setTitleTextSideBanner(response.data.sideBanner.title);
+                    setTitleTextPromoBanner(response.data.promoBanner.title);
                 }
             } catch (error) {
                 console.error("Error fetching post data:", error);
@@ -118,52 +127,87 @@ export default function PostsPage({ params }) {
 
 
     const handleSave = async () => {
+        setLoading(true);
         const now = new Date();
         const formattedTime = now.toISOString();
 
+        // Validate tiêu đề
         if (!title.trim()) {
             alert("Vui lòng nhập tiêu đề bài viết!");
+            setLoading(false);
             return;
         }
 
+        // Validate mô tả
         if (!description.trim()) {
             alert("Vui lòng nhập miêu tả bài viết!");
+            setLoading(false);
             return;
         }
 
-        if (!postJson || (postJson.content?.length === 0)) {
+        // Validate nội dung
+        if (!postJson || !postJson.content || postJson.content.length === 0) {
             alert("Nội dung bài viết không được để trống!");
+            setLoading(false);
             return;
         }
 
-        if (!titleText) {
-            alert("Vui lòng nhập tiêu đề ảnh!");
+        // Validate tiêu đề ảnh chính
+        if (!titleText.trim()) {
+            alert("Vui lòng nhập tiêu đề ảnh chính!");
+            setLoading(false);
             return;
         }
-        const processedJson = await processEditorImages(postJson, imageFileMap);
 
-        let uploadedImageUrl = "";
-
-        if (upFile) {
-            try {
-                uploadedImageUrl = await uploadToCloudinary(upFile);
-                console.log("Uploaded URL:", uploadedImageUrl);
-            } catch (err) {
-                console.error("Upload failed, cancel saving.");
-                alert("Image upload failed, please try again.");
+        // Nếu có upload ảnh mới, validate luôn các tiêu đề ảnh kèm theo
+        if (upFile || upFileSideBanner || upFilePromoBanner) {
+            if (!titleTextSideBanner.trim()) {
+                alert("Vui lòng nhập tiêu đề ảnh banner bên!");
+                setLoading(false);
                 return;
             }
-        } else {
-            console.log("No image uploaded, using existing image.");
+
+            if (!titleTextPromoBanner.trim()) {
+                alert("Vui lòng nhập tiêu đề ảnh quảng cáo!");
+                setLoading(false);
+                return;
+            }
+        }
+
+        const processedJson = await processEditorImages(postJson, imageFileMap);
+
+        let uploadedImageUrl = previewImage || "";
+        let uploadedSideBannerUrl = previewSideBanner || "";
+        let uploadedPromoBanner = previewPromoBanner || "";
+
+        // Nếu có ảnh mới => upload
+        try {
+            if (upFile) uploadedImageUrl = await uploadToCloudinary(upFile);
+            if (upFileSideBanner) uploadedSideBannerUrl = await uploadToCloudinary(upFileSideBanner);
+            if (upFilePromoBanner) uploadedPromoBanner = await uploadToCloudinary(upFilePromoBanner);
+        } catch (err) {
+            console.error("Upload failed, cancel saving.");
+            alert("Image upload failed, please try again.");
+            return;
         }
 
         const blog = {
             id: id,
-            title: title,
-            titleImage: titleText,
-            description: description,
+            title: title.trim(),
+            description: description.trim(),
             time: formattedTime,
-            images: uploadedImageUrl || previewImage,
+            imageTitle: {
+                url: uploadedImageUrl,
+                title: titleText.trim()
+            },
+            sideBanner: {
+                url: uploadedSideBannerUrl,
+                title: titleTextSideBanner.trim()
+            },
+            promoBanner: {
+                url: uploadedPromoBanner,
+                title: titleTextPromoBanner.trim()
+            },
             views: 0,
             status: true,
             postJson: processedJson,
@@ -175,39 +219,38 @@ export default function PostsPage({ params }) {
         };
 
         try {
-            setLoading(true);
+
             await axios.patch(`${baseUrl}/blogs/${id}`, blog);
 
-            if (selectedBlogIds.length > 0) {
-                await axios.put(`${baseUrl}/blogs_related/${blogsRelated.id}`, blog_related);
+            // Liên kết blog liên quan
 
-                for (const related of selectedBlogIds) {
-                    const getRes = await axios.get(`${baseUrl}/blogs_related?id_blog=${related.id}`);
-                    const existing = getRes.data[0];
+            await axios.put(`${baseUrl}/blogs_related/${blogsRelated.id}`, blog_related);
 
-                    if (existing) {
-                        const currentList = existing.related_blog_id || [];
-                        const isExist = currentList.some(item => item.id === id);
-                        if (!isExist) {
-                            currentList.push({ id: id });
-                            await axios.put(`${baseUrl}/blogs_related/${existing.id}`, {
-                                ...existing,
-                                related_blog_id: currentList
-                            });
-                        }
-                    } else {
-                        await axios.post(`${baseUrl}/blogs_related`, {
-                            id_blog: related.id,
-                            related_blog_id: [{ id: id }]
+            for (const related of selectedBlogIds) {
+                const getRes = await axios.get(`${baseUrl}/blogs_related?id_blog=${related.id}`);
+                const existing = getRes.data[0];
+
+                if (existing) {
+                    const currentList = existing.related_blog_id || [];
+                    const isExist = currentList.some(item => item.id === id.toString());
+                    if (!isExist) {
+                        currentList.push({ id: id.toString() });
+                        await axios.put(`${baseUrl}/blogs_related/${existing.id}`, {
+                            ...existing,
+                            related_blog_id: currentList
                         });
                     }
                 }
             }
+
+
+            // Cập nhật danh mục (gỡ cũ - thêm mới)
             const response = await axios.get(`${baseUrl}/categorys`);
             const previousCategoryIds = response.data
                 .filter(category => category.id_bogs?.some(bog => bog.id === id.toString()))
                 .map(category => category.id);
 
+            // Gỡ danh mục không còn chọn
             const removedCategoryIds = previousCategoryIds.filter(
                 prevId => !selectedCategoryIds.includes(prevId)
             );
@@ -218,7 +261,6 @@ export default function PostsPage({ params }) {
 
                 if (existing) {
                     const updatedList = (existing.id_bogs || []).filter(bog => bog.id !== id.toString());
-
                     await axios.put(`${baseUrl}/categorys/${removedId}`, {
                         ...existing,
                         id_bogs: updatedList
@@ -226,15 +268,23 @@ export default function PostsPage({ params }) {
                 }
             }
 
+            // Thêm mới danh mục được chọn
             for (const relatedId of selectedCategoryIds) {
                 const getRes = await axios.get(`${baseUrl}/categorys/${relatedId}`);
                 const existing = getRes.data;
 
                 if (existing) {
-                    const currentList = existing.id_bogs || [];
+                    let currentList = existing.id_bogs || [];
 
-                    const isExist = currentList.some(item => item.id === id);
+                    // Loại bỏ các bản ghi trùng lặp (dựa trên id)
+                    currentList = currentList.reduce((acc, curr) => {
+                        if (!acc.some(item => item.id === curr.id)) {
+                            acc.push(curr);
+                        }
+                        return acc;
+                    }, []);
 
+                    const isExist = currentList.some(item => item.id === id.toString());
                     if (!isExist) {
                         currentList.push({ id: id.toString(), priority: "0" });
 
@@ -245,14 +295,18 @@ export default function PostsPage({ params }) {
                     }
                 }
             }
-            alert("Thêm bài viết thành công!");
+
+
+            alert("Cập nhật bài viết thành công!");
             window.location.href = "/admin/posts";
         } catch (error) {
-            console.error('Lỗi khi lưu blog:', error);
+            console.error("Lỗi khi lưu blog:", error);
+            alert("Có lỗi xảy ra khi lưu bài viết.");
         } finally {
             setLoading(false);
         }
     };
+
 
 
     return (
@@ -290,7 +344,7 @@ export default function PostsPage({ params }) {
                 </div>
             </div>
             <div>
-                <label className="block text-primary font-medium mb-1">
+                <label className="block text-primary font-medium mb-2">
                     Miêu tả bài viết:<span className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -302,7 +356,26 @@ export default function PostsPage({ params }) {
                 >
                 </textarea>
             </div>
-            <UpImage previewImage={previewImage} setPreviewImage={setPreviewImage} titleText={titleText} setTitleText={setTitleText} setUpFile={setUpFile} />
+            <div className="mb-5">
+                <label className="block text-primary font-medium mb-1">
+                    Ảnh tiêu đề:<span className="text-red-500">*</span>
+                </label>
+                <UpImage previewImage={previewImage} setPreviewImage={setPreviewImage} titleText={titleText} setTitleText={setTitleText} setUpFile={setUpFile} inputId={0} />
+            </div>
+            <div className="flex gap-6">
+                <div className="mb-5 w-full">
+                    <label className="block text-primary font-medium mb-1">
+                        Ảnh tiêu đề:<span className="text-red-500">*</span>
+                    </label>
+                    <UpImage previewImage={previewSideBanner} setPreviewImage={setPreviewSideBanner} titleText={titleTextSideBanner} setTitleText={setTitleTextSideBanner} setUpFile={setUpFileSideBanner} inputId={1} />
+                </div>
+                <div className="mb-5 w-full">
+                    <label className="block text-primary font-medium mb-1">
+                        Ảnh tiêu đề:<span className="text-red-500">*</span>
+                    </label>
+                    <UpImage previewImage={previewPromoBanner} setPreviewImage={setPreviewPromoBanner} titleText={titleTextPromoBanner} setTitleText={setTitleTextPromoBanner} setUpFile={setUpFilePromoBanner} inputId={2} />
+                </div>
+            </div>
             <div className="flex gap-2 mb-10">
                 <div className="w-1/2 shadow-md">
                     <EditContent editor={editor} />
