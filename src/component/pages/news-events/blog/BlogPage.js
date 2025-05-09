@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Blog from "@/component/pages/blog/component/Blog";
-import RelatedPosts from "@/component/pages/blog/component/RelatedPosts";
+import Blog from "@/component/pages/news-events/component/Blog";
+import RelatedPosts from "@/component/pages/news-events/component/RelatedPosts";
 import BookingForm from "@/component/pages/news-events/component/BookingForm";
 import PopularNews from "@/component/pages/news-events/component/PopularNews";
+import Image from "next/image";
 export default function BlogPage({ params }) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const { slug } = params;
@@ -32,7 +33,7 @@ export default function BlogPage({ params }) {
 
             axios.get(`${baseUrl}/blogs_related?id_blog=${id}`)
                 .then(response => {
-                    setBlogsRelated(response.data[0].related_blog_id);
+                    setBlogsRelated(response.data[0]?.related_blog_id || []);
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -64,7 +65,27 @@ export default function BlogPage({ params }) {
                         </div>
                     </div>
 
-                    <div className="w-full lg:w-1/3">
+                    <div className="w-full lg:w-1/3 my-5">
+                        <div className='w-[90%] mx-auto mb-5 overflow-hidden'>
+                            <Image
+                                src={blog?.sideBanner?.url || "/default.jpg"}
+                                alt={blog?.sideBanner?.title || "hot news"}
+                                title={blog?.sideBanner?.title || ""}
+                                width={600}
+                                height={400}
+                                className="w-full h-auto object-cover transition-transform duration-500 ease-in-out hover:scale-110"
+                            />
+                        </div>
+                        <div className='w-[90%] mx-auto mb-5 overflow-hidden'>
+                            <Image
+                                src={blog?.promoBanner?.url || "/default.jpg"}
+                                alt={blog?.promoBanner?.title || "hot news"}
+                                title={blog?.promoBanner?.title || ""}
+                                width={600}
+                                height={400}
+                                className="w-full h-auto object-cover transition-transform duration-500 ease-in-out hover:scale-110"
+                            />
+                        </div>
                         <div className="rounded p-4 mb-5">
                             <PopularNews />
                         </div>
@@ -72,6 +93,7 @@ export default function BlogPage({ params }) {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }

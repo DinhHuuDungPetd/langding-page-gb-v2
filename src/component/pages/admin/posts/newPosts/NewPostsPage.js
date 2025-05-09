@@ -21,6 +21,12 @@ export default function PostsPage() {
     const [postJson, setPostJson] = useState(null);
     const [postHtml, setPostHtml] = useState(null);
     const [upFile, setUpFile] = useState(null);
+    const [upFileSideBanner, setUpFileSideBanner] = useState(null);
+    const [upFilePromoBanner, setUpFilePromoBanner] = useState(null);
+    const [titleTextSideBanner, setTitleTextSideBanner] = useState("");
+    const [titleTextPromoBanner, setTitleTextPromoBanner] = useState("");
+    const [previewSideBanner, setPreviewSideBanner] = useState("");
+    const [previewPromoBanner, setPreviewPromoBanner] = useState("");
     const [previewImage, setPreviewImage] = useState("");
     const [titleText, setTitleText] = useState("");
     const [title, setTitle] = useState("");
@@ -31,7 +37,6 @@ export default function PostsPage() {
     const editor = createEditor({
         content: '',
         onUpdate: ({ editor }) => {
-            setPostHtml(editor.getHTML());
             setPostJson(editor.getJSON());
         },
     });
@@ -94,106 +99,140 @@ export default function PostsPage() {
 
 
     const handleSave = async () => {
-        console.log("selectedCategoryIds", selectedCategoryIds)
+        setLoading(true);
         const now = new Date();
         const formattedTime = now.toISOString();
         const idblog = String(Math.floor(Math.random() * 1000000));
 
+        // Validate bắt buộc
         if (!title.trim()) {
             alert("Vui lòng nhập tiêu đề bài viết!");
+            setLoading(false);
             return;
         }
 
         if (!description.trim()) {
             alert("Vui lòng nhập miêu tả bài viết!");
+            setLoading(false);
             return;
         }
 
         if (!postJson || (postJson.content?.length === 0)) {
             alert("Nội dung bài viết không được để trống!");
+            setLoading(false);
             return;
         }
 
         if (!upFile) {
             alert("Vui lòng tải lên ảnh tiêu đề!");
+            setLoading(false);
             return;
         }
-        if (!titleText) {
-            alert("Vui lòng nhập tiêu đề ảnh!");
-            return;
-        }
-        const processedJson = await processEditorImages(postJson, imageFileMap);
 
-        let uploadedImageUrl = "";
+        if (!titleText.trim()) {
+            alert("Vui lòng nhập tiêu đề ảnh chính!");
+            setLoading(false);
+            return;
+        }
+
+        if (!titleTextSideBanner.trim()) {
+            alert("Vui lòng nhập tiêu đề ảnh banner bên!");
+            setLoading(false);
+            return;
+        }
+
+        if (!titleTextPromoBanner.trim()) {
+            alert("Vui lòng nhập tiêu đề ảnh banner quảng cáo!");
+            setLoading(false);
+            return;
+        }
+
+        if (!selectedCategoryIds || selectedCategoryIds.length === 0) {
+            alert("Vui lòng chọn ít nhất một danh mục!");
+            setLoading(false);
+            return;
+        }
+
+
 
         try {
-            uploadedImageUrl = await uploadToCloudinary(upFile);
-            console.log("Uploaded URL:", uploadedImageUrl);
-        } catch (err) {
-            console.error("Upload failed, cancel saving.");
-            alert
-            return;
-        }
+            const processedJson = await processEditorImages(postJson, imageFileMap);
 
-        const blog = {
-            id: idblog,
-            title: title,
-            titleImage: titleText,
-            description: description,
-            time: formattedTime,
-            images: uploadedImageUrl,
-            views: 0,
-            status: true,
-            postJson: processedJson,
-        };
+            // Upload hình ảnh
+            const [uploadedImageUrl, uploadedSideBannerUrl, uploadedPromoBanner] = await Promise.all([
+                uploadToCloudinary(upFile),
+                uploadToCloudinary(upFileSideBanner),
+                uploadToCloudinary(upFilePromoBanner)
+            ]);
 
-        const blog_related = {
-            id_blog: idblog,
-            related_blog_id: selectedBlogIds.map(item => ({ id: item.id }))
-        };
+            const blog = {
+                id: idblog,
+                title: title.trim(),
+                description: description.trim(),
+                time: formattedTime,
+                imageTitle: {
+                    url: uploadedImageUrl,
+                    title: titleText.trim()
+                },
+                sideBanner: {
+                    url: uploadedSideBannerUrl,
+                    title: titleTextSideBanner.trim()
+                },
+                promoBanner: {
+                    url: uploadedPromoBanner,
+                    title: titleTextPromoBanner.trim()
+                },
+                views: 0,
+                status: true,
+                postJson: processedJson,
+            };
 
-        try {
-            setLoading(true);
+            const blog_related = {
+                id_blog: idblog,
+                related_blog_id: selectedBlogIds?.map(item => ({ id: item.id }) || [])
+            };
+
             await axios.post(`${baseUrl}/blogs`, blog);
 
-            if (selectedBlogIds.length > 0) {
-                await axios.post(`${baseUrl}/blogs_related`, blog_related);
+            // Liên kết blog liên quan
 
-                for (const related of selectedBlogIds) {
-                    const getRes = await axios.get(`${baseUrl}/blogs_related?id_blog=${related.id}`);
-                    const existing = getRes.data[0];
+            await axios.post(`${baseUrl}/blogs_related`, blog_related);
 
-                    if (existing) {
-                        const currentList = existing.related_blog_id || [];
-                        const isExist = currentList.some(item => item.id === idblog);
-                        if (!isExist) {
-                            currentList.push({ id: idblog });
-                            await axios.put(`${baseUrl}/blogs_related/${existing.id}`, {
-                                ...existing,
-                                related_blog_id: currentList
-                            });
-                        }
-                    } else {
-                        await axios.post(`${baseUrl}/blogs_related`, {
-                            id_blog: related.id,
-                            related_blog_id: [{ id: idblog }]
+            for (const related of selectedBlogIds) {
+                const getRes = await axios.get(`${baseUrl}/blogs_related?id_blog=${related.id}`);
+                const existing = getRes.data[0];
+
+                if (existing) {
+                    const currentList = existing.related_blog_id || [];
+                    const isExist = currentList.some(item => item.id === idblog);
+
+                    if (!isExist) {
+                        currentList.push({ id: idblog });
+                        await axios.put(`${baseUrl}/blogs_related/${existing.id}`, {
+                            ...existing,
+                            related_blog_id: currentList
                         });
                     }
+                } else {
+                    await axios.post(`${baseUrl}/blogs_related`, {
+                        id_blog: related.id,
+                        related_blog_id: [{ id: idblog }]
+                    });
                 }
-
             }
+
+
+            // Gắn blog vào danh mục
             for (const relatedId of selectedCategoryIds) {
                 const getRes = await axios.get(`${baseUrl}/categorys/${relatedId}`);
                 const existing = getRes.data;
 
                 if (existing) {
                     const currentList = existing.id_bogs || [];
-
                     const isExist = currentList.some(item => item.id === idblog);
 
                     if (!isExist) {
                         currentList.push({ id: idblog, priority: "0" });
-
                         await axios.put(`${baseUrl}/categorys/${relatedId}`, {
                             ...existing,
                             id_bogs: currentList
@@ -201,10 +240,12 @@ export default function PostsPage() {
                     }
                 }
             }
+
             alert("Thêm bài viết thành công!");
             window.location.href = "/admin/posts";
         } catch (error) {
-            console.error('Lỗi khi lưu blog:', error);
+            console.error("Lỗi khi lưu blog:", error);
+            alert("Có lỗi xảy ra khi lưu bài viết.");
         } finally {
             setLoading(false);
         }
@@ -229,7 +270,7 @@ export default function PostsPage() {
             </div>
             <hr className="mb-5" />
             <div className="flex mb-5 w-full gap-4">
-                <div className="w-full">
+                <div className="w-full mb-2">
                     <label className="block text-primary font-medium mb-1">
                         Tiêu đề bài viết:<span className="text-red-500">*</span>
                     </label>
@@ -244,7 +285,7 @@ export default function PostsPage() {
                     <CustomSelect categorys={categorys} selectedCategoryIds={selectedCategoryIds} setSelectedCategoryIds={setSelectedCategoryIds} />
                 </div>
             </div>
-            <div>
+            <div className=" mb-2">
                 <label className="block text-primary font-medium mb-1">
                     Miêu tả bài viết:<span className="text-red-500">*</span>
                 </label>
@@ -256,7 +297,26 @@ export default function PostsPage() {
                 >
                 </textarea>
             </div>
-            <UpImage previewImage={previewImage} setPreviewImage={setPreviewImage} titleText={titleText} setTitleText={setTitleText} setUpFile={setUpFile} />
+            <div className="mb-5">
+                <label className="block text-primary font-medium mb-1">
+                    Ảnh tiêu đề:<span className="text-red-500">*</span>
+                </label>
+                <UpImage previewImage={previewImage} setPreviewImage={setPreviewImage} titleText={titleText} setTitleText={setTitleText} setUpFile={setUpFile} inputId={0} />
+            </div>
+            <div className="flex gap-6">
+                <div className="mb-5 w-full">
+                    <label className="block text-primary font-medium mb-1">
+                        Ảnh tiêu đề:<span className="text-red-500">*</span>
+                    </label>
+                    <UpImage previewImage={previewSideBanner} setPreviewImage={setPreviewSideBanner} titleText={titleTextSideBanner} setTitleText={setTitleTextSideBanner} setUpFile={setUpFileSideBanner} inputId={1} />
+                </div>
+                <div className="mb-5 w-full">
+                    <label className="block text-primary font-medium mb-1">
+                        Ảnh tiêu đề:<span className="text-red-500">*</span>
+                    </label>
+                    <UpImage previewImage={previewPromoBanner} setPreviewImage={setPreviewPromoBanner} titleText={titleTextPromoBanner} setTitleText={setTitleTextPromoBanner} setUpFile={setUpFilePromoBanner} inputId={2} />
+                </div>
+            </div>
             <div className="flex gap-2 mb-10">
                 <div className="w-1/2 shadow-md">
                     <EditContent editor={editor} />
@@ -265,14 +325,6 @@ export default function PostsPage() {
                     <PreviewConten postJson={postJson} />
                 </div>
             </div>
-            {/* <div className="flex gap-2 mb-10">
-                <div className="w-1/2 border rounded-md">
-                    <PreviewCode postHtml={postHtml} />
-                </div>
-                <div className="w-1/2 border rounded-md">
-                    <PreviewJson postJson={postJson} />
-                </div>
-            </div> */}
             <h1 className="text-2xl text-primary font-bold">Bài viết liên quan</h1>
             <TableRelatedPosts blogs={blogs} selectedBlogIds={selectedBlogIds} setSelectedBlogIds={setSelectedBlogIds} />
         </div>

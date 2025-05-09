@@ -60,7 +60,7 @@ const renderTextWithMarks = (textObj) => {
     return <span style={style}>{content}</span>;
 };
 
-export default function Blog2({ blog }) {
+export default function Blog({ blog }) {
 
     const levelOneItems = blog?.postJson?.content?.filter(section => section.attrs?.level === 1);
 

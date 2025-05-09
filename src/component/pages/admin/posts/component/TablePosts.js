@@ -82,7 +82,7 @@ export default function TablePosts({ setLoading, blogs, getBlogs }) {
                                 <td className="px-4 py-3 font-medium text-md w-1/4 break-words whitespace-normal">{item.description}</td>
                                 <td className="px-4 py-3">
                                     <Image
-                                        src={item.images}
+                                        src={item.imageTitle.url}
                                         alt="Ảnh bài viết"
                                         width={200}
                                         height={60}

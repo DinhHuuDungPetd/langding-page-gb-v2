@@ -26,7 +26,7 @@ export default function AppHeader() {
                         href="/">
                         <div>
                             <Image
-                                className="lg:w-40 h-auto cursor-pointer"
+                                className="lg:w-[50%] h-auto cursor-pointer"
                                 src="/images/logo/Green-Lab-Logo-03.png"
                                 alt="Green Lab Logo"
                                 width={300}

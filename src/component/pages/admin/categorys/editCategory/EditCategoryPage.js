@@ -88,10 +88,10 @@ export default function CategorysPage({ params }) {
             return;
         }
 
-        if (selectedPrioritys.length > 0 && selectedPrioritys.length !== selectedBlogIds.length) {
-            alert("Số lượng blog được chọn và blog có ưu tiên không khớp.");
-            return;
-        }
+        // if (selectedPrioritys.length > 0 && selectedPrioritys.length !== selectedBlogIds.length) {
+        //     alert("Số lượng blog được chọn và blog có ưu tiên không khớp.");
+        //     return;
+        // }
 
         setLoading(true);
         try {
