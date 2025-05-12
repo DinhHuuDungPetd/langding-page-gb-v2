@@ -1,25 +1,32 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { IoMenu, IoClose } from 'react-icons/io5'
-
-export default function MobileToggleMenu() {
+import ItemLi from "@/component/layout/header/ItemLi";
+export default function MobileToggleMenu({ menuItems }) {
     const [menuOpen, setMenuOpen] = useState(false)
 
-    useEffect(() => {
-        const navMenu = document.getElementById('nav-menu-mobile')
-        if (navMenu) {
-            navMenu.style.top = menuOpen ? '' : '-100%'
-        }
-    }, [menuOpen])
-
     return (
-        <div className="xl:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? (
-                <IoClose className="text-3xl cursor-pointer" />
-            ) : (
-                <IoMenu className="text-3xl cursor-pointer" />
-            )}
-        </div>
+        <>
+            <div className="lg:hidden" onClick={() => setMenuOpen(prev => !prev)}>
+                {menuOpen ? (
+                    <IoClose className="text-3xl cursor-pointer" />
+                ) : (
+                    <IoMenu className="text-3xl cursor-pointer" />
+                )}
+            </div>
+
+            <div
+                id="nav-menu-mobile"
+                className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white shadow-md ${menuOpen ? 'max-h-screen py-4' : 'max-h-0'
+                    }`}
+            >
+                <ul className="flex flex-col text-center divide-y">
+                    {menuItems.map((item, i) => (
+                        <ItemLi item={item} key={i} />
+                    ))}
+                </ul>
+            </div>
+        </>
     )
 }

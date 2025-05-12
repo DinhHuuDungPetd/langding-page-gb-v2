@@ -1,4 +1,3 @@
-import Image from "next/image"
 import "@/component/pages/introduction/component/MediaConten.css"
 import GreenLab_01 from "@/icons/GreenLab_01"
 import GreenLab_02 from "@/icons/GreenLab_02"
@@ -13,7 +12,7 @@ const features = [
     { icon: <GreenLab_02 />, title: "ĐỘI NGŨ", subtitle: "CỦA CHÚNG TÔI", description: "Đội ngũ bác sĩ và chuyên viên của Green Lab là những con người giàu kinh nghiệm, tận tâm với nghề." },
     { icon: <GreenLab_03 />, title: "MẠNG LƯỚI", subtitle: "HOẠT ĐỘNG", description: "Mạng lưới của Trung tâm xét nghiệm Green Lab phát triển mạnh tại Hà Nội và các tỉnh lân cận." },
     { icon: <GreenLab_04 />, title: "LIÊN KẾT", subtitle: "HỢP TÁC", description: "Hơn 50 bệnh viện, hơn 500 phòng khám, hơn 4000 bác sĩ và cộng tác viên." },
-    { icon: <GreenLab_05 />, title: "THẾ MẠNH", subtitle: "CHUYÊN MÔN", description: "Trung tâm xét nghiệm Green Lab đáp ứng mọi loại xét nghiệm từ cơ bản đến chuyên sâu như: Di truyền, Huyết học, Tế bào – Giải phẫu bệnh, Sinh hóa – Miễn dịch, Vi sinh, Sinh học phân tử." },
+    { icon: <GreenLab_05 />, title: "THẾ MẠNH", subtitle: "CHUYÊN MÔN", description: "Trung tâm xét nghiệm Green Lab đáp ứng mọi loại xét nghiệm như: Di truyền, Huyết học, Tế bào – Giải phẫu bệnh, Sinh hóa – Miễn dịch, Vi sinh, Sinh học phân tử." },
     { icon: <GreenLab_06 />, title: "PHÒNG XÉT NGHIỆM", subtitle: "ĐẠT CHUẨN", description: "Sử dụng công nghệ hiện đại đảm bảo độ chính xác cao. Quy trình kiểm soát chất lượng nghiêm ngặt." },
     { icon: <GreenLab_07 />, title: "CHI PHÍ", subtitle: "XÉT NGHIỆM", description: "Giá xét nghiệm thực hiện tại nhà hay bệnh viện đều không đổi. Khách hàng chỉ trả them chi phí đi lại 10.000 đồng/lần lấy mẫu." },
     { icon: <GreenLab_08 />, title: "TRẢ KẾT QUẢ", subtitle: "XÉT NGHIỆM", description: "Kết quả xét nghiệm được trả tận nơi theo yêu cầu của khách hàng hoặc tra cứu trên website greenlab.vn." },
@@ -40,8 +39,8 @@ export default function MediaContent() {
                                 </div>
                             </div>
 
-                            <div className="flip-back absolute inset-0 bg-midnight text-white rounded-lg p-6 flex flex-col justify-center text-sm ">
-                                <div className="font-bold text-base leading-tight uppercase mb-3">
+                            <div className="flip-back absolute inset-0 bg-midnight text-white rounded-lg p-2 flex flex-col justify-center text-sm ">
+                                <div className="font-bold text-base leading-tight uppercase my-3">
                                     <div>{item.title}</div>
                                     <div>{item.subtitle}</div>
                                 </div>

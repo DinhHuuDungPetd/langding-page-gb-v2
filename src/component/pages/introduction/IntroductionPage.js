@@ -23,6 +23,9 @@ const OrderComponent = dynamic(() => import("@/component/pages/home/Order"), {
 const Banner = dynamic(() => import("@/component/pages/introduction/component/Banner"), {
     loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
 });
+const BannerMobile = dynamic(() => import("@/component/pages/introduction/component/BannerMobile"), {
+    loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
+});
 const MediaContent = dynamic(() => import("@/component/pages/introduction/component/MediaContent"), {
     loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
 });
@@ -78,10 +81,10 @@ const IntroductionPage = memo(() => {
             variants={containerVariants}
         >
             <motion.div
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825600/greenlab/aan50gixyarmomdlnyqb.webp)] bg-no-repeat bg-cover bg-blend-multiply"
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747016194/backgroundMobile/ykqtdkarozwrx623p0wn.jpg)] sm:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825600/greenlab/aan50gixyarmomdlnyqb.webp)] bg-no-repeat bg-cover bg-blend-multiply"
                 variants={itemVariants}
             >
-                <div className="absolute bottom-4 left-20 text-white text-xl medium-italic z-9">
+                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20  text-white text-xl medium-italic z-9">
                     Trang chủ &gt; <span className="font-normal">Giới thiệu</span>
                 </div>
             </motion.div>
@@ -93,34 +96,40 @@ const IntroductionPage = memo(() => {
                 "Đồng hành vì sức khỏe, mang chất lượng đến từng gia đình"
             </motion.h3>
 
-            <Banner />
+            <div className='hidden md:block'>
+                <Banner />
+            </div>
+            <div className='md:hidden'>
+                <BannerMobile />
+            </div>
+
 
             <motion.div
-                className="flex flex-col xl:flex-row w-2/3 items-center mt-15 container mx-auto py-8 px-4 sm:px-6 lg:px-8"
+                className="flex flex-col xl:flex-row w-[90%] items-center mt-5 container mx-auto py-8 "
                 variants={containerVariants}
             >
                 <motion.div
-                    className="w-full flex justify-center items-center"
+                    className="w-[80%] xl:w-[50%] flex justify-center items-center"
                     variants={itemVariants}
                 >
                     <ImageSlider />
                 </motion.div>
 
                 <motion.div
-                    className="space-y-6 mt-8 xl:mt-0 xl:ml-8"
+                    className="space-y-6 mt-8 lg:mt-12 xl:mt-0 xl:ml-8 px-4 sm:px-6 w-full mx-auto"
                     variants={containerVariants}
                 >
                     <motion.article variants={itemVariants}>
-                        <h2 className="text-xl text-primary mb-2 font-bold">
+                        <h2 className="text-lg sm:text-xl text-primary mb-2 font-bold">
                             Khởi nguồn từ tâm huyết và sứ mệnh
                         </h2>
-                        <div className="space-y-4">
-                            <p className="font-medium text-sm sm:text-md text-justify text-pretty">
+                        <div className="space-y-4 text-sm sm:text-base leading-relaxed text-justify text-pretty">
+                            <p className="font-medium">
                                 Được cố vấn bởi những Giáo sư, Bác sĩ đầu ngành – những người không chỉ
                                 giỏi chuyên môn mà còn trọn vẹn y đức – Green Lab khởi đầu hành trình
                                 với cam kết đặt sức khỏe cộng đồng lên hàng đầu.
                             </p>
-                            <p className="font-medium text-sm sm:text-md text-justify text-pretty">
+                            <p className="font-medium">
                                 Dưới sự dẫn dắt của{" "}
                                 <strong>Bà Vũ Thị Thu Hoài – Giám đốc Công ty</strong>, Green Lab không
                                 chỉ là một trung tâm xét nghiệm, mà còn là nơi hội tụ tinh thần trách
@@ -133,10 +142,10 @@ const IntroductionPage = memo(() => {
                     </motion.article>
 
                     <motion.article variants={itemVariants}>
-                        <h2 className="text-xl text-primary mb-2 font-bold text-pretty">
+                        <h2 className="text-lg sm:text-xl text-primary mb-2 font-bold text-pretty">
                             Hành trình vươn tầm chất lượng
                         </h2>
-                        <p className="font-medium text-sm sm:text-md">
+                        <p className="font-medium text-sm sm:text-base leading-relaxed text-justify text-pretty">
                             Từ những ngày đầu thành lập, Green Lab đã đặt mục tiêu cao: Không chỉ
                             cung cấp dịch vụ xét nghiệm, mà còn phải làm tốt hơn cả mong đợi. Với
                             đội ngũ chuyên gia hàng đầu – Giáo sư, Tiến sĩ, Thạc sĩ, Bác sĩ giàu
@@ -148,13 +157,13 @@ const IntroductionPage = memo(() => {
             </motion.div>
 
             <motion.div
-                className="grid grid-cols-1 lg:grid-cols-3 gap-5 px-4 sm:px-6 lg:px-50 py-4 container mx-auto"
+                className="grid grid-cols-1 lg:grid-cols-3 gap-5 px-4 sm:px-6 xl:px-40 py-4 container mx-auto"
                 variants={containerVariants}
             >
                 {visionCards.map((card, index) => (
                     <motion.article
                         key={index}
-                        className="bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central text-white rounded-xl p-6 shadow-lg flex flex-col items-center text-center"
+                        className="bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central text-white rounded-xl p-2 shadow-lg flex flex-col items-center text-center"
                         variants={itemVariants}
                         whileHover={{ scale: 1.02 }}
                         transition={{ duration: 0.3 }}
@@ -204,7 +213,7 @@ const IntroductionPage = memo(() => {
             </motion.section>
 
             <CertificateComponent />
-            <PartnerComponent />
+            {/* <PartnerComponent /> */}
             <OrderComponent />
         </motion.main>
     );

@@ -45,8 +45,8 @@ export default function BlogPage({ params }) {
 
     return (
         <div>
-            <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(/images/background/background_6.webp)] bg-blend-multiply">
-                <div className="absolute bottom-4 left-20 text-white text-xl medium-italic z-9">
+            <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747017912/backgroundMobile/skwnwgkb13t5kaqlfl3z.jpg)] md:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/kwicnww6fxa63f9fplra.webp)] bg-blend-multiply">
+                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20 text-white text-xl medium-italic z-9">
                     Trang chủ &gt; <span className=" text-xl medium-italic ">Tin tức - Sự kiện</span> &gt;{" "}
                     {blog ? <span className=" text-xl medium-italic ">{blog?.title}</span> : 'Loading...'}
                 </div>
@@ -65,8 +65,8 @@ export default function BlogPage({ params }) {
                         </div>
                     </div>
 
-                    <div className="w-full lg:w-1/3 my-5">
-                        <div className='w-[90%] mx-auto mb-5 overflow-hidden'>
+                    <div className="w-full lg:w-[35%] my-5">
+                        <div className='lg:w-[90%] md:w-[60%] w-[80%] mx-auto mb-5 overflow-hidden'>
                             <Image
                                 src={blog?.sideBanner?.url || "/default.jpg"}
                                 alt={blog?.sideBanner?.title || "hot news"}
@@ -76,7 +76,7 @@ export default function BlogPage({ params }) {
                                 className="w-full h-auto object-cover transition-transform duration-500 ease-in-out hover:scale-110"
                             />
                         </div>
-                        <div className='w-[90%] mx-auto mb-5 overflow-hidden'>
+                        <div className='lg:w-[90%] md:w-[60%] w-[80%] mx-auto mb-5 overflow-hidden'>
                             <Image
                                 src={blog?.promoBanner?.url || "/default.jpg"}
                                 alt={blog?.promoBanner?.title || "hot news"}
@@ -89,7 +89,6 @@ export default function BlogPage({ params }) {
                         <div className="rounded p-4 mb-5">
                             <PopularNews />
                         </div>
-                        <BookingForm />
                     </div>
                 </div>
             </div>

@@ -66,14 +66,14 @@ export default function NewBlogs({ category }) {
     if (!featuredNews) return null;
 
     return (
-        <div className="bg-mint p-6 rounded-md mb-5">
+        <div className="bg-mint p-4 rounded-md mb-5">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold text-primary">{category.name}</h2>
                 <Link href={`/tin-tuc-su-kien/${category.id}`} className="text-blue-600 text-sm font-medium hover:underline">Xem thêm</Link>
             </div>
 
             <div className="md:flex gap-4">
-                <div className="md:w-[60%]">
+                <div className="md:w-[60%] mb-4">
                     <Link href={`/tin-tuc-su-kien/${category.id}/${featuredNews.id}`}>
                         <div className="rounded overflow-hidden">
                             <Image
@@ -113,7 +113,7 @@ export default function NewBlogs({ category }) {
                                     />
                                 </div>
                                 <div className="w-1/2">
-                                    <h4 className="text-sm font-semibold text-primary hover:text-midnight leading-snug line-clamp-4">
+                                    <h4 className="text-sm font-semibold text-primary hover:text-midnight leading-snug line-clamp-3">
                                         {news.title}
                                     </h4>
                                     <div className="flex items-center text-gray-500 text-xs mt-1">

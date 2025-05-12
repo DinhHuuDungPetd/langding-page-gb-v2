@@ -41,13 +41,13 @@ export default function ServicePage() {
                 />
             </Head>
             <motion.div
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/vipav5ien5gkxekytrzd.webp)] bg-blend-multiply"
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747017212/backgroundMobile/o4wmtltzspcfhnq233co.jpg)] md:bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747016415/backgroundMobile/ijn1tfp5aavhibez02hi.jpg)]  bg-blend-multiply"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
             >
                 <motion.div
-                    className="absolute bottom-4 left-20 text-white text-xl italic z-9"
+                    className="absolute bottom-4 left-5 md:left-10 lg:left-20  text-white text-xl italic z-9"
                     initial={{ x: -50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
@@ -107,7 +107,7 @@ export default function ServicePage() {
                                         className="w-full h-full object-cover hidden xl:block"
                                         sizes="(min-width: 1280px) 30vw, 0vw"
                                         quality={50}
-                                        priority = {true}
+                                        priority={true}
                                         loading={"eager"}
                                     />
                                 </div>
@@ -128,7 +128,7 @@ export default function ServicePage() {
                                             </div>
                                         </div>
                                         <motion.h2
-                                            className="text-[31px] lg:text-3xl text-primary font-bold whitespace-nowrap uppercase"
+                                            className="text-xl lg:text-3xl text-primary font-bold whitespace-nowrap uppercase"
                                             variants={itemVariants}
                                             whileHover={{ scale: 1.05 }}
                                             transition={{ duration: 0.2 }}
@@ -170,26 +170,25 @@ export default function ServicePage() {
                     </div>
                 </motion.div>
             </div>
-            <motion.div
-                className="bg-mint py-5"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+            <motion.section
+                className="bg-mint px-4 sm:px-6 lg:px-8"
+                variants={containerVariants}
             >
                 <motion.h2
-                    className="text-[20px] lg:text-3xl font-bold text-primary text-center uppercase"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.2 }}
+                    className="text-[20px] lg:text-3xl font-bold text-primary text-center my-2 uppercase"
+                    variants={itemVariants}
                 >
                     Tại sao nên chọn GREEN LAB?
                 </motion.h2>
-                <div className="my-10">
+                <motion.div
+                    className="my-10"
+                    variants={itemVariants}
+                >
                     <MediaContent />
-                </div>
-            </motion.div>
+                </motion.div>
+            </motion.section>
             <CertificateComponent />
-            <PartnerComponent />
+            {/* <PartnerComponent /> */}
             <OrderComponent />
         </div>
     )

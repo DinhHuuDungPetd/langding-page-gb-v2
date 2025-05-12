@@ -39,7 +39,7 @@ export default function PopularNews() {
             <h3 className="text-2xl text-primary font-bold text-center pt-5">
                 Tin tức nhiều người đọc
             </h3>
-            <div className="py-4 px-10">
+            <div className="py-4 px-2 md:px-5">
                 {latestNews && latestNews.length > 0 ? (
                     latestNews.map((item, index) => (
                         <Link
