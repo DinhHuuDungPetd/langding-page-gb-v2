@@ -18,13 +18,21 @@ export default function BlogPage({ params }) {
     useEffect(() => {
         axios.get(`${baseUrl}/categorys/${id}`)
             .then(response => {
-                setCategory(response.data)
+                if (response.data.status === true) {
+                    setCategory(response.data);
+                } else {
+                    console.warn('Category is inactive');
+                    setCategory(null); // hoặc bỏ qua
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }, []);
+
     useEffect(() => {
+        if (!category?.id_bogs) return;
+
         const fetchBlogs = async () => {
             try {
                 const res = await axios.get(`${baseUrl}/blogs`);
