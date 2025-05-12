@@ -67,11 +67,15 @@ export default function RelatedPosts({ blogsRelated }) {
     };
     return (
         <div className="w-full">
-            <div className="mx-auto py-4 px-2 flex flex-wrap justify-start gap-x-6">
+            <div className="mx-auto py-4 px-2 flex flex-wrap justify-center gap-x-4 gap-y-6">
                 {currentItems.length > 0 ? (
                     currentItems.map((item, index) => (
-                        <Link href={`/tin-tuc-su-kien/${item.id}`} key={`related-post-${index}`} className="w-[22%] text-center">
-                            <div className="relative w-full h-[150px] rounded-lg overflow-hidden">
+                        <Link
+                            href={`/tin-tuc-su-kien/${item.id}`}
+                            key={`related-post-${index}`}
+                            className="w-full sm:w-[45%] md:w-[40%] lg:w-[23%] text-center"
+                        >
+                            <div className="relative w-full h-[150px] lg:h-[100px] rounded-lg overflow-hidden">
                                 <Image
                                     src={item.imageTitle.url}
                                     alt={item.imageTitle.title || "Related post"}

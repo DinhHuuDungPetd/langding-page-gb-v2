@@ -64,7 +64,7 @@ export default function BlogCategory({ category, sideNews }) {
                             <div className="flex flex-col lg:flex-row items-center justify-between py-5">
                                 <Link href={`/tin-tuc-su-kien/${category.id}/${item.id}`}>
                                     <div className="flex items-center">
-                                        <div className="relative w-48 h-32 rounded-lg overflow-hidden shrink-0">
+                                        <div className="relative w-30 lg:w-48 h-24 lg:h-32 rounded-lg overflow-hidden shrink-0">
                                             <Image
                                                 src={item.imageTitle.url}
                                                 alt={item.imageTitle.title}
@@ -74,10 +74,10 @@ export default function BlogCategory({ category, sideNews }) {
                                             />
                                         </div>
                                         <div className="ml-4 w-[70%]">
-                                            <h3 className="lg:text-xl text-primary font-bold  overflow-hidden text-ellipsis max-w-full">
+                                            <h3 className="lg:text-lg text-primary font-bold  overflow-hidden text-ellipsis max-w-full line-clamp-2" title={item.title}>
                                                 {item.title}
                                             </h3>
-                                            <p className="font-medium text-balance text-vs text-gray-600 line-clamp-2">{item.description}</p>
+                                            <p className="font-medium text-balance text-sm text-gray-600 line-clamp-2" title={item.description} >{item.description}</p>
                                             <div className="flex items-start mt-2 gap-1.5 font-medium text-xs text-gray-600">
                                                 <div className="flex items-center text-xs text-gray-500 gap-1 mt-1">
                                                     <FaCalendarAlt className="mt-[2px]" />

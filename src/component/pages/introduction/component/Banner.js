@@ -1,9 +1,8 @@
 "use client";
-import Image from "next/image"
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function Banner() {
-
     const cardVariants = {
         hidden: { opacity: 0, y: 50 },
         visible: (i) => ({
@@ -18,52 +17,59 @@ export default function Banner() {
     };
 
     return (
-        <div className="relative w-full h-[700px] md:h-[700px] xl:h-[530px] my-2">
-            <div
-                className="absolute left-0 w-full h-[650px] md:h-[700px] xl:h-[500px] bg-gradient-to-b from-primary  to-midnight transform origin-bottom skew-x-[-3deg] -rotate-3 z-0 xl:top-10 md:top-27 top-18 flex justify-end items-center"
-            >
+        <div className="relative w-full my-6">
+            <div className="absolute inset-0 top-10 lg:h-[90%] bg-gradient-to-b from-primary to-midnight transform origin-bottom skew-x-[-3deg] -rotate-3 z-0 flex justify-end items-center overflow-hidden">
                 <Image
                     src="/images/background/background_2.png"
                     alt="background"
                     width={512}
                     height={512}
-                    className="object-cover w-[55%] opacity-32 h-auto hidden xl:block  pr-10"
+                    className="w-1/2 md:w-[55%] opacity-30 pr-4 sm:pr-10 hidden md:block object-contain"
                 />
             </div>
+
             <motion.div
                 custom={0}
                 initial="hidden"
                 whileInView="visible"
                 variants={cardVariants}
-                className="relative grid grid-cols-1 xl:grid-cols-2 h-full z-8 xl:mx-10 pl-30"
+                className="relative container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 items-center z-10"
             >
-                <div className="relative">
+                <div className="relative w-full">
                     <Image
                         src="/images/nv/nv_1.png"
                         alt="nhan vien"
                         width={780}
                         height={900}
-                        className="object-cover transform origin-bottom xl:-rotate-3"
+                        className="object-cover transform origin-bottom -rotate-3 w-full h-auto"
+                        priority
                     />
                 </div>
 
-                <div className="relative">
-                    <div className="absolute inset-0 flex flex-col items-center lg:justify-center text-white px-4 text-center pointer-events-none">
-                        <h2 className="xl:text-8xl text-outline-3 font-bold">2014</h2>
-                        <p className="text-base">
-                            <span className="font-fz-poppins medium xl:text-md">Green Lab ra đời dưới sự dẫn dắt của</span > <br />
-                            <span className=" xl:text-md font-bold">Công ty Cổ phần Đầu tư và Công nghệ Y tế Hà Nội</span><br />
-                            <span className="medium xl:text-md">với một khát vọng giản dị nhưng mạnh mẽ:</span>
+                <div className="relative w-full h-full">
+                    <div className="flex flex-col items-center justify-center text-white text-center h-full">
+                        <h2 className="text-outline-3 font-bold text-3xl lg:text-5xl xl:text-7xl mb-2">2014</h2>
+                        <p className="text-sm  lg:text-xl mb-4 text-pretty">
+                            <span className="font-medium text-pretty">
+                                Green Lab ra đời dưới sự dẫn dắt của
+                            </span>
+                            <br />
+                            <span className="font-bold text-pretty">
+                                Công ty Cổ phần Đầu tư và Công nghệ Y tế Hà Nội
+                            </span>
+                            <br />
+                            <span className="font-medium text-pretty">
+                                với một khát vọng giản dị nhưng mạnh mẽ:
+                            </span>
                         </p>
-                        <br />
-                        <p className="xl:text-xl font-bold">
-                            MANG ĐẾN DỊCH VỤ XÉT NGHIỆM Y HỌC CHẤT LƯỢNG,<br />
+                        <p className="font-bold text-md lg:text-lg xl:text-2xl text-pretty">
+                            MANG ĐẾN DỊCH VỤ XÉT NGHIỆM Y HỌC CHẤT LƯỢNG,
+                            <br />
                             ĐÁNG TIN CẬY CHO MỌI NGƯỜI DÂN VIỆT NAM
                         </p>
                     </div>
                 </div>
             </motion.div>
-
         </div>
-    )
+    );
 }

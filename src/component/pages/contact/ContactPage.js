@@ -53,11 +53,11 @@ const ContactPage = memo(() => {
             animate="visible"
             variants={containerVariants}
         >
-            <motion.div 
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/modzoiaox5xwvavuyyai.webp)] bg-blend-multiply"
+            <motion.div
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747018636/backgroundMobile/bw4hk7or82wnbqlpxbsj.jpg)] md:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/modzoiaox5xwvavuyyai.webp)] bg-blend-multiply"
                 variants={itemVariants}
             >
-                <div className="absolute bottom-4 left-20 text-white text-xl medium-italic z-9">
+                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20 text-white text-xl medium-italic z-9">
                     Trang chủ &gt; <span className="font-normal">Liên hệ</span>
                 </div>
             </motion.div>

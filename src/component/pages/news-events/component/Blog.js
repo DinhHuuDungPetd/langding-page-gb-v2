@@ -197,19 +197,23 @@ export default function Blog({ blog }) {
     return (
         <div className={`${styles.blogContent} px-4 py-6 max-w-5xl mx-auto`}>
 
-            <div className="flex flex-wrap items-center medium-italic text-gray-400 text-sm space-x-4 border-b pb-4 mb-4 px-4">
+            <div className="flex flex-wrap items-center justify-center md:justify-start text-gray-400 text-sm border-b pb-4 mb-4 px-4 gap-x-4 gap-y-2">
                 <div className="flex items-center space-x-2">
-                    <FaCalendarAlt className="text-green-700" size={30} />
+                    <FaCalendarAlt className="text-green-700" size={20} />
                     <span>Ngày đăng: {formatDate(blog?.time)}</span>
                 </div>
-                <div className="h-4 border-l border-gray-300 mx-2" />
+
+                <div className="hidden md:block h-4 border-l border-gray-300 mx-2" />
+
                 <div className="flex items-center space-x-2">
-                    <FaUser className="text-green-700" size={30} />
+                    <FaUser className="text-green-700" size={20} />
                     <span>Tác giả: admin</span>
                 </div>
-                <div className="h-4 border-l border-gray-300 mx-2" />
+
+                <div className="hidden md:block h-4 border-l border-gray-300 mx-2" />
+
                 <div className="flex items-center space-x-2">
-                    <FaEye className="text-green-700" size={30} />
+                    <FaEye className="text-green-700" size={20} />
                     <span>{blog.views}</span>
                 </div>
             </div>

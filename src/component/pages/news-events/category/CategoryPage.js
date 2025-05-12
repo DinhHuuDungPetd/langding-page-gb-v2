@@ -65,18 +65,17 @@ export default function BlogPage({ params }) {
     };
     return (
         <div>
-            <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(/images/background/background_6.webp)] bg-blend-multiply">
-                <div className="absolute bottom-4 left-20 text-white text-xl medium-italic z-9">
+            <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747017912/backgroundMobile/skwnwgkb13t5kaqlfl3z.jpg)] md:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/kwicnww6fxa63f9fplra.webp)] bg-blend-multiply">
+                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20 text-white text-xl medium-italic z-9">
                     Trang chủ &gt; <span className=" text-xl medium-italic ">Tin tức - Sự kiện</span> &gt;{" "}
                     <span className=" text-xl medium-italic ">{category?.name}</span>
                 </div>
             </div>
-            <div className="container mx-auto px-10">
+            <div className="container mx-auto px-2">
                 <div className="flex flex-col lg:flex-row gap-10">
-                    <div className="w-full lg:w-[65%] bg-mint px-10 mb-3">
+                    <div className="w-full lg:w-[65%] bg-mint px-2 lg:px-10 mb-3">
                         <div className="flex flex-col lg:flex-row gap-6 items-start w-full max-w-5xl mx-auto py-6">
-                            {/* Image */}
-                            <div className="w-full lg:w-[50%] rounded-md overflow-hidden">
+                            <div className="w-[70%] lg:w-[50%] rounded-md overflow-hidden">
                                 <Image
                                     src={featuredNews.imageTitle?.url || "/default.jpg"}
                                     alt={featuredNews.imageTitle?.title || "hot news"}
@@ -87,7 +86,6 @@ export default function BlogPage({ params }) {
                                 />
                             </div>
 
-                            {/* Content */}
                             <div className="flex flex-col gap-3 lg:w-[50%]">
                                 <p className="uppercase text-sm text-gray-500 font-semibold">Tin tức hot nhất</p>
                                 <Link href={`/tin-tuc-su-kien/news/${featuredNews.id}`}>
@@ -107,8 +105,8 @@ export default function BlogPage({ params }) {
                         <BlogCategory category={category} sideNews={sideNews} />
                     </div>
 
-                    <div className="w-full lg:w-[40%] my-5">
-                        <div className='w-[90%] mx-auto mb-5 overflow-hidden'>
+                    <div className="w-full lg:w-[35%] my-5">
+                        <div className='lg:w-[90%] md:w-[60%] w-[80%] mx-auto mb-5 overflow-hidden'>
                             <Image
                                 src={category?.sideBanner?.url || "/default.jpg"}
                                 alt={category?.sideBanner?.title || "hot news"}
@@ -118,7 +116,7 @@ export default function BlogPage({ params }) {
                                 className="w-full h-auto object-cover transition-transform duration-500 ease-in-out hover:scale-110"
                             />
                         </div>
-                        <div className='w-[90%] mx-auto mb-5 overflow-hidden'>
+                        <div className='lg:w-[90%] md:w-[60%] w-[80%] mx-auto mb-5 overflow-hidden'>
                             <Image
                                 src={category?.promoBanner?.url || "/default.jpg"}
                                 alt={category?.promoBanner?.title || "hot news"}

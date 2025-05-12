@@ -47,8 +47,8 @@ const CertificateComponent = memo(() => {
     };
 
     return (
-        <motion.section 
-            className="page-2 w-full" 
+        <motion.section
+            className="page-2 w-full py-5"
             aria-labelledby="certificate-heading"
             initial="hidden"
             whileInView="visible"
@@ -56,45 +56,45 @@ const CertificateComponent = memo(() => {
             variants={containerVariants}
         >
             <div className="container mx-auto py-1 flex flex-col lg:flex-row justify-between items-center">
-                <motion.div 
-                    className="w-full lg:w-2/3 text-white"
+                <motion.div
+                    className="w-full lg:w-2/3 text-white px-4"
                     variants={itemVariants}
                 >
-                    <motion.h1 
-                        id="certificate-heading" 
-                        className="text-2xl font-bold text-white mb-6 uppercase text-outline-4"
+                    <motion.h1
+                        id="certificate-heading"
+                        className="text-2xl font-bold text-white mb-6 uppercase text-outline-4 text-pretty"
                         variants={itemVariants}
                     >
                         TỰ HÀO ĐƯỢC CẤP CHỨNG NHẬN<br />
-                        <motion.span 
+                        <motion.span
                             className="text-white text-4xl"
                             variants={itemVariants}
                         >
                             ISO 15189:2012 VILAS MED 134
                         </motion.span>
                     </motion.h1>
-                    <motion.p 
-                        className="text-md mb-6 leading-relaxed"
+                    <motion.p
+                        className="text-md mb-6 leading-relaxed text-pretty"
                         variants={itemVariants}
                     >
                         Trong hành trình phát triển nỗ lực không ngừng, Trung tâm Xét nghiệm Green Lab đã dần gây dựng được vị thế tiền phong trong việc cung cấp dịch vụ xét nghiệm uy tín, nhanh chóng và hợp lý.
                     </motion.p>
                     <motion.div variants={itemVariants}>
-                        <motion.p 
-                            className="text-md"
+                        <motion.p
+                            className="text-md text-pretty"
                             variants={itemVariants}
                         >
                             Tháng 12/2020, Green Lab được cấp chứng nhận <span className="font-semibold">ISO 15189:2012 VILAS MED 134</span> - tiêu chuẩn quốc tế về năng lực kỹ thuật và hệ thống quản lý của Green Lab.
                         </motion.p>
                     </motion.div>
-                    <motion.ul 
-                        className="space-y-4 text-md mt-6" 
+                    <motion.ul
+                        className="space-y-4 text-md mt-6 text-pretty"
                         role="list"
                         variants={containerVariants}
                     >
                         {benefits.map((item, index) => (
-                            <motion.li 
-                                key={index} 
+                            <motion.li
+                                key={index}
                                 className="text-white before:content-['•'] before:text-white before:mr-2 before:text-xl"
                                 variants={itemVariants}
                                 whileHover={{ x: 10 }}
@@ -106,12 +106,12 @@ const CertificateComponent = memo(() => {
                     </motion.ul>
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                     className="w-full lg:w-1/3 flex items-center justify-center mt-10 lg:mt-0 p-4"
                     variants={imageVariants}
                 >
                     <Image
-                        src="/images/cnf.png"
+                        src="/images/iso.png"
                         alt="Chứng chỉ ISO 15189:2012 VILAS MED 134 của Green Lab"
                         placeholder="blur"
                         quality={85}
