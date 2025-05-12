@@ -14,7 +14,8 @@ export default function NewsEvents() {
     useEffect(() => {
         axios.get(`${baseUrl}/categorys`)
             .then(response => {
-                setCategorys(response.data);
+                const activeCategories = response.data.filter(cat => cat.status === true);
+                setCategorys(activeCategories);
             })
             .catch(error => {
                 console.error('Error:', error);

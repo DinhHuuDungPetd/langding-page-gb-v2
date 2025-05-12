@@ -14,7 +14,7 @@ export default function NewBlogs({ category }) {
         const fetchBlogs = async () => {
             try {
                 const res = await axios.get(`${baseUrl}/blogs`);
-                const blogs = res.data;
+                const blogs = res.data.filter(blog => blog.status === true); // Lọc blog có status = true
 
                 if (!category?.id_bogs) return;
 
@@ -62,6 +62,7 @@ export default function NewBlogs({ category }) {
 
         fetchBlogs();
     }, [category]);
+
 
     if (!featuredNews) return null;
 

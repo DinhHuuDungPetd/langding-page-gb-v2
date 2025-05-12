@@ -1092,7 +1092,7 @@
         "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746694660/lrpqtsmvrc63ucae1muw.jpg",
         "title": "Quy Trình Xét Nghiệm"
       },
-      "views": 7,
+      "views": 8,
       "status": true,
       "postJson": {
         "type": "doc",
@@ -3053,7 +3053,7 @@
         "title": "1"
       },
       "priority": "0",
-      "status": true,
+      "status": false,
       "id_bogs": [
         {
           "id": "382521",
@@ -3090,7 +3090,7 @@
         "title": "1"
       },
       "priority": "0",
-      "status": true,
+      "status": false,
       "id_bogs": [
         {
           "id": "382521",

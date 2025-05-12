@@ -116,7 +116,7 @@ const IntroductionPage = memo(() => {
                 </motion.div>
 
                 <motion.div
-                    className="space-y-6 mt-8 lg:mt-12 xl:mt-0 xl:ml-8 px-4 sm:px-6 w-full mx-auto"
+                    className="space-y-6 mt-8 lg:mt-12 xl:mt-0 xl:ml-8  sm:px-6 w-full mx-auto"
                     variants={containerVariants}
                 >
                     <motion.article variants={itemVariants}>
@@ -157,27 +157,26 @@ const IntroductionPage = memo(() => {
             </motion.div>
 
             <motion.div
-                className="grid grid-cols-1 lg:grid-cols-3 gap-5 px-4 sm:px-6 xl:px-40 py-4 container mx-auto"
+                className="grid grid-cols-1  lg:grid-cols-3 gap-5 px-4 sm:px-6 xl:px-40 py-4 container mx-auto"
                 variants={containerVariants}
             >
                 {visionCards.map((card, index) => (
                     <motion.article
                         key={index}
-                        className="bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central text-white rounded-xl p-2 shadow-lg flex flex-col items-center text-center"
+                        className="w-full h-full min-h-[320px] bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central text-white rounded-xl p-4 shadow-lg flex flex-col items-center text-center"
                         variants={itemVariants}
                         whileHover={{ scale: 1.02 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <div className="mb-4">
-                            {card.icon}
-                        </div>
+                        <div className="mb-4 text-4xl">{card.icon}</div>
                         <h3 className="text-xl uppercase font-bold mb-3">{card.title}</h3>
-                        <div className="font-medium text-sm sm:text-md text-pretty">
+                        <div className="font-medium text-sm sm:text-base text-pretty line-clamp-5">
                             {card.content}
                         </div>
                     </motion.article>
                 ))}
             </motion.div>
+
 
             <motion.section
                 className="bg-mint px-4 sm:px-6 lg:px-8"
