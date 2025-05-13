@@ -152,47 +152,32 @@ const MedicalSlider = () => {
     ]
 
     return (
-        <>
-            <div className="relative pt-8">
-                <Swiper
-                    modules={[Navigation]}
-                    spaceBetween={10}
-                    slidesPerView={4.5}
-                    loop={true}
-                    breakpoints={{
-                        640: {
-                            slidesPerView: 2,
-                            spaceBetween: 15
-                        },
-                        768: {
-                            slidesPerView: 3,
-                            spaceBetween: 20
-                        },
-                        1024: {
-                            slidesPerView: 4.5,
-                            spaceBetween: 25
-                        }
-                    }}
-                    className="w-full"
-                >
-                    {images.map((image, index) => (
-                        <SwiperSlide key={index}>
-                            <div className="relative h-[150px] w-[150px] cursor-pointer">
-                                <Image
-                                    src={image.src}
-                                    alt={image.alt}
-                                    fill
-                                    style={{
-                                        objectFit: "contain",
-                                    }}
-                                    loading="lazy"
-                                />
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+        <div className="overflow-hidden whitespace-nowrap">
+            <div className="animate-marquee flex gap-10">
+                {images.map((image, index) => (
+                    <Image
+                        key={index}
+                        src={image.src}
+                        alt={image.alt}
+                        width={150}
+                        height={100}
+                        className="object-contain"
+                    />
+                ))}
+                {/* Duplicate for seamless loop */}
+                {images.map((image, index) => (
+                    <Image
+                        key={`clone-${index}`}
+                        src={image.src}
+                        alt={image.alt}
+                        width={150}
+                        height={100}
+                        className="object-contain"
+                    />
+                ))}
             </div>
-        </>
+        </div>
+
     );
 };
 

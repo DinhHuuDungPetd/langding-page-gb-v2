@@ -56,7 +56,7 @@ export default function ServicePage() {
                     Trang chủ &gt; <span className="font-normal">Dịch vụ xét nghiệm</span>
                 </motion.div>
             </motion.div>
-            <div className="relative w-full min-h-screen bg-mint overflow-hidden">
+            <div className="relative w-full  bg-mint overflow-hidden">
                 <Banner />
             </div>
             <motion.div
@@ -87,7 +87,7 @@ export default function ServicePage() {
                 </motion.div>
             </motion.section>
             <CertificateComponent />
-            {/* <PartnerComponent /> */}
+            <PartnerComponent />
             <OrderComponent />
         </div>
     )

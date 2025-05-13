@@ -23,7 +23,7 @@ export default function InfoBox() {
     };
 
     return (
-        <div className="hop-tac flex items-center justify-center gap-0">
+        <div className="hop-tac flex items-center justify-center gap-0 px-5">
             {/* Cột 1: 2 hàng */}
             <div className="flex items-end justify-end flex-col">
                 <motion.div
@@ -32,7 +32,7 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }} // Trigger khi 30% card vào viewport
                     variants={cardVariants}
-                    className="w-[230px] h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
                 >
                     <div className="flex items-center justify-center">
                         <Home_7 />
@@ -50,7 +50,7 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[230px] h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
                 >
                     <div className="flex items-center justify-center">
                         <Home_9 />
@@ -68,8 +68,8 @@ export default function InfoBox() {
             </div>
 
             {/* Cột 2: Hình ảnh */}
-            <div className="bg-white w-[500px] h-[500px]">
-                <div className="relative w-full h-full">
+            <div className="bg-white w-[500px] h-[500px] hidden md:block">
+                <div className="relative w-full h-full ">
                     <Image
                         src="/images/background/Frame-logo-01.webp"
                         alt="Chứng chỉ ISO GREEN LAB"
@@ -88,7 +88,7 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[230px] h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
                 >
                     <div className="flex items-center justify-center">
                         <Home_8 />
@@ -109,7 +109,7 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[230px] h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
                 >
                     <div className="flex items-center justify-center">
                         <Home_10 />

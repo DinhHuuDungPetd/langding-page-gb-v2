@@ -48,46 +48,46 @@ const ExpertComponent = memo(() => {
 
     return (
         <AnimatePresence>
-            <motion.section 
-                className="container mx-auto py-8" 
+            <motion.section
+                className="container mx-auto py-8 mt-10"
                 aria-labelledby="expert-heading"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
                 variants={containerVariants}
             >
-                <motion.div 
+                <motion.div
                     className="flex items-center justify-center gap-2"
                     variants={itemVariants}
                 >
-                    <div className="flex items-center gap-1">
+                    <div className=" items-center gap-1 hidden md:flex">
                         <span className="w-2 h-2 bg-primary rounded-full"></span>
                         <span className="w-16 h-[2px] bg-[#36803E]"></span>
                     </div>
                     <h2 id="expert-heading" className="text-primary text-xl md:text-2xl font-bold whitespace-nowrap">
                         ĐỘI NGŨ CHUYÊN GIA HÀNG ĐẦU
                     </h2>
-                    <div className="flex items-center gap-1">
+                    <div className=" items-center gap-1 hidden md:flex">
                         <span className="w-16 h-[2px] bg-[#36803E]"></span>
                         <span className="w-2 h-2 bg-[#36803E] rounded-full"></span>
                     </div>
                 </motion.div>
-                <motion.div 
-                    className="flex items-center justify-center text-center pt-8"
+                <motion.div
+                    className="flex items-center justify-center text-center pt-8 mb-5"
                     variants={itemVariants}
                 >
-                    <p className="w-4/5 text-[18px]">
+                    <p className="w-full px-5 md:w-4/5 md:px-0 text-md text-justify md:text-center">
                         Đội ngũ chuyên gia hàng đầu với hơn 20 năm kinh nghiệm trong lĩnh vực y học mang đến dịch vụ xét nghiệm tại nhà, giúp bạn yên tâm về kết quả.
                         Với chuyên môn cao mức độ chuyên gia, Green Lab không chỉ là xét nghiệm, mà là sự đảm bảo cho sức khỏe của bạn và gia đình!
                     </p>
                 </motion.div>
-                <motion.div 
-                    className="flex items-center justify-center "
+                <motion.div
+                    className="flex flex-col md:flex-row items-center justify-center "
                     variants={containerVariants}
                 >
                     {experts.map((expert, index) => (
-                        <motion.div 
-                            key={index} 
+                        <motion.div
+                            key={index}
                             className="relative"
                             variants={itemVariants}
                             whileHover={{ scale: 1.05 }}

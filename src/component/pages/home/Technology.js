@@ -45,7 +45,7 @@ const TechnologyComponent = memo(() => {
     };
 
     return (
-        <motion.section 
+        <motion.section
             className="page-3 px-4 sm:px-6 lg:px-8"
             initial="hidden"
             whileInView="visible"
@@ -53,7 +53,7 @@ const TechnologyComponent = memo(() => {
             variants={containerVariants}
         >
             <div className="container mx-auto py-12 sm:py-20">
-                <motion.div 
+                <motion.div
                     className="text-white w-full lg:w-1/2"
                     variants={itemVariants}
                 >
@@ -69,8 +69,8 @@ const TechnologyComponent = memo(() => {
                         Quy trình xét nghiệm được tự động hóa hoàn toàn, được quản lý bằng phần mềm do GreenLab phát triển.
                     </p>
                 </motion.div>
-                <motion.div 
-                    className="flex items-center justify-start gap-4"
+                <motion.div
+                    className=" items-center justify-start gap-4 hidden md:flex"
                     variants={containerVariants}
                 >
                     {images.map((image, index) => (
