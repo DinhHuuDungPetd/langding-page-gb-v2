@@ -9,11 +9,3 @@ services:
     restart: always
     environment:
       - NODE_ENV=production
-
-  json-server:
-    build:
-      context: ./backend
-    container_name: green-lab-json
-    ports:
-      - "3003:3003"
-    restart: always
