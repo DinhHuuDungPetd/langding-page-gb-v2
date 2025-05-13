@@ -29,20 +29,12 @@ export default function ServiceContent({ content }) {
                         <h2 className="text-primary text-xl md:text-2xl font-bold whitespace-nowrap uppercase tracking-wide">
                             {content.name}
                         </h2>
-<<<<<<< HEAD
                         <p className="mt-2  text-sm sm:text-md font-medium text-justify text-black">
-=======
-                        <p className="mt-2 text-sm  md:text-base xl:text-base font-medium text-justify text-black">
->>>>>>> e2b88642f8a0f7bd21485e277f9528fd0435f468
                             {content.description}
                         </p>
                         <ul className="mt-4 text-left text-black space-y-2 ">
                             {content.features.map((feature, index) => (
-<<<<<<< HEAD
                                 <li key={index} className="flex items-center text-sm sm:text-md font-medium">
-=======
-                                <li key={index} className="flex items-center text-sm md:text-base xl:text-base font-medium">
->>>>>>> e2b88642f8a0f7bd21485e277f9528fd0435f468
                                     <span className="w-5 h-5 mr-2 rounded-full bg-primary flex items-center justify-center text-white">✓</span>
                                     {feature}
                                 </li>

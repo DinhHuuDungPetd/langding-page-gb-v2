@@ -105,7 +105,7 @@ export default function OrderComponent() {
                             <textarea
                                 id="note"
                                 placeholder="Ghi chú thêm những yêu cầu của bạn khi làm xét nghiệm"
-                                className="flex-1 text-sm md:text-base xl:text-base h-[100px] bg-gray-50 border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-1 focus:ring-primary resize-none placeholder-gray-400 text-sm"
+                                className="flex-1 md:text-base xl:text-base h-[100px] bg-gray-50 border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-1 focus:ring-primary resize-none placeholder-gray-400 text-sm"
                             />
                         </div>
 

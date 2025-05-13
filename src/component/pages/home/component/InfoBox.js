@@ -86,7 +86,6 @@ const InfoCard = ({ icon, number, title, description, index }) => (
 
 export default function InfoBox() {
     return (
-<<<<<<< HEAD
         <div className="hop-tac flex flex-col sm:flex-row items-center justify-center gap-0 px-5">
             {/* Cột 1: 2 hàng */}
             <div className="flex items-end justify-end flex-col">
@@ -129,16 +128,6 @@ export default function InfoBox() {
                         Liên kết hợp tác
                     </span>
                 </motion.div>
-=======
-        <div className="hop-tac flex items-center justify-center gap-0 px-5">
-            {/* Cột trái */}
-            <div className="flex items-end justify-end flex-col">
-                {cardData
-                    .filter(card => card.align === "end")
-                    .map((card) => (
-                        <InfoCard key={card.id} {...card} index={card.id} />
-                    ))}
->>>>>>> e2b88642f8a0f7bd21485e277f9528fd0435f468
             </div>
 
             {/* Cột giữa: Hình ảnh */}
@@ -156,7 +145,6 @@ export default function InfoBox() {
 
             {/* Cột phải */}
             <div className="flex items-start justify-end flex-col">
-<<<<<<< HEAD
                 <motion.div
                     custom={2}
                     initial="hidden"
@@ -199,13 +187,6 @@ export default function InfoBox() {
                         Liên kết hợp tác
                     </span>
                 </motion.div>
-=======
-                {cardData
-                    .filter(card => card.align === "start")
-                    .map((card) => (
-                        <InfoCard key={card.id} {...card} index={card.id} />
-                    ))}
->>>>>>> e2b88642f8a0f7bd21485e277f9528fd0435f468
             </div>
         </div>
     );
