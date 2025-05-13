@@ -42,7 +42,7 @@ const fadeInUp = {
 const ImageSlider = memo(() => {
     return (
         <motion.div
-            className="relative w-full mx-auto"
+            className="relative w-full mx-auto hidden md:block"
             role="region"
             aria-label="Image Slider"
             initial="initial"

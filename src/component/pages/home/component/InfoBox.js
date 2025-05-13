@@ -1,8 +1,12 @@
 'use client'
 
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 import Icon from "@/component/Icon";
 import Image from "next/image";
+import Home_7 from "@/icons/Home_7"
+import Home_8 from "@/icons/Home_8"
+import Home_9 from "@/icons/Home_9"
+import Home_10 from "@/icons/Home_10"
 
 export default function InfoBox() {
     const cardVariants = {
@@ -18,8 +22,8 @@ export default function InfoBox() {
         }),
     };
 
-    return(
-        <div className="hop-tac flex items-center justify-center gap-0">
+    return (
+        <div className="hop-tac flex items-center justify-center gap-0 px-5">
             {/* Cột 1: 2 hàng */}
             <div className="flex items-end justify-end flex-col">
                 <motion.div
@@ -28,21 +32,17 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }} // Trigger khi 30% card vào viewport
                     variants={cardVariants}
-                    className="w-[230px] h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
                 >
                     <div className="flex items-center justify-center">
-                        <Icon
-                            src={"icon-trang-chu-07.png"}
-                            alt={"Xét nghiệm greenlab"}
-                            size={84}
-                        />
+                        <Home_7 />
                     </div>
                     <h2 className="text-white text-xl md:text-4xl font-bold whitespace-nowrap uppercase">
                         1.000.000+
                     </h2>
                     <span className="text-white text-sm font-bold">
-              Xét nghiệm chuyên sâu
-            </span>
+                        Xét nghiệm chuyên sâu
+                    </span>
                 </motion.div>
                 <motion.div
                     custom={1}
@@ -50,14 +50,10 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[230px] h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
                 >
                     <div className="flex items-center justify-center">
-                        <Icon
-                            src={"icon-trang-chu-09.png"}
-                            alt={"Xét nghiệm greenlab"}
-                            size={84}
-                        />
+                        <Home_9 />
                     </div>
                     <h2 className="text-white text-xl md:text-4xl font-bold whitespace-nowrap uppercase">
                         50+
@@ -66,14 +62,14 @@ export default function InfoBox() {
                         Bệnh viện
                     </h2>
                     <span className="text-white text-sm font-bold">
-              Liên kết hợp tác
-            </span>
+                        Liên kết hợp tác
+                    </span>
                 </motion.div>
             </div>
 
             {/* Cột 2: Hình ảnh */}
-            <div className="bg-white w-[500px] h-[500px]">
-                <div className="relative w-full h-full">
+            <div className="bg-white w-[500px] h-[500px] hidden md:block">
+                <div className="relative w-full h-full ">
                     <Image
                         src="/images/background/Frame-logo-01.webp"
                         alt="Chứng chỉ ISO GREEN LAB"
@@ -92,14 +88,10 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[230px] h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
                 >
                     <div className="flex items-center justify-center">
-                        <Icon
-                            src={"icon-trang-chu-08.png"}
-                            alt={"Xét nghiệm greenlab"}
-                            size={84}
-                        />
+                        <Home_8 />
                     </div>
                     <h2 className="text-white text-xl md:text-4xl font-bold whitespace-nowrap uppercase">
                         500+
@@ -108,8 +100,8 @@ export default function InfoBox() {
                         Bệnh viện
                     </h2>
                     <span className="text-white text-sm font-bold">
-              Tin tưởng sử dụng dịch vụ
-            </span>
+                        Tin tưởng sử dụng dịch vụ
+                    </span>
                 </motion.div>
                 <motion.div
                     custom={3}
@@ -117,14 +109,10 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[230px] h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
                 >
                     <div className="flex items-center justify-center">
-                        <Icon
-                            src={"icon-trang-chu-10.png"}
-                            alt={"Xét nghiệm greenlab"}
-                            size={84}
-                        />
+                        <Home_10 />
                     </div>
                     <h2 className="text-white text-xl md:text-4xl font-bold whitespace-nowrap uppercase">
                         4000+
@@ -133,8 +121,8 @@ export default function InfoBox() {
                         Bác sĩ & CTV
                     </h2>
                     <span className="text-white text-sm font-bold">
-              Liên kết hợp tác
-            </span>
+                        Liên kết hợp tác
+                    </span>
                 </motion.div>
             </div>
         </div>

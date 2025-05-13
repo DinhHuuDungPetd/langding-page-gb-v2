@@ -53,31 +53,31 @@ const ContactPage = memo(() => {
             animate="visible"
             variants={containerVariants}
         >
-            <motion.div 
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/modzoiaox5xwvavuyyai.webp)] bg-blend-multiply"
+            <motion.div
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747018636/backgroundMobile/bw4hk7or82wnbqlpxbsj.jpg)] md:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/modzoiaox5xwvavuyyai.webp)] bg-blend-multiply"
                 variants={itemVariants}
             >
-                <div className="absolute bottom-4 left-20 text-white text-xl medium-italic z-9">
+                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20 text-white text-xl medium-italic z-9">
                     Trang chủ &gt; <span className="font-normal">Liên hệ</span>
                 </div>
             </motion.div>
 
-            <motion.section 
-                className="bg-[#f3fbee] px-4 md:px-16 py-10"
+            <motion.section
+                className="bg-mint px-4 md:px-16 py-10"
                 variants={containerVariants}
             >
-                <motion.h2 
+                <motion.h2
                     className="text-center text-green-700 text-2xl font-bold uppercase mb-8"
                     variants={itemVariants}
                 >
                     Bản đồ chỉ dẫn đường đi
                 </motion.h2>
 
-                <motion.div 
+                <motion.div
                     className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
                     variants={containerVariants}
                 >
-                    <motion.div 
+                    <motion.div
                         className="w-full md:h-full rounded-xl overflow-hidden shadow-md"
                         variants={itemVariants}
                     >
@@ -94,7 +94,7 @@ const ContactPage = memo(() => {
                         />
                     </motion.div>
 
-                    <motion.div 
+                    <motion.div
                         className="flex flex-col items-start gap-4"
                         variants={itemVariants}
                     >
@@ -109,7 +109,7 @@ const ContactPage = memo(() => {
                             sizes="(max-width: 768px) 100vw, 50vw"
                         />
 
-                        <motion.article 
+                        <motion.article
                             className="mt-4"
                             variants={itemVariants}
                         >

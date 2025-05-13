@@ -6,11 +6,11 @@ import { SiZalo } from "react-icons/si";
 import { FaFacebookMessenger } from "react-icons/fa";
 
 const buttons = [
-    { icon: <FiPhoneCall size={28} />, color: "bg-red-500", label: "Gọi 1", href: "tel:+84123456789" },
-    { icon: <FiPhoneCall size={28} />, color: "bg-red-500", label: "Gọi 2", href: "tel:+84987654321" },
+    { icon: <FiPhoneCall size={28} />, color: "bg-red-500", label: "Gọi 1", href: "tel:" },
+    { icon: <FiPhoneCall size={28} />, color: "bg-red-500", label: "Gọi 2", href: "tel:+84983729351" },
     { icon: <SiZalo size={28} />, color: "bg-blue-500", label: "Zalo", href: "https://zalo.me/yourpage" },
     { icon: <FaFacebookMessenger size={28} />, color: "bg-blue-400", label: "Messenger", href: "https://m.me/yourpage" },
-    { icon: <FiMail size={28} />, color: "bg-orange-400", label: "Email", href: "mailto:your@email.com" },
+    { icon: <FiMail size={28} />, color: "bg-orange-400", label: "Email", href: "mailto:xetnghiemgreenlab@gmail.com" },
 ];
 
 const ContactButton = memo(({ button, index, isVisible }) => (
@@ -37,7 +37,7 @@ const ContactFloatingButton = () => {
     return (
         <div className="fixed right-4 bottom-6 flex flex-col items-center gap-3 z-50">
             <AnimatePresence>
-                {buttons.map((btn, index) => (
+                {open && buttons.map((btn, index) => (
                     <ContactButton
                         key={btn.label}
                         button={btn}

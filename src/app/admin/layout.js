@@ -4,14 +4,15 @@ import Link from 'next/link'
 import Image from "next/image"
 import { AiFillHome } from 'react-icons/ai'
 import { FaRegFileAlt } from 'react-icons/fa'
-import { FiUsers, FiSettings } from 'react-icons/fi'
+import { FiSettings } from 'react-icons/fi'
 import { HiOutlineMenu } from 'react-icons/hi'
 import { MdLogout } from "react-icons/md";
+import { BiCategory } from "react-icons/bi";
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   return (
-    <div className="admin-container grid grid-cols-6 min-h-screen gap-3 shadow-md">
+    <div className="admin-container grid grid-cols-8 min-h-screen gap-3 shadow-md">
 
       <div className={`admin-sidebar col-span-6 xl:col-span-1 bg-mint p-4 transition-all duration-300
   ${sidebarOpen ? 'block' : 'hidden'} xl:flex flex-col items-center justify-start text-center`}>
@@ -29,6 +30,7 @@ export default function AdminLayout({ children }) {
         <nav className="space-y-4 flex flex-col gap-4 w-full ml-15">
           <SidebarLink href="/admin" icon={<AiFillHome size={20} />}>Dashboard</SidebarLink>
           <SidebarLink href="/admin/posts" icon={<FaRegFileAlt size={20} />}>Bài viết</SidebarLink>
+          <SidebarLink href="/admin/categorys" icon={<BiCategory size={20} />}>Danh mục</SidebarLink>
           <SidebarLink href="/admin/settings" icon={<FiSettings size={20} />}>Cài đặt</SidebarLink>
         </nav>
         <hr className="w-full border-gray-400 mb-6" />
@@ -38,7 +40,7 @@ export default function AdminLayout({ children }) {
       </div>
 
 
-      <div className="admin-content col-span-6 xl:col-span-5 ">
+      <div className="admin-content col-span-6 xl:col-span-7 ">
 
         <div className="admin-header flex items-center justify-between bg-white p-4 shadow-md">
           <button

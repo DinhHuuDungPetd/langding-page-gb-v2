@@ -2,6 +2,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import Image from "next/image";
+import Home_14 from "@/icons/Home_14"
 
 const MedicalSlider = () => {
     const images = [
@@ -32,12 +33,8 @@ const MedicalSlider = () => {
             <Swiper
                 modules={[Navigation]}
                 spaceBetween={0}
-                slidesPerView={3}
+                slidesPerView={1}
                 breakpoints={{
-                    640: {
-                        slidesPerView: 1,
-                        spaceBetween: 15,
-                    },
                     768: {
                         slidesPerView: 2,
                         spaceBetween: 20,
@@ -68,19 +65,22 @@ const MedicalSlider = () => {
                             {/* Phần nội dung */}
                             <div className="w-1/2 p-2">
                                 <h3 className="text-sm font-semibold">Lorem Ipsum</h3>
-                                <span className="text-xs text-gray-600">28/04/2025</span>
+                                <div className="flex items-start mt-2 gap-1.5 font-medium text-xs text-gray-600">
+                                    <Home_14 />
+                                    <p className="self-center mt-1">2023-02-05</p>
+                                </div>
                                 <p className="text-xs text-black text-justify leading-relaxed line-clamp-7">
-                                Lorem Ipsum is simply dummy text of the printing
-                                and typesetting industry. Lorem Ipsum has been 
-                                the industry's standard dummy text ever since 
-                                the 1500s, when an unknown printer took a galley
-                                of type and scrambled it to make a type specimen 
-                                book. It has survived not only five centuries, 
-                                but also the leap into electronic typesetting, 
-                                remaining essentially unchanged. It was popularised
-                                in the 1960s with the release of Letraset sheets 
-                                containing Lorem Ipsum passages, and more recently
-                                with desktop publishing software like Aldus PageMaker
+                                    Lorem Ipsum is simply dummy text of the printing
+                                    and typesetting industry. Lorem Ipsum has been
+                                    the industry's standard dummy text ever since
+                                    the 1500s, when an unknown printer took a galley
+                                    of type and scrambled it to make a type specimen
+                                    book. It has survived not only five centuries,
+                                    but also the leap into electronic typesetting,
+                                    remaining essentially unchanged. It was popularised
+                                    in the 1960s with the release of Letraset sheets
+                                    containing Lorem Ipsum passages, and more recently
+                                    with desktop publishing software like Aldus PageMaker
                                 </p>
                             </div>
                         </div>

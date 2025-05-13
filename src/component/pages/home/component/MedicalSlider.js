@@ -39,17 +39,13 @@ const MedicalSlider = () => {
                 <Swiper
                     modules={[Navigation]}
                     spaceBetween={20}
-                    slidesPerView={3}
+                    slidesPerView={2}
                     loop={true}
                     navigation={{
                         nextEl: '.swiper-button-next-custom',
                         prevEl: '.swiper-button-prev-custom',
                     }}
                     breakpoints={{
-                        640: {
-                            slidesPerView: 2,
-                            spaceBetween: 15
-                        },
                         768: {
                             slidesPerView: 3,
                             spaceBetween: 20

@@ -1,0 +1,422 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import React from "react";
+import axios from "axios";
+import UpImage from "@/component/pages/admin/posts/component/UpImage";
+import TableRelatedPosts from "@/component/pages/admin/posts/component/TableRelatedPosts"
+import EditContent from "@/component/pages/admin/posts/component/EditContent"
+import PreviewConten from "@/component/pages/admin/posts/component/PreviewConten"
+import styles from "@/component/style/BlogContent.module.css";
+import { imageFileMap } from "@/component/pages/admin/posts/component/customTiptap/imageFileMap";
+import { createEditor } from '@/component/pages/admin/posts/component/editorConfig';
+import CustomSelect from '@/component/CustomSelect'
+import FullScreenLoader from "@/component/FullScreenLoader";
+export default function PostsPage({ params }) {
+    const { slug } = params;
+    const id = parseInt(slug, 10);
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const [loading, setLoading] = useState(true);
+    const [blogs, setBlogs] = useState([]);
+    const [blogsRelated, setblogsRelated] = useState(null);
+    const [postJson, setPostJson] = useState(null);
+    const [upFile, setUpFile] = useState(null);
+    const [upFileSideBanner, setUpFileSideBanner] = useState(null);
+    const [upFilePromoBanner, setUpFilePromoBanner] = useState(null);
+    const [titleTextSideBanner, setTitleTextSideBanner] = useState("");
+    const [titleTextPromoBanner, setTitleTextPromoBanner] = useState("");
+    const [previewSideBanner, setPreviewSideBanner] = useState("");
+    const [previewPromoBanner, setPreviewPromoBanner] = useState("");
+    const [previewImage, setPreviewImage] = useState("");
+    const [titleText, setTitleText] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [selectedBlogIds, setSelectedBlogIds] = useState([]);
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
+    const [categorys, setCategorys] = useState([]);
+    const editor = createEditor({
+        content: '',
+        onUpdate: ({ editor }) => {
+            setPostJson(editor.getJSON());
+        },
+    });
+
+    useEffect(() => {
+        const fetchPostData = async () => {
+            try {
+                const response = await axios.get(`${baseUrl}/blogs/${id}`);
+                const response2 = await axios.get(`${baseUrl}/blogs_related?id_blog=${id}`);
+                const response3 = await axios.get(`${baseUrl}/blogs`)
+                const response4 = await axios.get(`${baseUrl}/categorys`)
+                const filteredBlogs = response3.data.filter(blog => blog.id !== id.toString());
+                const matchingCategoryIds = response4.data
+                    .filter(category =>
+                        category.id_bogs.some(bog => bog.id === id.toString())
+                    )
+                    .map(category => category.id);
+
+                setBlogs(filteredBlogs);
+
+                setblogsRelated(response2.data[0] || [])
+                console.log(response2.data[0])
+                setCategorys(response4.data)
+                setSelectedCategoryIds(matchingCategoryIds)
+
+                if (editor) {
+                    editor.commands.setContent(response.data.postJson.content);
+                    setPostJson(response.data.postJson);
+                    setTitle(response.data.title);
+                    setDescription(response.data.description);
+                    setSelectedBlogIds(response2.data[0]?.related_blog_id || []);
+                    setPreviewImage(response.data.imageTitle.url);
+                    setTitleText(response.data.imageTitle.title);
+                    setPreviewSideBanner(response.data.sideBanner.url);
+                    setPreviewPromoBanner(response.data.promoBanner.url);
+                    setTitleTextSideBanner(response.data.sideBanner.title);
+                    setTitleTextPromoBanner(response.data.promoBanner.title);
+                }
+            } catch (error) {
+                console.error("Error fetching post data:", error);
+            }
+        };
+
+        fetchPostData();
+        setLoading(false);
+    }, [id, editor]);
+    const processEditorImages = async (editorJson, imageFileMap) => {
+        const walk = async (node) => {
+
+            if (node.type === "image" && node.attrs?.src?.startsWith("blob:")) {
+                console.log("Đang xử lý ảnh:");
+                const file = imageFileMap.get(node.attrs.src);
+                if (file) {
+                    try {
+                        const uploadedUrl = await uploadToCloudinary(file);
+                        return {
+                            ...node,
+                            attrs: {
+                                ...node.attrs,
+                                src: uploadedUrl,
+                            },
+                        };
+                    } catch (err) {
+                        console.error("Lỗi khi upload ảnh:", err);
+                    }
+                } else {
+                    console.log("Không tìm thấy file ảnh");
+                }
+            }
+
+            if (node.content) {
+                const newContent = [];
+                for (const child of node.content) {
+                    const updatedChild = await walk(child);
+                    newContent.push(updatedChild || child);
+                }
+                return {
+                    ...node,
+                    content: newContent,
+                };
+            }
+
+            return node;
+        };
+
+        return await walk(editorJson);
+    };
+
+
+    const handleSave = async () => {
+        setLoading(true);
+        const now = new Date();
+        const formattedTime = now.toISOString();
+
+        // Validate tiêu đề
+        if (!title.trim()) {
+            alert("Vui lòng nhập tiêu đề bài viết!");
+            setLoading(false);
+            return;
+        }
+
+        // Validate mô tả
+        if (!description.trim()) {
+            alert("Vui lòng nhập miêu tả bài viết!");
+            setLoading(false);
+            return;
+        }
+
+        // Validate nội dung
+        if (!postJson || !postJson.content || postJson.content.length === 0) {
+            alert("Nội dung bài viết không được để trống!");
+            setLoading(false);
+            return;
+        }
+
+        // Validate tiêu đề ảnh chính
+        if (!titleText.trim()) {
+            alert("Vui lòng nhập tiêu đề ảnh chính!");
+            setLoading(false);
+            return;
+        }
+
+        // Nếu có upload ảnh mới, validate luôn các tiêu đề ảnh kèm theo
+        if (upFile || upFileSideBanner || upFilePromoBanner) {
+            if (!titleTextSideBanner.trim()) {
+                alert("Vui lòng nhập tiêu đề ảnh banner bên!");
+                setLoading(false);
+                return;
+            }
+
+            if (!titleTextPromoBanner.trim()) {
+                alert("Vui lòng nhập tiêu đề ảnh quảng cáo!");
+                setLoading(false);
+                return;
+            }
+        }
+
+        const processedJson = await processEditorImages(postJson, imageFileMap);
+
+        let uploadedImageUrl = previewImage || "";
+        let uploadedSideBannerUrl = previewSideBanner || "";
+        let uploadedPromoBanner = previewPromoBanner || "";
+
+        // Nếu có ảnh mới => upload
+        try {
+            if (upFile) uploadedImageUrl = await uploadToCloudinary(upFile);
+            if (upFileSideBanner) uploadedSideBannerUrl = await uploadToCloudinary(upFileSideBanner);
+            if (upFilePromoBanner) uploadedPromoBanner = await uploadToCloudinary(upFilePromoBanner);
+        } catch (err) {
+            console.error("Upload failed, cancel saving.");
+            alert("Image upload failed, please try again.");
+            return;
+        }
+
+        const blog = {
+            id: id,
+            title: title.trim(),
+            description: description.trim(),
+            time: formattedTime,
+            imageTitle: {
+                url: uploadedImageUrl,
+                title: titleText.trim()
+            },
+            sideBanner: {
+                url: uploadedSideBannerUrl,
+                title: titleTextSideBanner.trim()
+            },
+            promoBanner: {
+                url: uploadedPromoBanner,
+                title: titleTextPromoBanner.trim()
+            },
+            views: 0,
+            status: true,
+            postJson: processedJson,
+        };
+
+        const blog_related = {
+            id_blog: id,
+            related_blog_id: selectedBlogIds.map(item => ({ id: item.id }))
+        };
+
+        try {
+
+            await axios.patch(`${baseUrl}/blogs/${id}`, blog);
+
+            // Liên kết blog liên quan
+
+            await axios.put(`${baseUrl}/blogs_related/${blogsRelated.id}`, blog_related);
+
+            for (const related of selectedBlogIds) {
+                const getRes = await axios.get(`${baseUrl}/blogs_related?id_blog=${related.id}`);
+                const existing = getRes.data[0];
+
+                if (existing) {
+                    const currentList = existing.related_blog_id || [];
+                    const isExist = currentList.some(item => item.id === id.toString());
+                    if (!isExist) {
+                        currentList.push({ id: id.toString() });
+                        await axios.put(`${baseUrl}/blogs_related/${existing.id}`, {
+                            ...existing,
+                            related_blog_id: currentList
+                        });
+                    }
+                }
+            }
+
+
+            // Cập nhật danh mục (gỡ cũ - thêm mới)
+            const response = await axios.get(`${baseUrl}/categorys`);
+            const previousCategoryIds = response.data
+                .filter(category => category.id_bogs?.some(bog => bog.id === id.toString()))
+                .map(category => category.id);
+
+            // Gỡ danh mục không còn chọn
+            const removedCategoryIds = previousCategoryIds.filter(
+                prevId => !selectedCategoryIds.includes(prevId)
+            );
+
+            for (const removedId of removedCategoryIds) {
+                const getRes = await axios.get(`${baseUrl}/categorys/${removedId}`);
+                const existing = getRes.data;
+
+                if (existing) {
+                    const updatedList = (existing.id_bogs || []).filter(bog => bog.id !== id.toString());
+                    await axios.put(`${baseUrl}/categorys/${removedId}`, {
+                        ...existing,
+                        id_bogs: updatedList
+                    });
+                }
+            }
+
+            // Thêm mới danh mục được chọn
+            for (const relatedId of selectedCategoryIds) {
+                const getRes = await axios.get(`${baseUrl}/categorys/${relatedId}`);
+                const existing = getRes.data;
+
+                if (existing) {
+                    let currentList = existing.id_bogs || [];
+
+                    // Loại bỏ các bản ghi trùng lặp (dựa trên id)
+                    currentList = currentList.reduce((acc, curr) => {
+                        if (!acc.some(item => item.id === curr.id)) {
+                            acc.push(curr);
+                        }
+                        return acc;
+                    }, []);
+
+                    const isExist = currentList.some(item => item.id === id.toString());
+                    if (!isExist) {
+                        currentList.push({ id: id.toString(), priority: "0" });
+
+                        await axios.put(`${baseUrl}/categorys/${relatedId}`, {
+                            ...existing,
+                            id_bogs: currentList
+                        });
+                    }
+                }
+            }
+
+
+            alert("Cập nhật bài viết thành công!");
+            window.location.href = "/admin/posts";
+        } catch (error) {
+            console.error("Lỗi khi lưu blog:", error);
+            alert("Có lỗi xảy ra khi lưu bài viết.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+    return (
+        <div className={styles.container}>
+            {loading && <FullScreenLoader />}
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-2xl text-primary font-bold">Cập nhật bài viết mới</h1>
+                <div className="mx-10">
+                    <button
+                        onClick={handleSave}
+                        className="px-4 py-2 bg-primary text-white rounded mx-1 
+             hover:bg-green-700 transition duration-200 
+             transform active:scale-95 cursor-pointer"
+                    >
+                        Lưu thông tin bài viết
+                    </button>
+                </div>
+            </div>
+            <hr className="mb-5" />
+            <div className="flex mb-5 w-full gap-4">
+                <div className="w-full">
+                    <label className="block text-primary font-medium mb-1">
+                        Tiêu đề bài viết:<span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Nhập tiêu đề bài viết ...."
+                        value={title}
+                        className="w-full border bg-gray-50 placeholder-gray-400 border-gray-300 px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#38803E]"
+                        onChange={(event) => setTitle(event.target.value)}
+                    />
+                </div>
+                <div className="w-full">
+                    <CustomSelect categorys={categorys} selectedCategoryIds={selectedCategoryIds} setSelectedCategoryIds={setSelectedCategoryIds} />
+                </div>
+            </div>
+            <div>
+                <label className="block text-primary font-medium mb-2">
+                    Miêu tả bài viết:<span className="text-red-500">*</span>
+                </label>
+                <textarea
+                    id="note"
+                    placeholder="Nhập miêu tả bài viết ...."
+                    value={description}
+                    className="w-full h-[150px] bg-gray-50 border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-1 focus:ring-primary resize-none placeholder-gray-400 text-sm"
+                    onChange={(event) => setDescription(event.target.value)}
+                >
+                </textarea>
+            </div>
+            <div className="mb-5">
+                <label className="block text-primary font-medium mb-1">
+                    Ảnh tiêu đề:<span className="text-red-500">*</span>
+                </label>
+                <UpImage previewImage={previewImage} setPreviewImage={setPreviewImage} titleText={titleText} setTitleText={setTitleText} setUpFile={setUpFile} inputId={0} />
+            </div>
+            <div className="flex gap-6">
+                <div className="mb-5 w-full">
+                    <label className="block text-primary font-medium mb-1">
+                        Ảnh tiêu đề:<span className="text-red-500">*</span>
+                    </label>
+                    <UpImage previewImage={previewSideBanner} setPreviewImage={setPreviewSideBanner} titleText={titleTextSideBanner} setTitleText={setTitleTextSideBanner} setUpFile={setUpFileSideBanner} inputId={1} />
+                </div>
+                <div className="mb-5 w-full">
+                    <label className="block text-primary font-medium mb-1">
+                        Ảnh tiêu đề:<span className="text-red-500">*</span>
+                    </label>
+                    <UpImage previewImage={previewPromoBanner} setPreviewImage={setPreviewPromoBanner} titleText={titleTextPromoBanner} setTitleText={setTitleTextPromoBanner} setUpFile={setUpFilePromoBanner} inputId={2} />
+                </div>
+            </div>
+            <div className="flex gap-2 mb-10">
+                <div className="w-1/2 shadow-md">
+                    <EditContent editor={editor} />
+                </div>
+                <div className="w-1/2 border rounded-md " >
+                    <PreviewConten postJson={postJson} />
+                </div>
+            </div>
+            <div className="flex gap-2 mb-10">
+                {/* <div className="w-1/2 border rounded-md">
+                    <PreviewCode postHtml={postHtml} />
+                </div> */}
+                {/* <div className="w-1/2 border rounded-md">
+                    <PreviewJson postJson={postJson} />
+                </div> */}
+            </div>
+            <h1 className="text-2xl text-primary font-bold">Bài viết liên quan</h1>
+            <TableRelatedPosts blogs={blogs} selectedBlogIds={selectedBlogIds} setSelectedBlogIds={setSelectedBlogIds} />
+        </div>
+    );
+}
+
+export const uploadToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "greenlab"); // Đổi theo preset của bạn
+
+    try {
+        const res = await fetch("https://api.cloudinary.com/v1_1/dgfwxibj4/image/upload", {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error?.message || "Upload thất bại");
+
+        return data.secure_url;
+    } catch (error) {
+        console.error("Lỗi upload Cloudinary:", error);
+        throw error;
+    }
+};
+

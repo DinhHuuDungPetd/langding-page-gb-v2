@@ -14,7 +14,9 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   webpack: (config, { dev, isServer }) => {
-    config.optimization.minimize = true;
+    if (!dev) {
+      config.optimization.minimize = true;
+    }
     return config;
   },
   compress: true,

@@ -120,6 +120,8 @@ body {
     background-size: cover;       /* Phủ kín toàn bộ element */
     background-position: bottom;  /* Căn giữa hình nền */
     width: 100%;                 /* Chiều rộng 100% */
+    background-color: #F8FFF8;
+    background-blend-mode: multiply;
 }
 .page-color {
     background-color:#F8FFF8;
@@ -262,4 +264,21 @@ body {
 .swiper-button-prev,
 .swiper-button-next {
   display: none;
+}
+html {
+  scroll-behavior: smooth;
+}
+[id]::before {
+  content: "";
+  display: block;
+  height: 100px;
+  margin-top: -100px;
+}
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
 }
