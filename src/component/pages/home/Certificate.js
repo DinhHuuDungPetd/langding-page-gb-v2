@@ -62,26 +62,26 @@ const CertificateComponent = memo(() => {
                 >
                     <motion.h1
                         id="certificate-heading"
-                        className="text-2xl font-bold text-white mb-6 uppercase text-outline-4 text-pretty"
+                        className="xl:text-2xl md:text-2xl text-xl font-bold text-white mb-4 uppercase text-outline-4 text-pretty"
                         variants={itemVariants}
                     >
                         TỰ HÀO ĐƯỢC CẤP CHỨNG NHẬN<br />
                         <motion.span
-                            className="text-white text-4xl"
+                            className="text-white xl:text-4xl md:text-4xl text-2xl"
                             variants={itemVariants}
                         >
                             ISO 15189:2012 VILAS MED 134
                         </motion.span>
                     </motion.h1>
                     <motion.p
-                        className="text-md mb-6 leading-relaxed text-pretty"
+                        className="text-sm md:text-base xl:text-base mb-6 leading-relaxed text-pretty"
                         variants={itemVariants}
                     >
                         Trong hành trình phát triển nỗ lực không ngừng, Trung tâm Xét nghiệm Green Lab đã dần gây dựng được vị thế tiền phong trong việc cung cấp dịch vụ xét nghiệm uy tín, nhanh chóng và hợp lý.
                     </motion.p>
                     <motion.div variants={itemVariants}>
                         <motion.p
-                            className="text-md text-pretty"
+                            className="text-sm md:text-base xl:text-base text-pretty"
                             variants={itemVariants}
                         >
                             Tháng 12/2020, Green Lab được cấp chứng nhận <span className="font-semibold">ISO 15189:2012 VILAS MED 134</span> - tiêu chuẩn quốc tế về năng lực kỹ thuật và hệ thống quản lý của Green Lab.
@@ -95,19 +95,19 @@ const CertificateComponent = memo(() => {
                         {benefits.map((item, index) => (
                             <motion.li
                                 key={index}
-                                className="text-white before:content-['•'] before:text-white before:mr-2 before:text-xl"
+                                className="text-white before:content-['•'] before:text-white before:mr-2 before:text-xl m-0"
                                 variants={itemVariants}
                                 whileHover={{ x: 10 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <span className="pt-4">{item}</span>
+                                <span className="pt-2  md:pt-6 xl:pt-6  text-sm md:text-base xl:text-base font-medium">{item}</span>
                             </motion.li>
                         ))}
                     </motion.ul>
                 </motion.div>
 
                 <motion.div
-                    className="w-full lg:w-1/3 flex items-center justify-center mt-10 lg:mt-0 p-4"
+                    className="w-full lg:w-1/3 flex items-center justify-center mt-2 lg:mt-0 "
                     variants={imageVariants}
                 >
                     <Image
