@@ -62,33 +62,33 @@ const CertificateComponent = memo(() => {
                 >
                     <motion.h1
                         id="certificate-heading"
-                        className="text-2xl font-bold text-white mb-6 uppercase text-outline-4 text-pretty"
+                        className="text-xl font-bold text-white mb-6 uppercase text-outline-4 text-pretty"
                         variants={itemVariants}
                     >
                         TỰ HÀO ĐƯỢC CẤP CHỨNG NHẬN<br />
                         <motion.span
-                            className="text-white text-4xl"
+                            className="text-white text-xl"
                             variants={itemVariants}
                         >
                             ISO 15189:2012 VILAS MED 134
                         </motion.span>
                     </motion.h1>
                     <motion.p
-                        className="text-md mb-6 leading-relaxed text-pretty"
+                        className="text-sm sm:text-md mb-6 leading-relaxed text-pretty"
                         variants={itemVariants}
                     >
                         Trong hành trình phát triển nỗ lực không ngừng, Trung tâm Xét nghiệm Green Lab đã dần gây dựng được vị thế tiền phong trong việc cung cấp dịch vụ xét nghiệm uy tín, nhanh chóng và hợp lý.
                     </motion.p>
                     <motion.div variants={itemVariants}>
                         <motion.p
-                            className="text-md text-pretty"
+                            className="text-sm sm:text-md text-pretty"
                             variants={itemVariants}
                         >
                             Tháng 12/2020, Green Lab được cấp chứng nhận <span className="font-semibold">ISO 15189:2012 VILAS MED 134</span> - tiêu chuẩn quốc tế về năng lực kỹ thuật và hệ thống quản lý của Green Lab.
                         </motion.p>
                     </motion.div>
                     <motion.ul
-                        className="space-y-4 text-md mt-6 text-pretty"
+                        className="space-y-4 text-sm sm:text-md mt-6 text-pretty"
                         role="list"
                         variants={containerVariants}
                     >

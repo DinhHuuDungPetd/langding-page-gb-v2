@@ -85,7 +85,7 @@ export default function RelatedPosts({ blogsRelated }) {
                                 />
                             </div>
                             <h3
-                                className="text-lg text-primary hover:text-midnight font-bold font-fz-poppins mt-4 truncate max-w-full cursor-default"
+                                className="text-md sm:text-lg text-primary hover:text-midnight font-bold font-fz-poppins mt-4 truncate max-w-full cursor-default"
                                 title={item.title}
                             >
                                 {item.title}

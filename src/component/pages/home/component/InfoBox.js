@@ -23,7 +23,7 @@ export default function InfoBox() {
     };
 
     return (
-        <div className="hop-tac flex items-center justify-center gap-0 px-5">
+        <div className="hop-tac flex flex-col sm:flex-row items-center justify-center gap-0 px-5">
             {/* Cột 1: 2 hàng */}
             <div className="flex items-end justify-end flex-col">
                 <motion.div
@@ -32,12 +32,12 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }} // Trigger khi 30% card vào viewport
                     variants={cardVariants}
-                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-5"
                 >
-                    <div className="flex items-center justify-center">
+                    <div className="">
                         <Home_7 />
                     </div>
-                    <h2 className="text-white text-xl md:text-4xl font-bold whitespace-nowrap uppercase">
+                    <h2 className="text-white text-lg md:text-2xl font-bold whitespace-nowrap uppercase">
                         1.000.000+
                     </h2>
                     <span className="text-white text-sm font-bold">
@@ -50,15 +50,15 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-5"
                 >
-                    <div className="flex items-center justify-center">
+                    <div className="">
                         <Home_9 />
                     </div>
-                    <h2 className="text-white text-xl md:text-4xl font-bold whitespace-nowrap uppercase">
+                    <h2 className="text-white text-lg md:text-2xl font-bold whitespace-nowrap uppercase">
                         50+
                     </h2>
-                    <h2 className="text-white text-xl md:text-xl font-bold whitespace-nowrap uppercase">
+                    <h2 className="text-white text-lg font-bold whitespace-nowrap uppercase">
                         Bệnh viện
                     </h2>
                     <span className="text-white text-sm font-bold">
@@ -88,19 +88,19 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-5"
                 >
-                    <div className="flex items-center justify-center">
+                    <div className="">
                         <Home_8 />
                     </div>
-                    <h2 className="text-white text-xl md:text-4xl font-bold whitespace-nowrap uppercase">
+                    <h2 className="text-white text-lg md:text-2xl font-bold whitespace-nowrap uppercase">
                         500+
                     </h2>
-                    <h2 className="text-white text-xl md:text-xl font-bold whitespace-nowrap uppercase">
+                    <h2 className="text-white text-lg  font-bold whitespace-nowrap uppercase">
                         Bệnh viện
                     </h2>
                     <span className="text-white text-sm font-bold">
-                        Tin tưởng sử dụng dịch vụ
+                        Tin tưởng sử dụng
                     </span>
                 </motion.div>
                 <motion.div
@@ -109,15 +109,15 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-8"
+                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-5"
                 >
-                    <div className="flex items-center justify-center">
+                    <div className="">
                         <Home_10 />
                     </div>
-                    <h2 className="text-white text-xl md:text-4xl font-bold whitespace-nowrap uppercase">
+                    <h2 className="text-white text-lg md:text-2xl font-bold whitespace-nowrap uppercase">
                         4000+
                     </h2>
-                    <h2 className="text-white text-xl md:text-xl font-bold whitespace-nowrap uppercase">
+                    <h2 className="text-white text-lg font-bold whitespace-nowrap uppercase">
                         Bác sĩ & CTV
                     </h2>
                     <span className="text-white text-sm font-bold">

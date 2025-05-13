@@ -10,7 +10,7 @@ export default function ServicePage() {
         {
             title: "Đăng ký lịch hẹn",
             icon: <Book_01 />,
-            content: "Qua tổng đài: 1900 636 588\nQua hotline: 0912 615 997\nQua website: greenlab.vn"
+            content: "Qua tổng đài:\n 1900 636 588\nQua hotline:\n 0912 615 997\nQua website:\n greenlab.vn"
         },
         {
             title: "Lấy mẫu tận nơi",
@@ -40,7 +40,7 @@ export default function ServicePage() {
                 </div>
             </div>
             <div className="container mx-auto py-8 ">
-                <h2 className='text-center text-2xl uppercase text-primary font-bold my-4'>Quy trình lấy mẫu tại green lab</h2>
+                <h2 className='text-center text-xl uppercase text-primary font-bold my-4'>Quy trình lấy mẫu tại green lab</h2>
                 <div className=" w-full  flex justify-center">
                     <div className="w-full pt-8 flex justify-center relative px-4">
                         <div

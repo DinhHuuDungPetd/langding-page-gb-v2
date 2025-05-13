@@ -42,11 +42,11 @@ export default function CircleComponent({ item, index }) {
             </div>
             {/*Text*/}
             <div className="flex flex-col items-center justify-center text-center w-full">
-                <div className="font-bold text-primary text-lg leading-none uppercase md:pt-8">
+                <div className="font-bold text-primary text-md sm:text-lg leading-none uppercase md:pt-8">
                     {item.title}
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                    <p className="pt-2 whitespace-pre-line text-sm text-gray-700 w-full md:w-[150px] xl:w-[250px] lg:w-[220px] text-center" style={{ lineHeight: '28px' }}>
+                    <p className="pt-2 whitespace-pre-line text-sm sm:text-md text-gray-700 w-full md:w-[150px] xl:w-[250px] lg:w-[220px] text-center" style={{ lineHeight: '28px' }}>
                         {item.content}
                     </p>
                 </div>

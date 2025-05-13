@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import MedicalSlider from "@/component/pages/service/component/MedicalSlider";
 import Banner from "@/component/pages/service/component/Banner";
 import CertificateComponent from "@/component/pages/home/Certificate";
@@ -74,7 +73,7 @@ export default function ServicePage() {
                 variants={containerVariants}
             >
                 <motion.h2
-                    className="text-[20px] lg:text-3xl font-bold text-primary text-center my-2 uppercase"
+                    className="text-xl sm:text-2xl font-bold text-primary text-center my-2 uppercase"
                     variants={itemVariants}
                 >
                     Tại sao nên chọn GREEN LAB?

@@ -76,7 +76,7 @@ const ExpertComponent = memo(() => {
                     className="flex items-center justify-center text-center pt-8 mb-5"
                     variants={itemVariants}
                 >
-                    <p className="w-full px-5 md:w-4/5 md:px-0 text-md text-justify md:text-center">
+                    <p className="w-full px-5 md:w-4/5 md:px-0 text-sm sm:text-md text-justify md:text-center">
                         Đội ngũ chuyên gia hàng đầu với hơn 20 năm kinh nghiệm trong lĩnh vực y học mang đến dịch vụ xét nghiệm tại nhà, giúp bạn yên tâm về kết quả.
                         Với chuyên môn cao mức độ chuyên gia, Green Lab không chỉ là xét nghiệm, mà là sự đảm bảo cho sức khỏe của bạn và gia đình!
                     </p>

@@ -51,7 +51,7 @@ export default function BlogPage({ params }) {
                     {blog ? <span className=" text-md medium-italic ">{blog?.title}</span> : 'Loading...'}
                 </div>
             </div>
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto">
                 <div className="flex flex-col lg:flex-row gap-8">
                     <div className="w-full lg:w-2/3 ">
                         {blog ? <Blog blog={blog} /> : 'Loading...'}
@@ -88,6 +88,9 @@ export default function BlogPage({ params }) {
                         </div>
                         <div className="rounded p-4 mb-5">
                             <PopularNews />
+                        </div>
+                        <div className="rounded p-4 mb-5">
+                            <BookingForm />
                         </div>
                     </div>
                 </div>

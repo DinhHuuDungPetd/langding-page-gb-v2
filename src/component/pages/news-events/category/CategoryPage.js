@@ -97,7 +97,7 @@ export default function BlogPage({ params }) {
                             <div className="flex flex-col gap-3 lg:w-[50%]">
                                 <p className="uppercase text-sm text-gray-500 font-semibold">Tin tức hot nhất</p>
                                 <Link href={`/tin-tuc-su-kien/news/${featuredNews.id}`}>
-                                    <h2 className="text-xl font-bold text-primary hover:text-midnight leading-snug  transition-colors">
+                                    <h2 className="text-lg sm:text-xl font-bold text-primary hover:text-midnight leading-snug  transition-colors">
                                         {featuredNews.title}
                                     </h2>
                                 </Link>

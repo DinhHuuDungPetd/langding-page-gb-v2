@@ -1,33 +1,33 @@
 .container h1 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: bold;
     margin-bottom: 1.25rem;
     text-wrap: pretty;
   }
   
   .container h2 {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     font-weight: 700;
     margin-bottom: 1.125rem;
     text-wrap: pretty;
   }
   
   .container h3 {
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
     text-wrap: pretty;
   }
 
   .container h4 {
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: bold;
     margin-bottom: 0.4rem;
     text-wrap: pretty;
   }
   
   .container p {
-    margin-bottom: 1rem;
+    margin-bottom: 0.875rem;
     font-size: 1rem;
     font-weight: 500;
     line-height: 2rem;

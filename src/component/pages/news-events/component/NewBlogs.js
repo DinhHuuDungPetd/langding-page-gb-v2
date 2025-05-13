@@ -69,7 +69,7 @@ export default function NewBlogs({ category }) {
     return (
         <div className="bg-mint p-4 rounded-md mb-5">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold text-primary">{category.name}</h2>
+                <h2 className="text-lg sm:text-xl font-bold text-primary">{category.name}</h2>
                 <Link href={`/tin-tuc-su-kien/${category.id}`} className="text-blue-600 text-sm font-medium hover:underline">Xem thêm</Link>
             </div>
 
@@ -86,13 +86,13 @@ export default function NewBlogs({ category }) {
                                 className="w-full h-auto object-cover rounded transition-transform duration-500 ease-in-out hover:scale-110"
                             />
                         </div>
-                        <h3 className="mt-3 text-lg font-semibold line-clamp-2 text-primary hover:text-midnight" title={featuredNews.title}>
+                        <h3 className="mt-3 text-md sm:text-lg font-semibold line-clamp-2 text-primary hover:text-midnight" title={featuredNews.title}>
                             {featuredNews.title}
                         </h3>
                         <p className="text-sm text-gray-700 mt-1 line-clamp-4" title={featuredNews.description}>
                             {featuredNews.description}
                         </p>
-                        <div className="flex items-center text-gray-500 text-sm mt-2">
+                        <div className="flex items-center text-gray-500 text-xs mt-2">
                             <FaCalendarAlt className="w-4 h-4 mr-1" />
                             {featuredNews.date}
                         </div>

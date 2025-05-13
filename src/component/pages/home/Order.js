@@ -17,16 +17,16 @@ export default function OrderComponent() {
 
                 {/* Form */}
                 <div className="w-full xl:flex-1">
-                    <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">
+                    <h2 className="text-xl md:text-2xl font-bold text-primary mb-2">
                         ĐẶT LỊCH LẤY MẪU XÉT NGHIỆM
                     </h2>
-                    <p className="font-medium mb-4">
+                    <p className="font-medium text-sm sm:text-md mb-4">
                         Đặt lịch xét nghiệm ngay để nhận được ưu đãi dành riêng cho Khách hàng chỉ có tại Green Lab.
                     </p>
 
                     <form className="space-y-4 text-[16px]">
                         {/** Mỗi nhóm input được bọc để có thể responsive */}
-                        <div className="flex flex-col md:flex-row md:items-center gap-2">
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 text-sm sm:text-md">
                             <label className="text-primary md:w-1/5 font-semibold">
                                 Họ và tên:<span className="text-red-500">*</span>
                             </label>
@@ -37,7 +37,7 @@ export default function OrderComponent() {
                             />
                         </div>
 
-                        <div className="flex flex-col md:flex-row md:items-center gap-2">
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 text-sm sm:text-md">
                             <label className="text-primary md:w-1/5 font-semibold">
                                 Số điện thoại:<span className="text-red-500">*</span>
                             </label>
@@ -48,7 +48,7 @@ export default function OrderComponent() {
                             />
                         </div>
 
-                        <div className="flex flex-col md:flex-row md:items-center gap-2">
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 text-sm sm:text-md">
                             <label className="text-primary md:w-1/5 font-semibold">
                                 Địa chỉ:<span className="text-red-500">*</span>
                             </label>
@@ -59,7 +59,7 @@ export default function OrderComponent() {
                             />
                         </div>
 
-                        <div className="flex flex-col md:flex-row md:items-center gap-2">
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 text-sm sm:text-md">
                             <label className="text-primary md:w-1/5 font-semibold">
                                 Ngày lấy mẫu:<span className="text-red-500">*</span>
                             </label>
@@ -69,7 +69,7 @@ export default function OrderComponent() {
                             />
                         </div>
 
-                        <div className="flex flex-col md:flex-row md:items-center gap-2">
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 text-sm sm:text-md">
                             <label className="text-primary md:w-1/5 font-semibold">
                                 Khung giờ:<span className="text-red-500">*</span>
                             </label>
@@ -98,7 +98,7 @@ export default function OrderComponent() {
                             </select>
                         </div>
 
-                        <div className="flex flex-col md:flex-row gap-2">
+                        <div className="flex flex-col md:flex-row gap-2 text-sm sm:text-md">
                             <label htmlFor="note" className="text-primary md:w-1/5 font-semibold">
                                 Ghi chú:<span className="text-red-500">*</span>
                             </label>
@@ -109,7 +109,7 @@ export default function OrderComponent() {
                             />
                         </div>
 
-                        <div className="w-full flex justify-center">
+                        <div className="w-full flex justify-center text-sm sm:text-md">
                             <button
                                 type="submit"
                                 className="mt-4 bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded"

@@ -78,10 +78,10 @@ export default function Blog({ blog }) {
                         : undefined;
                 const HeadingTag = `h${Math.min(level, 4)}`;
                 const headingClassMap = {
-                    1: "text-2xl font-bold mt-8 mb-4",
-                    2: "text-xl font-semibold mt-6 mb-3",
-                    3: "text-lg font-medium mt-5 mb-2",
-                    4: "text-base font-medium mt-4 mb-2",
+                    1: "text-xl font-bold mt-8 mb-4",
+                    2: "text-lg font-semibold mt-6 mb-3",
+                    3: "text-md font-medium mt-5 mb-2",
+                    4: "text-sm font-medium mt-4 mb-2",
                 };
 
                 return (
@@ -115,7 +115,7 @@ export default function Blog({ blog }) {
                 if (isEmpty) return null;
 
                 return (
-                    <p key={index} className="mb-4 leading-relaxed" style={alignStyle}>
+                    <p key={index} className="mb-4 leading-relaxed text-sm sm:text-md" style={alignStyle}>
                         {contentArray.map((part, idx) => {
                             if (part.type === "hardBreak") return <br key={idx} />;
                             return (
@@ -218,13 +218,13 @@ export default function Blog({ blog }) {
                 </div>
             </div>
 
-            <h5 className="text-3xl font-bold text-primary mb-3">{blog?.title}</h5>
+            <h5 className="text-xl sm:text-2xl font-bold text-primary mb-3">{blog?.title}</h5>
 
-            <h5 className="mb-4 medium-italic text-md text-pretty text-gray-500">
+            <h5 className="mb-4 medium-italic text-sm sm:text-md text-pretty text-gray-500">
                 {blog?.description}
             </h5>
 
-            <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 medium-italic text-base/8 text-md text-pretty space-y-2">
+            <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 medium-italic text-sm sm:text-md sm:text-md text-pretty space-y-2">
                 {levelOneItems?.map((section, index) => {
                     const text = section.content?.[0]?.text || "";
                     const slug = slugify(text);

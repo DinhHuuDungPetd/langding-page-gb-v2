@@ -9,7 +9,7 @@ const SvgComponent = (props) => (
             fillRule: "evenodd",
             clipRule: "evenodd",
         }}
-        viewBox="-220 0 808 337" {...props} className="w-full h-full" transform="scale(1)"
+        viewBox="-220 0 808 337" {...props} className="w-full h-full" transform="scale(0.8)"
     >
         <path
             fill="#fefffe"
