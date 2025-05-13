@@ -18,3 +18,5 @@ EXPOSE 3002
 
 # Run Next.js production server
 CMD ["npm", "start", "--", "-p", "3002"]
+
+
