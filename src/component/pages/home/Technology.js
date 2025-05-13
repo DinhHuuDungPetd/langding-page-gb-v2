@@ -60,12 +60,12 @@ const TechnologyComponent = memo(() => {
                     <h1 className="text-3xl sm:text-4xl font-bold mb-4 uppercase text-primary">
                         Công nghệ tiên tiến
                     </h1>
-                    <p className="text-sm sm:text-md text-black mb-4 leading-relaxed font-medium">
+                    <p className="text-sm md:text-base xl:text-base text-gray-800 mb-2 leading-relaxed font-bold">
                         Sử dụng công nghệ hiện đại của các hãng sản phẩm đầu thế
                         giới như: Roche, Beckman-Coulter, Siemens, Stago, Horiba, NovaCyt,
                         Perkin Elmer, Qiagen...
                     </p>
-                    <p className="text-sm sm:text-md text-black mb-4 leading-relaxed font-medium">
+                    <p className="text-sm md:text-base xl:text-base text-gray-800 mb-4 leading-relaxed font-bold">
                         Quy trình xét nghiệm được tự động hóa hoàn toàn, được quản lý bằng phần mềm do GreenLab phát triển.
                     </p>
                 </motion.div>

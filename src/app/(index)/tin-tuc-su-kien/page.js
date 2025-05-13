@@ -1,4 +1,5 @@
 import NewsEvents from "@/component/pages/news-events/NewsEvents";
+import {Suspense} from "react";
 
 export const metadata = {
   title: 'Tin tức y khoa & hoạt động Green Lab',
@@ -18,6 +19,8 @@ export const metadata = {
 }
 export default function Home() {
   return (
-    <NewsEvents />
+      <Suspense fallback={<div>Đang tải...</div>}>
+          <NewsEvents/>
+      </Suspense>
   );
 }

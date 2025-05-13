@@ -195,10 +195,10 @@ const IntroductionPage = memo(() => {
                     <MediaContent />
                 </motion.div>
                 <motion.div
-                    className="max-w-3/5 mx-auto rounded-xl overflow-hidden shadow-lg border mb-20"
+                    className="w-full max-w-screen-lg px-4 mx-auto rounded-xl overflow-hidden shadow-lg border border-gray-200 mb-10"
                     variants={itemVariants}
                 >
-                    <div className="relative pt-[50%]">
+                    <div className="relative  aspect-video "> {/* aspect-ratio 16:9 */}
                         <iframe
                             className="absolute top-0 left-0 w-full h-full rounded-xl"
                             src="https://www.youtube.com/embed/KpZK2l0fZwU"
@@ -209,6 +209,7 @@ const IntroductionPage = memo(() => {
                         />
                     </div>
                 </motion.div>
+
             </motion.section>
 
             <CertificateComponent />

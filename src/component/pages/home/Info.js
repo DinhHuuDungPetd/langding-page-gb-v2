@@ -23,7 +23,7 @@ export default function InfoComponent() {
             </div>
             <InfoBox />
             <div className='page-color'>
-                <div className=" container mx-auto flex flex-col md:flex-row items-center justify-center my-8 relative py-8">
+                <div className="container mx-auto flex flex-col md:flex-row items-center justify-center my-8 relative py-8">
                     <div className="flex flex-1 max-w-[300px] flex-col justify-center items-center gap-2 p-4">
                         <Home_11 />
                         <h2 className="text-primary text-xl md:text-lg font-bold whitespace-nowrap uppercase">
@@ -31,14 +31,14 @@ export default function InfoComponent() {
                         </h2>
                         <AnimatedButton text="Nhận ngay" href="#" />
                     </div>
-                    <div className="flex relative flex-1 max-w-[300px] flex-col justify-center items-center gap-2 p-4 border-primary">
+                    <div className="flex relative flex-1 max-w-[300px] flex-col justify-center items-center gap-2 p-4">
                         <Home_12 />
                         <h2 className="text-primary text-xl md:text-lg font-bold whitespace-nowrap uppercase">
                             Đặt lịch tư vấn
                         </h2>
                         <AnimatedButton text="Đặt ngay" href="#" />
-                        <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-px h-2/3 bg-primary"></div>
-                        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-2/3 bg-primary"></div>
+                        <div className="hidden md:block xl:block absolute left-0 top-1/2 transform -translate-y-1/2 w-px h-2/3 bg-primary"></div>
+                        <div className="hidden md:block xl:block absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-2/3 bg-primary"></div>
                     </div>
                     <div className="flex flex-1 max-w-[300px] flex-col justify-center items-center gap-2 p-4">
                         <Home_13 />

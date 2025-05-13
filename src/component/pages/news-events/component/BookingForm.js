@@ -6,14 +6,14 @@ const Image = dynamic(() => import("next/image"), { ssr: false });
 
 const FormInput = memo(({ label, id, type = "text", placeholder, ...props }) => (
     <div>
-        <label htmlFor={id} className="block text-white font-semibold mb-1">
+        <label htmlFor={id} className="block text-white font-semibold mb-1 text-sm md:text-base xl:text-base">
             {label}<span className="text-red-500">*</span>
         </label>
         <input
             id={id}
             type={type}
             placeholder={placeholder}
-            className="w-full border bg-white border-gray-300 px-4 py-2 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
+            className="text-sm md:text-base xl:text-base w-full border bg-white border-gray-300 px-4 py-2 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
             required
             aria-required="true"
             {...props}
@@ -25,12 +25,12 @@ FormInput.displayName = 'FormInput';
 
 const TimeSlotSelect = memo(() => (
     <div>
-        <label htmlFor="timeSlot" className="block text-white font-semibold mb-1">
+        <label htmlFor="timeSlot" className="block text-white font-semibold mb-1 text-sm md:text-base xl:text-base">
             Khung giờ:<span className="text-red-500">*</span>
         </label>
         <select
             id="timeSlot"
-            className="w-full bg-white border border-gray-300 px-4 py-2 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-white"
+            className="text-sm md:text-base xl:text-base w-full bg-white border border-gray-300 px-4 py-2 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-white"
             required
             aria-required="true"
             aria-label="Chọn khung giờ lấy mẫu"
@@ -58,12 +58,11 @@ const BookingForm = () => {
 
     return (
         <div className="w-full max-w-3xl p-6 bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-xl shadow-lg text-white mx-auto">
-            <h2 className="md:text-3xl font-bold mb-2 text-center text-base/8">
-                ĐẶT LỊCH
-            </h2>
-            <h2 className="md:text-3xl font-bold mb-6 text-center text-base/8">
-                LẤY MẪU XÉT NGHIỆM
-            </h2>
+            <div className="flex flex-row md:flex-col items-center justify-center text-center font-bold text-base md:text-3xl mb-2 md:mb-6">
+                <span className="m-2">ĐẶT LỊCH</span>
+                <span className="mx-1">LẤY MẪU XÉT NGHIỆM</span>
+            </div>
+
             <form
                 onSubmit={handleSubmit}
                 className="space-y-5"
@@ -109,13 +108,13 @@ const BookingForm = () => {
                 />
 
                 <div>
-                    <label htmlFor="message" className="block text-white font-semibold mb-1">
+                    <label htmlFor="message" className="block text-white font-semibold mb-1 text-sm md:text-base xl:text-base">
                         Nội dung:<span className="text-red-500">*</span>
                     </label>
                     <textarea
                         id="message"
                         placeholder="Nội dung tin nhắn"
-                        className="w-full border bg-white border-gray-300 px-4 py-2 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white h-32"
+                        className=" text-sm md:text-base xl:text-base w-full border bg-white border-gray-300 px-4 py-2 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white h-32"
                         required
                         aria-required="true"
                     />
@@ -124,7 +123,7 @@ const BookingForm = () => {
                 <div className="text-center pt-4">
                     <button
                         type="submit"
-                        className="bg-red-600 text-white hover:bg-red-800 py-3 px-7 rounded-full transition duration-200 font-bold font-fz-poppins text-xl"
+                        className="text-sm md:text-base xl:text-base bg-red-600 text-white hover:bg-red-800 py-3 px-7 rounded-full transition duration-200 font-bold font-fz-poppins"
                         aria-label="Gửi mẫu đơn đặt lịch"
                     >
                         Đặt lịch
