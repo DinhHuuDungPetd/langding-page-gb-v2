@@ -1,4 +1,4 @@
-import Icon from "@/component/Icon";
+
 import InfoBox from "@/component/pages/home/component/InfoBox";
 import AnimatedButton from "@/component/pages/home/component/AnimatedButton";
 import Home_11 from "@/icons/Home_11"
@@ -9,21 +9,21 @@ export default function InfoComponent() {
     return (
         <section>
             <div className="container mx-auto py-8 flex items-center justify-center gap-2">
-                <div className="flex items-center gap-1">
+                <div className="hidden md:flex items-center gap-1">
                     <span className="w-2 h-2 bg-primary rounded-full"></span>
                     <span className="w-16 h-[2px] bg-[#36803E]"></span>
                 </div>
                 <h2 className="text-primary text-xl md:text-2xl font-bold whitespace-nowrap uppercase">
                     Con số nổi bật, ấn tượng
                 </h2>
-                <div className="flex items-center gap-1">
+                <div className="hidden md:flex items-center gap-1">
                     <span className="w-16 h-[2px] bg-[#36803E]"></span>
                     <span className="w-2 h-2 bg-[#36803E] rounded-full"></span>
                 </div>
             </div>
             <InfoBox />
             <div className='page-color'>
-                <div className=" container mx-auto flex items-center justify-center my-8 relative py-8">
+                <div className=" container mx-auto flex flex-col md:flex-row items-center justify-center my-8 relative py-8">
                     <div className="flex flex-1 max-w-[300px] flex-col justify-center items-center gap-2 p-4">
                         <Home_11 />
                         <h2 className="text-primary text-xl md:text-lg font-bold whitespace-nowrap uppercase">

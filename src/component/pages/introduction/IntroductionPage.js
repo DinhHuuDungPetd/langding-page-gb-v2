@@ -212,7 +212,7 @@ const IntroductionPage = memo(() => {
             </motion.section>
 
             <CertificateComponent />
-            {/* <PartnerComponent /> */}
+            <PartnerComponent />
             <OrderComponent />
         </motion.main>
     );
