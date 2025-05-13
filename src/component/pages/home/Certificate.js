@@ -62,7 +62,7 @@ const CertificateComponent = memo(() => {
                 >
                     <motion.h1
                         id="certificate-heading"
-                        className="text-xl font-bold text-white mb-6 uppercase text-outline-4 text-pretty"
+                        className="xl:text-2xl md:text-2xl text-xl font-bold text-white mb-4 uppercase text-outline-4 text-pretty"
                         variants={itemVariants}
                     >
                         TỰ HÀO ĐƯỢC CẤP CHỨNG NHẬN<br />
@@ -95,19 +95,19 @@ const CertificateComponent = memo(() => {
                         {benefits.map((item, index) => (
                             <motion.li
                                 key={index}
-                                className="text-white before:content-['•'] before:text-white before:mr-2 before:text-xl"
+                                className="text-white before:content-['•'] before:text-white before:mr-2 before:text-xl m-0"
                                 variants={itemVariants}
                                 whileHover={{ x: 10 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <span className="pt-4">{item}</span>
+                                <span className="pt-2  md:pt-6 xl:pt-6  text-sm md:text-base xl:text-base font-medium">{item}</span>
                             </motion.li>
                         ))}
                     </motion.ul>
                 </motion.div>
 
                 <motion.div
-                    className="w-full lg:w-1/3 flex items-center justify-center mt-10 lg:mt-0 p-4"
+                    className="w-full lg:w-1/3 flex items-center justify-center mt-2 lg:mt-0 "
                     variants={imageVariants}
                 >
                     <Image

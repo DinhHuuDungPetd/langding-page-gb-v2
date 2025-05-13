@@ -24,7 +24,7 @@ export default function OrderComponent() {
                         Đặt lịch xét nghiệm ngay để nhận được ưu đãi dành riêng cho Khách hàng chỉ có tại Green Lab.
                     </p>
 
-                    <form className="space-y-4 text-[16px]">
+                    <form className="space-y-4 text-[16px] ">
                         {/** Mỗi nhóm input được bọc để có thể responsive */}
                         <div className="flex flex-col md:flex-row md:items-center gap-2 text-sm sm:text-md">
                             <label className="text-primary md:w-1/5 font-semibold">
@@ -33,7 +33,7 @@ export default function OrderComponent() {
                             <input
                                 type="text"
                                 placeholder="Họ tên khách hàng"
-                                className="flex-1 bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                className="flex-1 text-sm md:text-base xl:text-base bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
                             />
                         </div>
 
@@ -44,7 +44,7 @@ export default function OrderComponent() {
                             <input
                                 type="tel"
                                 placeholder="Số điện thoại"
-                                className="flex-1 bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                className="flex-1 text-sm md:text-base xl:text-base bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
                             />
                         </div>
 
@@ -55,7 +55,7 @@ export default function OrderComponent() {
                             <input
                                 type="text"
                                 placeholder="Địa chỉ lấy mẫu xét nghiệm"
-                                className="flex-1 bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                className="flex-1 text-sm md:text-base xl:text-base bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
                             />
                         </div>
 
@@ -65,7 +65,7 @@ export default function OrderComponent() {
                             </label>
                             <input
                                 type="date"
-                                className="w-full md:w-[200px] bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                className="w-full text-sm md:text-base xl:text-base md:w-[200px] bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
                             />
                         </div>
 
@@ -73,7 +73,7 @@ export default function OrderComponent() {
                             <label className="text-primary md:w-1/5 font-semibold">
                                 Khung giờ:<span className="text-red-500">*</span>
                             </label>
-                            <select className="w-full md:w-auto bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary">
+                            <select className="w-full md:w-auto bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary text-sm md:text-base xl:text-base">
                                 <option value="">Chọn khung giờ</option>
                                 {[
                                     "8h00 - 9h00",
@@ -105,14 +105,14 @@ export default function OrderComponent() {
                             <textarea
                                 id="note"
                                 placeholder="Ghi chú thêm những yêu cầu của bạn khi làm xét nghiệm"
-                                className="flex-1 h-[100px] bg-gray-50 border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-1 focus:ring-primary resize-none placeholder-gray-400 text-sm"
+                                className="flex-1 text-sm md:text-base xl:text-base h-[100px] bg-gray-50 border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-1 focus:ring-primary resize-none placeholder-gray-400 text-sm"
                             />
                         </div>
 
                         <div className="w-full flex justify-center text-sm sm:text-md">
                             <button
                                 type="submit"
-                                className="mt-4 bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded"
+                                className="mt-4 bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-6 rounded text-sm md:text-base xl:text-base"
                             >
                                 Đặt lịch
                             </button>

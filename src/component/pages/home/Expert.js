@@ -49,7 +49,7 @@ const ExpertComponent = memo(() => {
     return (
         <AnimatePresence>
             <motion.section
-                className="container mx-auto py-8 mt-10"
+                className="container mx-auto py-8 mt-2"
                 aria-labelledby="expert-heading"
                 initial="hidden"
                 whileInView="visible"

@@ -115,7 +115,7 @@ const BookingForm = () => {
                     <textarea
                         id="message"
                         placeholder="Nội dung tin nhắn"
-                        className="w-full border bg-white border-gray-300 px-4 py-2 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white h-32"
+                        className=" text-sm md:text-base xl:text-base w-full border bg-white border-gray-300 px-4 py-2 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white h-32"
                         required
                         aria-required="true"
                     />
@@ -124,7 +124,7 @@ const BookingForm = () => {
                 <div className="text-center pt-4">
                     <button
                         type="submit"
-                        className="bg-red-600 text-white hover:bg-red-800 py-3 px-7 rounded-full transition duration-200 font-bold font-fz-poppins text-xl"
+                        className="text-sm md:text-base xl:text-base bg-red-600 text-white hover:bg-red-800 py-3 px-7 rounded-full transition duration-200 font-bold font-fz-poppins"
                         aria-label="Gửi mẫu đơn đặt lịch"
                     >
                         Đặt lịch

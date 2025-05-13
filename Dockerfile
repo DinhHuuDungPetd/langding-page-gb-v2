@@ -1,26 +1,20 @@
-# Sử dụng Node.js chính thức làm base image
 FROM node:20-alpine
 
-# Thiết lập thư mục làm việc
+# Làm việc trong thư mục /app
 WORKDIR /app
 
-# Sao chép file package.json và package-lock.json (nếu có)
-COPY package.json ./
-
-# Cài đặt dependencies
+# Copy package và cài dependency
+COPY package*.json ./
 RUN npm install
 
-# Sao chép toàn bộ mã nguồn
+# Copy toàn bộ mã nguồn (bao gồm cả db.json, nhưng FE không dùng)
 COPY . .
 
-# Build ứng dụng Next.js
+# Build FE
 RUN npm run build
 
-# Expose cổng mà Next.js sử dụng (mặc định là 3000)
+# Expose FE port
 EXPOSE 3002
 
-# Thiết lập biến môi trường (mặc định là production)
-ENV NODE_ENV=production
-
-# Chạy ứng dụng
+# Run Next.js production server
 CMD ["npm", "start", "--", "-p", "3002"]
