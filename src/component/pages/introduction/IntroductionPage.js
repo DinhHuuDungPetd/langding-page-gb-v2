@@ -84,13 +84,13 @@ const IntroductionPage = memo(() => {
                 className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747016194/backgroundMobile/ykqtdkarozwrx623p0wn.jpg)] sm:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825600/greenlab/aan50gixyarmomdlnyqb.webp)] bg-no-repeat bg-cover bg-blend-multiply"
                 variants={itemVariants}
             >
-                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20  text-white text-xl medium-italic z-9">
+                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20  text-white text-md medium-italic z-9">
                     Trang chủ &gt; <span className="font-normal">Giới thiệu</span>
                 </div>
             </motion.div>
 
             <motion.h3
-                className="text-2xl sm:text-3xl text-primary text-center my-5 font-bold"
+                className="text-xl sm:text-2xl text-primary text-center my-5 font-bold"
                 variants={itemVariants}
             >
                 "Đồng hành vì sức khỏe, mang chất lượng đến từng gia đình"
@@ -183,7 +183,7 @@ const IntroductionPage = memo(() => {
                 variants={containerVariants}
             >
                 <motion.h2
-                    className="text-[20px] lg:text-3xl font-bold text-primary text-center my-2 uppercase"
+                    className="text-xl lg:text-2xl font-bold text-primary text-center my-2 uppercase"
                     variants={itemVariants}
                 >
                     Tại sao nên chọn GREEN LAB?

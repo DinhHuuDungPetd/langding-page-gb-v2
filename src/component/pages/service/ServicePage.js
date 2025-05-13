@@ -8,7 +8,7 @@ import PartnerComponent from "@/component/pages/home/Partner";
 import OrderComponent from "@/component/pages/home/Order";
 import MediaContent from "@/component/pages/introduction/component/MediaContent"
 import Head from 'next/head';
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function ServicePage() {
     const containerVariants = {
@@ -48,7 +48,7 @@ export default function ServicePage() {
                 transition={{ duration: 0.5 }}
             >
                 <motion.div
-                    className="absolute bottom-4 left-5 md:left-10 lg:left-20  text-white text-xl italic z-9"
+                    className="absolute bottom-4 left-5 md:left-10 lg:left-20  text-white text-md italic z-9"
                     initial={{ x: -50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.5 }}

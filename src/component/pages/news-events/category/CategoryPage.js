@@ -74,9 +74,9 @@ export default function BlogPage({ params }) {
     return (
         <div>
             <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747017912/backgroundMobile/skwnwgkb13t5kaqlfl3z.jpg)] md:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/kwicnww6fxa63f9fplra.webp)] bg-blend-multiply">
-                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20 text-white text-xl medium-italic z-9">
-                    Trang chủ &gt; <span className=" text-xl medium-italic ">Tin tức - Sự kiện</span> &gt;{" "}
-                    <span className=" text-xl medium-italic ">{category?.name}</span>
+                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20 text-white text-md medium-italic z-9">
+                    Trang chủ &gt; <span className=" text-md medium-italic ">Tin tức - Sự kiện</span> &gt;{" "}
+                    <span className=" text-md medium-italic ">{category?.name}</span>
                 </div>
             </div>
             <div className="container mx-auto px-2">

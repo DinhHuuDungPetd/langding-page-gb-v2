@@ -37,7 +37,7 @@ const ContactFloatingButton = () => {
     return (
         <div className="fixed right-4 bottom-6 flex flex-col items-center gap-3 z-50">
             <AnimatePresence>
-                {buttons.map((btn, index) => (
+                {open && buttons.map((btn, index) => (
                     <ContactButton
                         key={btn.label}
                         button={btn}

@@ -22,7 +22,7 @@ export default function AppHeader() {
     const [menuOpen, setMenuOpen] = useState(false)
     return (
         <Suspense fallback={<div>Đang tải...</div>}>
-            <header className="bg-white text-black shadow-md sticky top-0 z-50">
+            <header className="bg-white text-black shadow-md sticky top-0 z-500">
                 <TimelineProgressBar />
                 <nav className="container flex justify-between items-center mx-auto px-2">
                     <Link

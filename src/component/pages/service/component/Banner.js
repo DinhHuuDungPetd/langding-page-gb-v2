@@ -31,7 +31,7 @@ export default function Banner() {
             <div className="class_1 relative">
                 <div className="relative w-full h-full lg:h-[1200px] xl:h-[1000px] px-6 overflow-hidden">
                     <motion.div
-                        className="absolute top-0 right-0 w-[30%] h-[45%] opacity-30 z-0 mx-30"
+                        className="absolute top-0 right-0 w-[48%] xl:w-[30%] h-[45%] opacity-30 z-0 xl:mx-30"
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 0.3, scale: 1 }}
                         transition={{ duration: 0.8 }}
@@ -40,13 +40,11 @@ export default function Banner() {
                             src="/images/nv/nv_3.webp"
                             alt="Doctor Transparent"
                             fill
-                            className="w-full h-full object-cover hidden xl:block"
-                            sizes="(min-width: 1280px) 30vw, 0vw"
-                            quality={50}
+                            className="w-full h-full object-cover hidden lg:block"
                         />
                     </motion.div>
                     <motion.div
-                        className="absolute bottom-0 right-0 w-[80%] lg:w-[30%] h-[50%] opacity-50 z-0"
+                        className="absolute bottom-0 right-0 w-[90%] lg:w-[30%] h-[50%] opacity-50 z-0"
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 0.5, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
@@ -60,7 +58,7 @@ export default function Banner() {
                     </motion.div>
 
                     <motion.div
-                        className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-20 py-18 xl:px-20 2xl:px-70"
+                        className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-20 py-5 lg:py-18 xl:px-20 2xl:px-70"
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
@@ -116,7 +114,7 @@ export default function Banner() {
                                 </motion.div>
 
                                 <motion.p
-                                    className="leading-relaxed font-medium xl:text-md"
+                                    className="leading-relaxed font-medium text-sm xl:text-md"
                                     variants={itemVariants}
                                     whileHover={{ scale: 1.02 }}
                                     transition={{ duration: 0.2 }}
