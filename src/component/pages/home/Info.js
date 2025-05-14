@@ -36,7 +36,7 @@ export default function InfoComponent() {
                         <h2 className="text-primary text-xl md:text-lg font-bold whitespace-nowrap uppercase">
                             Đặt lịch tư vấn
                         </h2>
-                        <AnimatedButton text="Đặt ngay" href="#" />
+                        <AnimatedButton text="Đặt ngay" href="/dat-lich" />
                         <div className="hidden md:block xl:block absolute left-0 top-1/2 transform -translate-y-1/2 w-px h-2/3 bg-primary"></div>
                         <div className="hidden md:block xl:block absolute right-0 top-1/2 transform -translate-y-1/2 w-px h-2/3 bg-primary"></div>
                     </div>

@@ -40,11 +40,7 @@ export default function MediaContent() {
                             </div>
 
                             <div className="flip-back absolute inset-0 bg-midnight text-white rounded-lg p-2 flex flex-col justify-center text-sm ">
-                                {/* <div className="font-bold text-base leading-tight uppercase my-3">
-                                    <div>{item.title}</div>
-                                    <div>{item.subtitle}</div>
-                                </div> */}
-                                <p className="font-medium text-md text-balance mb-2">{item.description}</p>
+                                <p className="font-medium text-sm md:text-base  text-balance mb-2">{item.description}</p>
                             </div>
 
                         </div>
