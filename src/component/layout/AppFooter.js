@@ -4,10 +4,6 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
 import { FaPhoneVolume } from "react-icons/fa6";
-import Iso from "@/icons/Iso"
-import Logo_fb from "@/icons/Logo_fb"
-import Logo_tt from "@/icons/Logo_tt"
-import Logo_yt from "@/icons/Logo_yt"
 
 export default function AppFooter() {
     return (
@@ -69,7 +65,7 @@ export default function AppFooter() {
                 </div>
 
                 <div className="sm:col-span-2 xl:col-span-4 text-center">
-                    <p className="font-bold text-lg mb-2 text-pretty">BẢN ĐỒ TRUNG TÂM XÉT NGHIỆM GREEN LAB</p>
+                    <p className="font-bold text-lg mb-2 text-pretty hidden lg:block">BẢN ĐỒ TRUNG TÂM XÉT NGHIỆM GREEN LAB</p>
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.4566984195967!2d105.84743137596261!3d21.014404780631477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab8b0c400001%3A0xf4271e655b7acc51!2zMTIxIFAuIELDuWkgVGjhu4sgWHXDom4sIELDuWkgVGjhu4sgWHXDom4sIEhhaSBCw6AgVHLGsG5nLCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1744960140723!5m2!1svi!2s"
                         width="100%"
@@ -87,11 +83,11 @@ export default function AppFooter() {
                             <FaPhone className="text-white" /> 0912 615 997 | <FaPhoneVolume className="text-white" /> 1900 636 588
                         </li>
                     </ul>
-                    <p className="text-sm sm:text-md mt-4 font-medium text-pretty md:hidden">
+                    <p className="text-sm sm:text-md mt-4 font-medium text-pretty lg:hidden">
                         Trang web thuộc sở hữu của Công ty Cổ phần Đầu tư và Công nghệ Y tế Hà Nội. <br />
                         Mã số thuế: 0106064740 do Sở Kế hoạch và Đầu tư thành phố Hà Nội cấp ngày 18/12/2012. <br />
                     </p>
-                    <p className="text-sm sm:text-md font-medium mt-2 block md:hidden">Copyright 2025 © Trung tâm xét nghiệm Green Lab</p>
+                    <p className="text-sm sm:text-md font-medium mt-2 block lg:hidden">Copyright 2025 © Trung tâm xét nghiệm Green Lab</p>
                 </div>
             </div>
         </footer>

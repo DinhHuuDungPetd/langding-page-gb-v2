@@ -40,7 +40,7 @@ export default function ServicePage() {
                 </div>
             </div>
             <div className="container mx-auto py-8 ">
-                <h2 className='text-center text-xl uppercase text-primary font-bold my-4'>Quy trình lấy mẫu tại green lab</h2>
+                <h1 className='text-center text-2xl uppercase text-primary font-bold my-4'>Quy trình lấy mẫu tại green lab</h1>
                 <div className=" w-full  flex justify-center">
                     <div className="w-full pt-8 flex justify-center relative px-4">
                         <div

@@ -55,38 +55,9 @@ const cardVariants = {
     }),
 };
 
-const InfoCard = ({ icon, number, title, description, index }) => (
-    <motion.div
-        custom={index}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={cardVariants}
-        className="w-[160px] h-[160px] sm:w-[160px] sm:h-[160px] md:w-[200px] md:h-[200px] lg:w-[230px] lg:h-[230px]
-                   text-center bg-gradient-to-t from-midnight to-green-700
-                   border-[4px] border-central rounded-lg m-2 px-2 py-6 md:py-8"
-    >
-        <div className="flex items-center justify-center mb-1">
-            {icon}
-        </div>
-        <h2 className="text-white text-base sm:text-lg md:text-2xl lg:text-4xl font-bold whitespace-nowrap uppercase">
-            {number}
-        </h2>
-        {title && (
-            <h2 className="text-white text-xs sm:text-sm md:text-base lg:text-xl font-bold whitespace-nowrap uppercase">
-                {title}
-            </h2>
-        )}
-        <span className="text-white text-[10px] sm:text-xs md:text-sm font-bold">
-            {description}
-        </span>
-    </motion.div>
-);
-
-
 export default function InfoBox() {
     return (
-        <div className="hop-tac flex flex-col sm:flex-row items-center justify-center gap-0 px-5">
+        <div className="hop-tac flex  items-center justify-center gap-0 px-5">
             {/* Cột 1: 2 hàng */}
             <div className="flex items-end justify-end flex-col">
                 <motion.div
@@ -95,7 +66,7 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }} // Trigger khi 30% card vào viewport
                     variants={cardVariants}
-                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-5"
+                    className="w-[150px] h-[150px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-0 md:px-2 md:py-5  "
                 >
                     <div className="">
                         <Home_7 />
@@ -113,7 +84,7 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-5"
+                    className="w-[150px] h-[150px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-0 md:px-2 md:py-5  "
                 >
                     <div className="">
                         <Home_9 />
@@ -124,7 +95,7 @@ export default function InfoBox() {
                     <h2 className="text-white text-lg font-bold whitespace-nowrap uppercase">
                         Bệnh viện
                     </h2>
-                    <span className="text-white text-sm font-bold">
+                    <span className="text-white text-sm font-bold whitespace-nowrap">
                         Liên kết hợp tác
                     </span>
                 </motion.div>
@@ -151,7 +122,7 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-5"
+                    className="w-[150px] h-[150px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-0 md:px-2 md:py-5  "
                 >
                     <div className="">
                         <Home_8 />
@@ -163,7 +134,7 @@ export default function InfoBox() {
                         Bệnh viện
                     </h2>
                     <span className="text-white text-sm font-bold">
-                        Tin tưởng sử dụng
+                        Tin tưởng&nbsp;sử dụng
                     </span>
                 </motion.div>
                 <motion.div
@@ -172,7 +143,7 @@ export default function InfoBox() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={cardVariants}
-                    className="w-[200px] h-[200px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-2 py-5"
+                    className="w-[150px] h-[150px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-0 md:px-2 md:py-5  "
                 >
                     <div className="">
                         <Home_10 />
@@ -183,7 +154,7 @@ export default function InfoBox() {
                     <h2 className="text-white text-lg font-bold whitespace-nowrap uppercase">
                         Bác sĩ & CTV
                     </h2>
-                    <span className="text-white text-sm font-bold">
+                    <span className="text-white text-sm font-bold whitespace-nowrap">
                         Liên kết hợp tác
                     </span>
                 </motion.div>

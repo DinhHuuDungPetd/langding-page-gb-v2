@@ -72,12 +72,12 @@ export default function ServicePage() {
                 className="bg-mint px-4 sm:px-6 lg:px-8"
                 variants={containerVariants}
             >
-                <motion.h2
+                <motion.h1
                     className="text-xl sm:text-2xl font-bold text-primary text-center my-2 uppercase"
                     variants={itemVariants}
                 >
                     Tại sao nên chọn GREEN LAB?
-                </motion.h2>
+                </motion.h1>
                 <motion.div
                     className="my-10"
                     variants={itemVariants}

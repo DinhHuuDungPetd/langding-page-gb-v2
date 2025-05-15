@@ -23,7 +23,7 @@ export default function InfoComponent() {
             </div>
             <InfoBox />
             <div className='page-color'>
-                <div className="container mx-auto flex flex-col md:flex-row items-center justify-center my-8 relative py-8">
+                <div className="container mx-auto flex flex-col md:flex-row items-center justify-center my-5 relative">
                     <div className="flex flex-1 max-w-[300px] flex-col justify-center items-center gap-2 p-4">
                         <Home_11 />
                         <h2 className="text-primary text-xl md:text-lg font-bold whitespace-nowrap uppercase">

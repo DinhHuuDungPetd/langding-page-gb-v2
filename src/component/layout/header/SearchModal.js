@@ -45,7 +45,7 @@ export default function SearchModal() {
                 className="flex items-center gap-2 px-4 py-2 bg-white"
             >
                 <FiSearch className="text-xl text-gray-600" />
-                <span className="text-md font-medium text-gray-600">Tìm kiếm</span>
+                <span className="text-sm font-medium text-gray-600 hidden md:block">Tìm kiếm</span>
             </button>
 
             <AnimatePresence>

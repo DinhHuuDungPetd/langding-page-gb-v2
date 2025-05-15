@@ -63,7 +63,7 @@ const renderTextWithMarks = (textObj) => {
 
 export default function PreviewContent({ postJson }) {
     const levelOneItems = postJson?.content?.filter(
-        (section) => section.type === "heading" && section.attrs?.level === 1
+        (section) => section.type === "heading" && section.attrs?.level === 2
     );
 
     const renderContent = (section, index) => {
@@ -72,18 +72,18 @@ export default function PreviewContent({ postJson }) {
 
         switch (section.type) {
             case "heading": {
-                const level = section.attrs?.level || 1;
+                const level = section.attrs?.level || 2;
                 const contentArray = section.content || [];
                 const slug =
-                    level === 1 && contentArray[0]?.text
+                    level === 2 && contentArray[0]?.text
                         ? slugify(contentArray[0].text)
                         : undefined;
                 const HeadingTag = `h${Math.min(level, 4)}`;
                 const headingClassMap = {
-                    1: "text-xl font-bold mt-8 mb-4",
-                    2: "text-lg font-semibold mt-6 mb-3",
-                    3: "text-md font-medium mt-5 mb-2",
-                    4: "text-sm font-medium mt-4 mb-2",
+                    1: "text-2xl font-bold mt-8 mb-4",
+                    2: "text-xl font-semibold mt-6 mb-3",
+                    3: "text-lg font-medium mt-5 mb-2",
+                    4: "text-base font-medium mt-4 mb-2",
                 };
 
                 return (
@@ -117,7 +117,7 @@ export default function PreviewContent({ postJson }) {
                 if (isEmpty) return null;
 
                 return (
-                    <p key={index} className="mb-4 leading-relaxed text-sm sm:text-md" style={alignStyle}>
+                    <p key={index} className="mb-4 leading-relaxed " style={alignStyle}>
                         {contentArray.map((part, idx) => {
                             if (part.type === "hardBreak") return <br key={idx} />;
                             return (
@@ -191,7 +191,7 @@ export default function PreviewContent({ postJson }) {
     return (
         <div className={styles.container}>
 
-            <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 medium-italic text-sm sm:text-md sm:text-md text-pretty space-y-2">
+            <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 text-md space-y-2">
                 {levelOneItems?.map((section, index) => {
                     const text = section.content?.[0]?.text || "";
                     const slug = slugify(text);

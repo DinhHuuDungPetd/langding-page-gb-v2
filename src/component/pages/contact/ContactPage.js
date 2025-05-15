@@ -57,7 +57,7 @@ const ContactPage = memo(() => {
                 className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747018636/backgroundMobile/bw4hk7or82wnbqlpxbsj.jpg)] md:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/modzoiaox5xwvavuyyai.webp)] bg-blend-multiply"
                 variants={itemVariants}
             >
-                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20 text-white text-xl medium-italic z-9">
+                <div className="absolute bottom-4 left-5 md:left-10 lg:left-20 text-white text-md medium-italic z-9">
                     Trang chủ &gt; <span className="font-normal">Liên hệ</span>
                 </div>
             </motion.div>
@@ -113,12 +113,12 @@ const ContactPage = memo(() => {
                             className="mt-4"
                             variants={itemVariants}
                         >
-                            <h3 className="text-primary text-xl font-bold uppercase mb-4">
+                            <h3 className="text-primary text-lg font-bold uppercase mb-4">
                                 Trung tâm xét nghiệm GREEN LAB
                             </h3>
                             <div className="space-y-3">
                                 {contactInfo.map((info, index) => (
-                                    <p key={index} className="text-md font-medium flex items-center gap-2">
+                                    <p key={index} className="text-sm sm:text-md font-medium flex items-center gap-2">
                                         {info.icon} {info.text}
                                         {info.additionalIcon && (
                                             <>

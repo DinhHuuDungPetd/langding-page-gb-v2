@@ -62,7 +62,7 @@ const renderTextWithMarks = (textObj) => {
 
 export default function Blog({ blog }) {
 
-    const levelOneItems = blog?.postJson?.content?.filter(section => section.attrs?.level === 1);
+    const levelOneItems = blog?.postJson?.content?.filter(section => section.attrs?.level === 2);
 
     const renderContent = (section, index) => {
         const textAlign = section.attrs?.textAlign || "left";
@@ -70,18 +70,18 @@ export default function Blog({ blog }) {
 
         switch (section.type) {
             case "heading": {
-                const level = section.attrs?.level || 1;
+                const level = section.attrs?.level || 2;
                 const contentArray = section.content || [];
                 const slug =
-                    level === 1 && contentArray[0]?.text
+                    level === 2 && contentArray[0]?.text
                         ? slugify(contentArray[0].text)
                         : undefined;
                 const HeadingTag = `h${Math.min(level, 4)}`;
                 const headingClassMap = {
-                    1: "text-xl font-bold mt-8 mb-4",
-                    2: "text-lg font-semibold mt-6 mb-3",
-                    3: "text-md font-medium mt-5 mb-2",
-                    4: "text-sm font-medium mt-4 mb-2",
+                    1: "text-2xl font-bold mt-8 mb-4",
+                    2: "text-xl font-semibold mt-6 mb-3",
+                    3: "text-lg font-medium mt-5 mb-2",
+                    4: "text-md font-medium mt-4 mb-2",
                 };
 
                 return (
@@ -218,7 +218,7 @@ export default function Blog({ blog }) {
                 </div>
             </div>
 
-            <h5 className="text-xl sm:text-2xl font-bold text-primary mb-3">{blog?.title}</h5>
+            <h1 className="text-xl sm:text-2xl font-bold text-primary mb-3">{blog?.title}</h1>
 
             <h5 className="mb-4 medium-italic text-sm sm:text-md text-pretty text-gray-500">
                 {blog?.description}

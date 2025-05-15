@@ -49,7 +49,7 @@ export default function Banner() {
                 <div className="relative w-full h-full">
                     <div className="flex flex-col items-center justify-center text-white text-center h-full">
                         <h2 className="text-outline-3 font-bold text-3xl lg:text-5xl xl:text-7xl mb-2">2014</h2>
-                        <p className="text-sm sm:text-lg mb-4 text-pretty">
+                        <p className="text-sm sm:text-md mb-4 text-pretty">
                             <span className="font-medium text-pretty">
                                 Green Lab ra đời dưới sự dẫn dắt của
                             </span>
@@ -62,7 +62,7 @@ export default function Banner() {
                                 với một khát vọng giản dị nhưng mạnh mẽ:
                             </span>
                         </p>
-                        <p className="font-bold text-sm sm:text-lg text-pretty">
+                        <p className="font-bold text-sm sm:text-md text-pretty">
                             MANG ĐẾN DỊCH VỤ XÉT NGHIỆM Y HỌC CHẤT LƯỢNG,
                             <br />
                             ĐÁNG TIN CẬY CHO MỌI NGƯỜI DÂN VIỆT NAM

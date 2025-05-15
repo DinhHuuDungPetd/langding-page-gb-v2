@@ -26,7 +26,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -268,7 +268,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -376,7 +376,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -605,7 +605,7 @@
         "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746693385/cdatqaka8vowjrivcjhz.jpg",
         "title": "Green lab vươn xa"
       },
-      "views": 13,
+      "views": 20,
       "status": true,
       "postJson": {
         "type": "doc",
@@ -614,7 +614,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -666,7 +666,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -1101,7 +1101,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -1342,7 +1342,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -1450,7 +1450,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -1691,7 +1691,7 @@
         "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1746760048/kpl7sxqivdaiqdkqzfqm.jpg",
         "title": "1"
       },
-      "views": 5,
+      "views": 7,
       "status": true,
       "postJson": {
         "type": "doc",
@@ -1700,7 +1700,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -1959,7 +1959,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -2067,7 +2067,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -2317,7 +2317,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -2576,7 +2576,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -2684,7 +2684,7 @@
             "type": "heading",
             "attrs": {
               "textAlign": null,
-              "level": 1
+              "level": 2
             },
             "content": [
               {
@@ -3053,7 +3053,7 @@
         "title": "1"
       },
       "priority": "0",
-      "status": false,
+      "status": true,
       "id_bogs": [
         {
           "id": "382521",
@@ -3090,7 +3090,7 @@
         "title": "1"
       },
       "priority": "0",
-      "status": false,
+      "status": true,
       "id_bogs": [
         {
           "id": "382521",
