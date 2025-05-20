@@ -6,14 +6,14 @@ const Image = dynamic(() => import("next/image"), { ssr: false });
 
 const FormInput = memo(({ label, id, type = "text", placeholder, ...props }) => (
     <div>
-        <label htmlFor={id} className="block text-white font-semibold mb-1 text-sm md:text-base xl:text-base">
-            {label}<span className="text-red-500">*</span>
+        <label htmlFor={id} className="block text-white font-medium mb-1 text-sm sm:text-base">
+            {label} <span className="text-red-500">*</span>
         </label>
         <input
             id={id}
             type={type}
             placeholder={placeholder}
-            className="text-sm md:text-base xl:text-base w-full border bg-white border-gray-300 px-4 py-2 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full border bg-white border-gray-300 px-4 py-2 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base"
             required
             aria-required="true"
             {...props}
@@ -25,12 +25,12 @@ FormInput.displayName = 'FormInput';
 
 const TimeSlotSelect = memo(() => (
     <div>
-        <label htmlFor="timeSlot" className="block text-white font-semibold mb-1 text-sm md:text-base xl:text-base">
+        <label htmlFor="timeSlot" className="block text-white font-medium mb-1 text-sm sm:text-base">
             Khung giờ:<span className="text-red-500">*</span>
         </label>
         <select
             id="timeSlot"
-            className="text-sm md:text-base xl:text-base w-full bg-white border border-gray-300 px-4 py-2 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full bg-white border border-gray-300 px-4 py-2 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base"
             required
             aria-required="true"
             aria-label="Chọn khung giờ lấy mẫu"
@@ -58,11 +58,12 @@ const BookingForm = () => {
 
     return (
         <div className="w-full max-w-3xl p-6 bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-xl shadow-lg text-white mx-auto">
-            <div className="flex flex-row md:flex-col items-center justify-center text-center font-bold text-base md:text-3xl mb-2 md:mb-6">
-                <span className="m-2">ĐẶT LỊCH</span>
-                <span className="mx-1">LẤY MẪU XÉT NGHIỆM</span>
-            </div>
-
+            <h2 className="text-lg sm:text-xl font-bold mb-2 text-center">
+                ĐẶT LỊCH
+            </h2>
+            <h2 className="text-lg sm:text-xl font-bold mb-6 text-center">
+                LẤY MẪU XÉT NGHIỆM
+            </h2>
             <form
                 onSubmit={handleSubmit}
                 className="space-y-5"
@@ -108,7 +109,7 @@ const BookingForm = () => {
                 />
 
                 <div>
-                    <label htmlFor="message" className="block text-white font-semibold mb-1 text-sm md:text-base xl:text-base">
+                    <label htmlFor="message" className="block text-white font-semibold mb-1 text-sm sm:text-base">
                         Nội dung:<span className="text-red-500">*</span>
                     </label>
                     <textarea

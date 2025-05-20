@@ -1,16 +1,16 @@
 "use client";
 import { useState, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiMessageCircle, FiX, FiPhoneCall, FiMail } from "react-icons/fi";
+import { FiMessageCircle, FiX } from "react-icons/fi";
 import { SiZalo } from "react-icons/si";
-import { FaFacebookMessenger } from "react-icons/fa";
-
+import { FaPhone } from "react-icons/fa6";
+import { FaPhoneVolume } from "react-icons/fa6";
+import { FaFacebook } from "react-icons/fa6";
 const buttons = [
-    { icon: <FiPhoneCall size={28} />, color: "bg-red-500", label: "Gọi 1", href: "tel:" },
-    { icon: <FiPhoneCall size={28} />, color: "bg-red-500", label: "Gọi 2", href: "tel:+84983729351" },
-    { icon: <SiZalo size={28} />, color: "bg-blue-500", label: "Zalo", href: "https://zalo.me/yourpage" },
-    { icon: <FaFacebookMessenger size={28} />, color: "bg-blue-400", label: "Messenger", href: "https://m.me/yourpage" },
-    { icon: <FiMail size={28} />, color: "bg-orange-400", label: "Email", href: "mailto:xetnghiemgreenlab@gmail.com" },
+    { icon: <FaPhoneVolume size={28} />, color: "bg-red-500", label: "Gọi 1", href: "tel:1900636588" },
+    { icon: <FaPhone size={28} />, color: "bg-red-500", label: "Gọi 2", href: "tel:+84912615997" },
+    { icon: <FaFacebook size={28} />, color: "bg-blue-600", label: "Facebook", href: "https://www.facebook.com/greenlab.real" },
+    { icon: <SiZalo size={28} />, color: "bg-blue-500", label: "Zalo", href: "https://zalo.me/0912615997" },
 ];
 
 const ContactButton = memo(({ button, index, isVisible }) => (

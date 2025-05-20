@@ -97,14 +97,14 @@ export default function Banner() {
                                             <span className="w-16 h-[2px] bg-[#36803E]"></span>
                                         </div>
                                     </div>
-                                    <motion.h2
+                                    <motion.h1
                                         className="text-xl lg:text-2xl text-primary font-bold whitespace-nowrap uppercase"
                                         variants={itemVariants}
                                         whileHover={{ scale: 1.05 }}
                                         transition={{ duration: 0.2 }}
                                     >
                                         Các dịch vụ xét nghiệm
-                                    </motion.h2>
+                                    </motion.h1>
                                     <div className="hidden md:block">
                                         <div className="flex items-center gap-1">
                                             <span className="w-16 h-[2px] bg-[#36803E]"></span>

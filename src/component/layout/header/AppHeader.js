@@ -43,7 +43,7 @@ export default function AppHeader() {
                         >
                             <ul className="lg:flex flex-row items-center gap-0 w-full hidden">
                                 {menuItems.map((item, i) => (
-                                    <ItemLi item={item} key={i} />
+                                    <ItemLi item={item} key={i} setMenuOpen={setMenuOpen} />
                                 ))}
                             </ul>
                         </div>
@@ -66,7 +66,7 @@ export default function AppHeader() {
                 >
                     <ul className="flex flex-col text-center divide-y">
                         {menuItems.map((item, i) => (
-                            <ItemLi item={item} key={i} />
+                            <ItemLi item={item} key={i} setMenuOpen={setMenuOpen} />
                         ))}
                     </ul>
                 </div>

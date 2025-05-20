@@ -89,12 +89,12 @@ const IntroductionPage = memo(() => {
                 </div>
             </motion.div>
 
-            <motion.h3
+            <motion.h1
                 className="text-xl sm:text-2xl text-primary text-center my-5 font-bold"
                 variants={itemVariants}
             >
                 "Đồng hành vì sức khỏe, mang chất lượng đến từng gia đình"
-            </motion.h3>
+            </motion.h1>
 
             <div className='hidden md:block'>
                 <Banner />
@@ -169,7 +169,7 @@ const IntroductionPage = memo(() => {
                         transition={{ duration: 0.3 }}
                     >
                         <div className="mb-4 text-4xl">{card.icon}</div>
-                        <h3 className="text-xl uppercase font-bold mb-3">{card.title}</h3>
+                        <h3 className="text-lg uppercase font-bold mb-3">{card.title}</h3>
                         <div className="font-medium text-sm sm:text-base text-pretty line-clamp-5">
                             {card.content}
                         </div>
@@ -182,12 +182,12 @@ const IntroductionPage = memo(() => {
                 className="bg-mint px-4 sm:px-6 lg:px-8"
                 variants={containerVariants}
             >
-                <motion.h2
+                <motion.h1
                     className="text-xl lg:text-2xl font-bold text-primary text-center my-2 uppercase"
                     variants={itemVariants}
                 >
                     Tại sao nên chọn GREEN LAB?
-                </motion.h2>
+                </motion.h1>
                 <motion.div
                     className="my-10"
                     variants={itemVariants}

@@ -30,10 +30,10 @@ export default function MediaContent() {
                         <div className="flip-inner border-2 border-primary rounded-xl p-8 bg-mint transition-all text-center flex items-center justify-center relative min-h-[250px]">
 
                             <div className="flip-front absolute inset-0 p-8 flex flex-col items-center justify-center">
-                                <div className="w-20 h-20 mb-4 flex items-center justify-center rounded-full bg-gradient-to-b from-primary to-midnight border-central border-3">
+                                <div className="w-15 h-15 sm:w-20 sm:h-20 mb-4 flex items-center justify-center rounded-full bg-gradient-to-b from-primary to-midnight border-central border-3">
                                     {item.icon}
                                 </div>
-                                <div className="font-bold text-base leading-tight uppercase">
+                                <div className="font-bold text-sm sm:text-base leading-tight uppercase">
                                     <div>{item.title}</div>
                                     <div>{item.subtitle}</div>
                                 </div>

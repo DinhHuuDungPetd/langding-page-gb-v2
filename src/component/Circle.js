@@ -19,8 +19,7 @@ export default function CircleComponent({ item, index }) {
             <div className="bg-white flex flex-row md:flex-col items-center justify-center gap-4  z-50 text-left md:text-center">
                 <div className={`${styles.circleContainer} xl:h-[250px] lg:h-[220px] md:h-[150px] h-[150px]  xl:w-[250px] lg:w-[220px] md:w-[150px] w-[150px]`}>
                     <div className='block md:hidden'>
-                        <div className={styles.topLength}>
-                        </div>
+                        <div className={styles.topLength} />
                     </div>
                     <div className={styles.outerCircle}>
                         <div className={styles.dot}></div>
@@ -34,19 +33,19 @@ export default function CircleComponent({ item, index }) {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.arrow}></div>
+                    <div className={styles.arrow} />
                     <div className={styles.length}>
-                        <div className={styles.bottomLength}></div>
+                        <div className={`${styles.bottomLength} hidden md:block`}></div>
                     </div>
                 </div>
             </div>
             {/*Text*/}
             <div className="flex flex-col items-center justify-center text-center w-full">
-                <div className="font-bold text-primary text-lg leading-none uppercase md:pt-8">
+                <h3 className="font-bold text-primary text-md sm:text-lg leading-none uppercase md:pt-8">
                     {item.title}
-                </div>
+                </h3>
                 <div className="flex flex-col items-center justify-center">
-                    <p className="pt-2 whitespace-pre-line text-sm text-gray-700 w-full md:w-[150px] xl:w-[250px] lg:w-[220px] text-center" style={{ lineHeight: '28px' }}>
+                    <p className="pt-2 whitespace-pre-line text-sm sm:text-base text-gray-700 w-full md:w-[150px] xl:w-[250px] lg:w-[220px] text-center" style={{ lineHeight: '28px' }}>
                         {item.content}
                     </p>
                 </div>

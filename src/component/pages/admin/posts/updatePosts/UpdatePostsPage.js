@@ -58,7 +58,7 @@ export default function PostsPage({ params }) {
                 setBlogs(filteredBlogs);
 
                 setblogsRelated(response2.data[0] || [])
-                console.log(response2.data[0])
+
                 setCategorys(response4.data)
                 setSelectedCategoryIds(matchingCategoryIds)
 
@@ -128,8 +128,6 @@ export default function PostsPage({ params }) {
 
     const handleSave = async () => {
         setLoading(true);
-        const now = new Date();
-        const formattedTime = now.toISOString();
 
         // Validate tiêu đề
         if (!title.trim()) {
@@ -190,12 +188,22 @@ export default function PostsPage({ params }) {
             alert("Image upload failed, please try again.");
             return;
         }
-
+        if (!uploadedImageUrl) {
+            alert("Side banner is required.");
+            return;
+        }
+        if (!uploadedSideBannerUrl) {
+            alert("Side banner is required.");
+            return;
+        }
+        if (!uploadedPromoBanner) {
+            alert("Promo banner is required.");
+            return;
+        }
         const blog = {
             id: id,
             title: title.trim(),
             description: description.trim(),
-            time: formattedTime,
             imageTitle: {
                 url: uploadedImageUrl,
                 title: titleText.trim()

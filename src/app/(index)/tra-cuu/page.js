@@ -1,4 +1,4 @@
-import AccountPage from "@/component/pages/account/AccountPage";
+import TestResultSearchFormPage from "@/component/pages/test-result-lookup/TestResultSearchFormPage";
 
 
 export const metadata = {
@@ -19,6 +19,6 @@ export const metadata = {
 }
 export default function Home() {
   return (
-    <AccountPage />
+    <TestResultSearchFormPage />
   );
 }

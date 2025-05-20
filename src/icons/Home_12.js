@@ -3,7 +3,7 @@ const SvgComponent = (props) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlSpace="preserve"
-        viewBox="-250 -0 858 290" {...props} className="w-full h-full" transform="scale(0.8)"
+        viewBox="-260 -10 868 362" {...props} className="w-full h-full" transform="scale(0.9)"
     >
         <path
             fill="#FFF"

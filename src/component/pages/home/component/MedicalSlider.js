@@ -68,7 +68,7 @@ const MedicalSlider = () => {
                                         : ' bg-white' // Style mặc định
                                         }`}
                                 >
-                                    <h3 className={`text-lg font-medium text-center px-4 ${activeSlideId === slide.id
+                                    <h3 className={`text-md sm:text-lg font-medium text-center px-4 ${activeSlideId === slide.id
                                         ? 'text-white' // Text color khi active
                                         : 'text-primary' // Text color mặc định
                                         }`}>
