@@ -70,7 +70,7 @@ export default function NewBlogs({ category }) {
         <div className="bg-mint p-4 rounded-md mb-5">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg sm:text-xl font-bold text-primary">{category.name}</h2>
-                <Link href={`/tin-tuc-su-kien/${category.id}`} className="text-blue-600 text-sm font-medium hover:underline">Xem thêm</Link>
+                <Link href={`/tin-tuc-su-kien/${category.id}`} className="text-blue-500 text-sm font-medium hover:underline">Xem thêm</Link>
             </div>
 
             <div className="md:flex gap-4">

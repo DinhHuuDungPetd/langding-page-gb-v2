@@ -57,7 +57,7 @@ const TechnologyComponent = memo(() => {
                     className="text-white w-full lg:w-1/2"
                     variants={itemVariants}
                 >
-                    <h1 className="text-3xl sm:text-4xl font-bold mb-4 uppercase text-primary">
+                    <h1 className="md:text-2xl text-xl font-bold mb-4 uppercase text-primary">
                         Công nghệ tiên tiến
                     </h1>
                     <p className="text-sm md:text-base xl:text-base text-gray-800 mb-2 leading-relaxed font-bold">

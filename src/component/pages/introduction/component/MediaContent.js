@@ -33,18 +33,14 @@ export default function MediaContent() {
                                 <div className="w-15 h-15 sm:w-20 sm:h-20 mb-4 flex items-center justify-center rounded-full bg-gradient-to-b from-primary to-midnight border-central border-3">
                                     {item.icon}
                                 </div>
-                                <div className="font-bold text-sm sm:text-md leading-tight uppercase">
+                                <div className="font-bold text-sm sm:text-base leading-tight uppercase">
                                     <div>{item.title}</div>
                                     <div>{item.subtitle}</div>
                                 </div>
                             </div>
 
                             <div className="flip-back absolute inset-0 bg-midnight text-white rounded-lg p-2 flex flex-col justify-center text-sm ">
-                                {/* <div className="font-bold text-base leading-tight uppercase my-3">
-                                    <div>{item.title}</div>
-                                    <div>{item.subtitle}</div>
-                                </div> */}
-                                <p className="font-medium text-sm sm:text-md text-balance mb-2">{item.description}</p>
+                                <p className="font-medium text-sm md:text-base  text-balance mb-2">{item.description}</p>
                             </div>
 
                         </div>

@@ -35,12 +35,12 @@
   }
   
   .container a {
-    color: #2563eb;
+    color: #cf4242ad;
     text-decoration: underline;
   }
   
   .container a:hover {
-    color: #1d4ed8;
+    color: #ec7d7d7e;
   }
   
   .image {

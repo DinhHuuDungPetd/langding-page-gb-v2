@@ -6,14 +6,14 @@ const Image = dynamic(() => import("next/image"), { ssr: false });
 
 const FormInput = memo(({ label, id, type = "text", placeholder, ...props }) => (
     <div>
-        <label htmlFor={id} className="block text-white font-medium mb-1 text-sm sm:text-md">
+        <label htmlFor={id} className="block text-white font-medium mb-1 text-sm sm:text-base">
             {label} <span className="text-red-500">*</span>
         </label>
         <input
             id={id}
             type={type}
             placeholder={placeholder}
-            className="w-full border bg-white border-gray-300 px-4 py-2 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-md"
+            className="w-full border bg-white border-gray-300 px-4 py-2 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base"
             required
             aria-required="true"
             {...props}
@@ -25,12 +25,12 @@ FormInput.displayName = 'FormInput';
 
 const TimeSlotSelect = memo(() => (
     <div>
-        <label htmlFor="timeSlot" className="block text-white font-medium mb-1 text-sm sm:text-md">
+        <label htmlFor="timeSlot" className="block text-white font-medium mb-1 text-sm sm:text-base">
             Khung giờ:<span className="text-red-500">*</span>
         </label>
         <select
             id="timeSlot"
-            className="w-full bg-white border border-gray-300 px-4 py-2 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-md"
+            className="w-full bg-white border border-gray-300 px-4 py-2 rounded-xl text-black focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base"
             required
             aria-required="true"
             aria-label="Chọn khung giờ lấy mẫu"
@@ -109,7 +109,7 @@ const BookingForm = () => {
                 />
 
                 <div>
-                    <label htmlFor="message" className="block text-white font-semibold mb-1 text-sm sm:text-md">
+                    <label htmlFor="message" className="block text-white font-semibold mb-1 text-sm sm:text-base">
                         Nội dung:<span className="text-red-500">*</span>
                     </label>
                     <textarea

@@ -118,7 +118,7 @@ const ContactPage = memo(() => {
                             </h3>
                             <div className="space-y-3">
                                 {contactInfo.map((info, index) => (
-                                    <p key={index} className="text-sm sm:text-md font-medium flex items-center gap-2">
+                                    <p key={index} className="text-sm sm:text-base font-medium flex items-center gap-2">
                                         {info.icon} {info.text}
                                         {info.additionalIcon && (
                                             <>

@@ -114,7 +114,7 @@ export default function Banner() {
                                 </motion.div>
 
                                 <motion.p
-                                    className="leading-relaxed font-medium text-sm sm:text-md"
+                                    className="leading-relaxed font-medium text-sm md:text-base"
                                     variants={itemVariants}
                                     whileHover={{ scale: 1.02 }}
                                     transition={{ duration: 0.2 }}

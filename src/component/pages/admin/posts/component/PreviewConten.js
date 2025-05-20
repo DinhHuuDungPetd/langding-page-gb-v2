@@ -49,7 +49,7 @@ const renderTextWithMarks = (textObj) => {
                 href={linkMark.attrs.href}
                 target={linkMark.attrs.target || "_blank"}
                 rel={linkMark.attrs.rel || "noopener noreferrer"}
-                className="text-blue-600 underline"
+                className="text-blue-400 underline"
                 style={style}
             >
                 {content}
@@ -62,9 +62,6 @@ const renderTextWithMarks = (textObj) => {
 
 
 export default function PreviewContent({ postJson }) {
-    const levelOneItems = postJson?.content?.filter(
-        (section) => section.type === "heading" && section.attrs?.level === 2
-    );
 
     const renderContent = (section, index) => {
         const textAlign = section.attrs?.textAlign || "left";
@@ -74,10 +71,7 @@ export default function PreviewContent({ postJson }) {
             case "heading": {
                 const level = section.attrs?.level || 2;
                 const contentArray = section.content || [];
-                const slug =
-                    level === 2 && contentArray[0]?.text
-                        ? slugify(contentArray[0].text)
-                        : undefined;
+
                 const HeadingTag = `h${Math.min(level, 4)}`;
                 const headingClassMap = {
                     1: "text-2xl font-bold mt-8 mb-4",
@@ -89,7 +83,7 @@ export default function PreviewContent({ postJson }) {
                 return (
                     <HeadingTag
                         key={index}
-                        id={slug}
+                        id={contentArray[0].text}
                         className={headingClassMap[level] || ""}
                         style={alignStyle}
                     >
@@ -192,27 +186,61 @@ export default function PreviewContent({ postJson }) {
         <div className={styles.container}>
 
             <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 text-md space-y-2">
-                {levelOneItems?.map((section, index) => {
-                    const text = section.content?.[0]?.text || "";
-                    const slug = slugify(text);
-                    return (
-                        <li key={index}>
-                            <a
-                                href={`#${slug}`}
-                                className="hover:underline"
-                                style={{
-                                    color: "var(--color-primary)",
-                                    fontWeight: 500,
-                                    fontSize: "1rem",
-                                }}
-                            >
-                                {text}
-                            </a>
-                        </li>
-                    );
-                })}
-            </ul>
+                {(() => {
+                    const numbering = { 2: 0, 3: 0, 4: 0 };
 
+                    return postJson?.content
+                        ?.filter((section) => section.type === "heading" && section.content?.[0]?.text)
+                        .map((section, index) => {
+                            const level = section.attrs?.level || 2;
+                            const text = section.content?.[0]?.text || "";
+                            const slug = slugify(text);
+
+                            // Reset cấp thấp hơn khi có heading mới
+                            if (level === 2) {
+                                numbering[2]++;
+                                numbering[3] = 0;
+                                numbering[4] = 0;
+                            } else if (level === 3) {
+                                numbering[3]++;
+                                numbering[4] = 0;
+                            } else if (level === 4) {
+                                numbering[4]++;
+                            }
+
+                            // Tạo chuỗi chỉ số
+                            const numberPrefix =
+                                level === 2
+                                    ? `${numbering[2]}.`
+                                    : level === 3
+                                        ? `${numbering[2]}.${numbering[3]}.`
+                                        : `${numbering[2]}.${numbering[3]}.${numbering[4]}.`;
+
+                            // Tạo class thụt lề
+                            const indentClass = {
+                                2: "ml-0",
+                                3: "ml-4",
+                                4: "ml-8",
+                            }[level] || "ml-0";
+
+                            return (
+                                <li key={index} className={`${indentClass}`}>
+                                    <a
+                                        href={`#${text}`}
+                                        className="hover:underline block"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                            fontWeight: 500,
+                                            fontSize: "1rem",
+                                        }}
+                                    >
+                                        {numberPrefix} {text}
+                                    </a>
+                                </li>
+                            );
+                        });
+                })()}
+            </ul>
 
             {postJson?.content?.map((section, index) => renderContent(section, index))}
         </div>

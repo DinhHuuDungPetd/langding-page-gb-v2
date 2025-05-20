@@ -7,14 +7,3 @@ services:
     restart: always
     environment:
       - NODE_ENV=production
-    depends_on:
-      - json-server
-
-  json-server:
-    container_name: green-lab-json
-    image: clue/json-server
-    volumes:
-      - ./db.json:/data/db.json
-    ports:
-      - "3001:80"
-    restart: always

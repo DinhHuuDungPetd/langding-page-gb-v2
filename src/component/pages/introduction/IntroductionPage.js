@@ -123,7 +123,7 @@ const IntroductionPage = memo(() => {
                         <h2 className="text-lg sm:text-xl text-primary mb-2 font-bold">
                             Khởi nguồn từ tâm huyết và sứ mệnh
                         </h2>
-                        <div className="space-y-4 text-sm sm:text-md leading-relaxed text-justify text-pretty">
+                        <div className="space-y-4 text-sm sm:text-base leading-relaxed text-justify text-pretty">
                             <p className="font-medium">
                                 Được cố vấn bởi những Giáo sư, Bác sĩ đầu ngành – những người không chỉ
                                 giỏi chuyên môn mà còn trọn vẹn y đức – Green Lab khởi đầu hành trình
@@ -145,7 +145,7 @@ const IntroductionPage = memo(() => {
                         <h2 className="text-lg sm:text-xl text-primary mb-2 font-bold text-pretty">
                             Hành trình vươn tầm chất lượng
                         </h2>
-                        <p className="font-medium text-sm sm:text-md leading-relaxed text-justify text-pretty">
+                        <p className="font-medium text-sm sm:text-base leading-relaxed text-justify text-pretty">
                             Từ những ngày đầu thành lập, Green Lab đã đặt mục tiêu cao: Không chỉ
                             cung cấp dịch vụ xét nghiệm, mà còn phải làm tốt hơn cả mong đợi. Với
                             đội ngũ chuyên gia hàng đầu – Giáo sư, Tiến sĩ, Thạc sĩ, Bác sĩ giàu
@@ -170,7 +170,7 @@ const IntroductionPage = memo(() => {
                     >
                         <div className="mb-4 text-4xl">{card.icon}</div>
                         <h3 className="text-lg uppercase font-bold mb-3">{card.title}</h3>
-                        <div className="font-medium text-sm sm:text-md text-pretty line-clamp-5">
+                        <div className="font-medium text-sm sm:text-base text-pretty line-clamp-5">
                             {card.content}
                         </div>
                     </motion.article>

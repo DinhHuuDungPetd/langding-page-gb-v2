@@ -103,9 +103,17 @@ export default function CategorysPage({ params }) {
             let uploadedSideBannerUrl = "";
             let uploadedPromoBanner = "";
 
-            if (upFileSideBanner && upFilePromoBanner) {
+            if (upFileSideBanner) {
                 try {
                     uploadedSideBannerUrl = await uploadToCloudinary(upFileSideBanner);
+                } catch (err) {
+                    console.error("Upload failed, cancel saving.");
+                    alert("Tải ảnh lên thất bại. Vui lòng thử lại.");
+                    return;
+                }
+            }
+            if (upFilePromoBanner) {
+                try {
                     uploadedPromoBanner = await uploadToCloudinary(upFilePromoBanner);
                 } catch (err) {
                     console.error("Upload failed, cancel saving.");
@@ -113,7 +121,6 @@ export default function CategorysPage({ params }) {
                     return;
                 }
             }
-
             const updatedCategory = {
                 ...categorys,
                 name: name.trim(),

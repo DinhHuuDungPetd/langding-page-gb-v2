@@ -61,10 +61,10 @@ export default function PopularNews() {
                                     <FaCalendarAlt className="mr-1" />
                                     <span>{formatDate(item.time)}</span>
                                 </div>
-                                <h3 className="text-sm sm:text-md font-semibold text-primary hover:text-midnight leading-snug line-clamp-2 ">
+                                <h4 className="text-sm sm:text-base font-semibold text-primary hover:text-midnight leading-snug line-clamp-2 ">
                                     {item.title}
-                                </h3>
-                                <p className="text-sm sm:text-md text-gray-700 line-clamp-2">
+                                </h4>
+                                <p className="text-sm sm:text-base text-gray-700 line-clamp-2">
                                     {item.description}
                                 </p>
                             </div>

@@ -77,7 +77,7 @@ export default function BlogCategory({ category, sideNews }) {
                                             <h3 className="text-md sm:text-lg text-primary font-bold  overflow-hidden text-ellipsis max-w-full line-clamp-2" title={item.title}>
                                                 {item.title}
                                             </h3>
-                                            <p className="font-medium text-balance text-sm sm:text-md text-gray-600 line-clamp-2" title={item.description} >{item.description}</p>
+                                            <p className="font-medium text-balance text-sm sm:text-base text-gray-600 line-clamp-2" title={item.description} >{item.description}</p>
                                             <div className="flex items-start mt-2 gap-1.5 font-medium text-xs text-gray-600">
                                                 <div className="flex items-center text-xs text-gray-500 gap-1 mt-1">
                                                     <FaCalendarAlt className="mt-[2px]" />

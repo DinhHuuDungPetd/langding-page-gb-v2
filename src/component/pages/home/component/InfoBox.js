@@ -68,14 +68,14 @@ export default function InfoBox() {
                     variants={cardVariants}
                     className="w-[150px] h-[150px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-0 md:px-2 md:py-5  "
                 >
-                    <div className="">
+                    <div>
                         <Home_7 />
                     </div>
                     <h2 className="text-white text-lg md:text-2xl font-bold whitespace-nowrap uppercase">
                         1.000.000+
                     </h2>
-                    <span className="text-white text-sm font-bold">
-                        Xét nghiệm chuyên sâu
+                    <span className="text-white text-sm md:text-base font-bold">
+                        Xét nghiệm
                     </span>
                 </motion.div>
                 <motion.div
@@ -86,7 +86,7 @@ export default function InfoBox() {
                     variants={cardVariants}
                     className="w-[150px] h-[150px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-0 md:px-2 md:py-5  "
                 >
-                    <div className="">
+                    <div>
                         <Home_9 />
                     </div>
                     <h2 className="text-white text-lg md:text-2xl font-bold whitespace-nowrap uppercase">
@@ -95,7 +95,7 @@ export default function InfoBox() {
                     <h2 className="text-white text-lg font-bold whitespace-nowrap uppercase">
                         Bệnh viện
                     </h2>
-                    <span className="text-white text-sm font-bold whitespace-nowrap">
+                    <span className="text-white text-sm md:text-base font-bold whitespace-nowrap">
                         Liên kết hợp tác
                     </span>
                 </motion.div>
@@ -124,7 +124,7 @@ export default function InfoBox() {
                     variants={cardVariants}
                     className="w-[150px] h-[150px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-0 md:px-2 md:py-5  "
                 >
-                    <div className="">
+                    <div>
                         <Home_8 />
                     </div>
                     <h2 className="text-white text-lg md:text-2xl font-bold whitespace-nowrap uppercase">
@@ -133,7 +133,7 @@ export default function InfoBox() {
                     <h2 className="text-white text-lg  font-bold whitespace-nowrap uppercase">
                         Bệnh viện
                     </h2>
-                    <span className="text-white text-sm font-bold">
+                    <span className="text-white text-sm md:text-base font-bold">
                         Tin tưởng&nbsp;sử dụng
                     </span>
                 </motion.div>
@@ -145,7 +145,7 @@ export default function InfoBox() {
                     variants={cardVariants}
                     className="w-[150px] h-[150px] md:w-[230px] md:h-[230px] text-center bg-gradient-to-t from-midnight to-green-700 border-[4px] border-central rounded-lg m-2 px-0 md:px-2 md:py-5  "
                 >
-                    <div className="">
+                    <div>
                         <Home_10 />
                     </div>
                     <h2 className="text-white text-lg md:text-2xl font-bold whitespace-nowrap uppercase">
@@ -154,7 +154,7 @@ export default function InfoBox() {
                     <h2 className="text-white text-lg font-bold whitespace-nowrap uppercase">
                         Bác sĩ & CTV
                     </h2>
-                    <span className="text-white text-sm font-bold whitespace-nowrap">
+                    <span className="text-white text-sm md:text-base font-bold whitespace-nowrap">
                         Liên kết hợp tác
                     </span>
                 </motion.div>

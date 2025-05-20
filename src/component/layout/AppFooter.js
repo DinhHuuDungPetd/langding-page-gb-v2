@@ -30,15 +30,15 @@ export default function AppFooter() {
                     <div className='text-center xl:text-left mx-auto'>
                         <p className="font-bold text-center xl:text-left text-lg lg:text-2xl mb-5 text-pretty">TRUNG TÂM XÉT NGHIỆM GREEN LAB</p>
                         <ul className="space-y-1 mx-auto hidden md:block">
-                            <li className='flex gap-3 font-medium text-sm sm:text-md text-pretty'><FaMapMarkedAlt className="text-white" />121 Bùi Thị Xuân, Q. Hai Bà Trưng, Hà Nội</li>
-                            <li className='flex gap-3 font-medium text-sm sm:text-md text-pretty'><MdOutlineEmail className="text-white" /> <a href="mailto:xetnghiemgreenlab@gmail.com" className="hover:underline">xetnghiemgreenlab@gmail.com</a></li>
-                            <li className='flex gap-3 font-medium text-sm sm:text-md text-pretty'><FaPhone className="text-white" /> 0912 615 997 | <FaPhoneVolume className="text-white" /> 1900 636 588</li>
+                            <li className='flex gap-3 font-medium text-sm sm:text-base text-pretty'><FaMapMarkedAlt className="text-white" />121 Bùi Thị Xuân, Q. Hai Bà Trưng, Hà Nội</li>
+                            <li className='flex gap-3 font-medium text-sm sm:text-base text-pretty'><MdOutlineEmail className="text-white" /> <a href="mailto:xetnghiemgreenlab@gmail.com" className="hover:underline">xetnghiemgreenlab@gmail.com</a></li>
+                            <li className='flex gap-3 font-medium text-sm sm:text-base text-pretty'><FaPhone className="text-white" /> 0912 615 997 | <FaPhoneVolume className="text-white" /> 1900 636 588</li>
                         </ul>
-                        <p className="text-sm sm:text-md mt-4 font-medium text-pretty hidden lg:block">
+                        <p className="text-sm sm:text-base mt-4 font-medium text-pretty hidden lg:block">
                             Trang web thuộc sở hữu của Công ty Cổ phần Đầu tư và Công nghệ Y tế Hà Nội. <br />
                             Mã số thuế: 0106064740 do Sở Kế hoạch và Đầu tư thành phố Hà Nội cấp ngày 18/12/2012. <br />
                         </p>
-                        <p className="text-sm sm:text-md font-medium mt-2 hidden lg:block">Copyright 2025 © Trung tâm xét nghiệm Green Lab</p>
+                        <p className="text-sm sm:text-base font-medium mt-2 hidden lg:block">Copyright 2025 © Trung tâm xét nghiệm Green Lab</p>
                     </div>
                 </div>
 
@@ -74,20 +74,20 @@ export default function AppFooter() {
                         title="Map đến green lab 109 Bùi Thị Xuân"
                         className="rounded-md border-none mb-5"
                     ></iframe>
-                    <ul className="space-y-1 mx-auto w-max text-pretty text-sm sm:text-md md:hidden">
+                    <ul className="space-y-1 mx-auto w-max text-pretty text-sm sm:text-base md:hidden">
                         <li className='flex gap-3 font-medium text-md'><FaMapMarkedAlt className="text-white" /> 121 Bùi Thị Xuân, Q. Hai Bà Trưng, Hà Nội</li>
                         <li className='flex gap-3 font-medium text-md'><MdOutlineEmail className="text-white" />
                             <a href="mailto:xetnghiemgreenlab@gmail.com" className="hover:underline">xetnghiemgreenlab@gmail.com</a>
                         </li>
-                        <li className='flex gap-3 font-medium text-sm sm:text-md'>
+                        <li className='flex gap-3 font-medium text-sm sm:text-base'>
                             <FaPhone className="text-white" /> 0912 615 997 | <FaPhoneVolume className="text-white" /> 1900 636 588
                         </li>
                     </ul>
-                    <p className="text-sm sm:text-md mt-4 font-medium text-pretty lg:hidden">
+                    <p className="text-sm sm:text-base mt-4 font-medium text-pretty lg:hidden">
                         Trang web thuộc sở hữu của Công ty Cổ phần Đầu tư và Công nghệ Y tế Hà Nội. <br />
                         Mã số thuế: 0106064740 do Sở Kế hoạch và Đầu tư thành phố Hà Nội cấp ngày 18/12/2012. <br />
                     </p>
-                    <p className="text-sm sm:text-md font-medium mt-2 block lg:hidden">Copyright 2025 © Trung tâm xét nghiệm Green Lab</p>
+                    <p className="text-sm sm:text-base font-medium mt-2 block lg:hidden">Copyright 2025 © Trung tâm xét nghiệm Green Lab</p>
                 </div>
             </div>
         </footer>

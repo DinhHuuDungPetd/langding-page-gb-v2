@@ -7,7 +7,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-# Copy toàn bộ mã nguồn (bao gồm cả db.json, nhưng FE không dùng)
 COPY . .
 
 # Build FE
