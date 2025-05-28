@@ -12,6 +12,8 @@ import { imageFileMap } from "@/component/pages/admin/posts/component/customTipt
 import { createEditor } from '@/component/pages/admin/posts/component/editorConfig';
 import CustomSelect from '@/component/CustomSelect'
 import FullScreenLoader from "@/component/FullScreenLoader";
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+
 export default function PostsPage({ params }) {
     const { slug } = params;
     const id = parseInt(slug, 10);
@@ -44,36 +46,30 @@ export default function PostsPage({ params }) {
     useEffect(() => {
         const fetchPostData = async () => {
             try {
-                const response = await axios.get(`${baseUrl}/blogs/${id}`);
-                const response2 = await axios.get(`${baseUrl}/blogs_related?id_blog=${id}`);
-                const response3 = await axios.get(`${baseUrl}/blogs`)
-                const response4 = await axios.get(`${baseUrl}/categorys`)
-                const filteredBlogs = response3.data.filter(blog => blog.id !== id.toString());
-                const matchingCategoryIds = response4.data
-                    .filter(category =>
-                        category.id_bogs.some(bog => bog.id === id.toString())
-                    )
-                    .map(category => category.id);
-
-                setBlogs(filteredBlogs);
-
-                setblogsRelated(response2.data[0] || [])
-
-                setCategorys(response4.data)
-                setSelectedCategoryIds(matchingCategoryIds)
-
+                const response = await blogAPI.get(`api/v1/Blog?BlogId=${id}`);
+                const response2 = await blogAPI.get(`api/v1/Category?CategoryId=0&BlogId=0`)
+                const response3 = await blogAPI.get(`api/v1/Blog?BlogId=0`);
+                const response4 = await blogAPI.get(`api/v1/Category?BlogId=${id}`)
+                setCategorys(response2.data.data.items)
+                setBlogs(response3.data.data.items);
+                const relatedCategorys = response4.data.data.items || [];
+                setSelectedCategoryIds(relatedCategorys.map(category => category.categoryId))
                 if (editor) {
-                    editor.commands.setContent(response.data.postJson.content);
-                    setPostJson(response.data.postJson);
-                    setTitle(response.data.title);
-                    setDescription(response.data.description);
-                    setSelectedBlogIds(response2.data[0]?.related_blog_id || []);
-                    setPreviewImage(response.data.imageTitle.url);
-                    setTitleText(response.data.imageTitle.title);
-                    setPreviewSideBanner(response.data.sideBanner.url);
-                    setPreviewPromoBanner(response.data.promoBanner.url);
-                    setTitleTextSideBanner(response.data.sideBanner.title);
-                    setTitleTextPromoBanner(response.data.promoBanner.title);
+                    editor.commands.setContent(response.data.data.items[0].blogPostJson.content);
+                    setPostJson(response.data.data.items[0].blogPostJson);
+                    setTitle(response.data.data.items[0].blogTitle);
+                    setDescription(response.data.data.items[0].blogDescription);
+
+                    const relatedBlogs = response.data.data.items[0].blogRelated || [];
+                    setSelectedBlogIds(relatedBlogs.map(blog => ({ id: blog.blogId })));
+
+
+                    setPreviewImage(response.data.data.items[0].imageTitle.url);
+                    setTitleText(response.data.data.items[0].imageTitle.title);
+                    setPreviewSideBanner(response.data.data.items[0].sideBanner.url);
+                    setPreviewPromoBanner(response.data.data.items[0].promoBanner.url);
+                    setTitleTextSideBanner(response.data.data.items[0].sideBanner.title);
+                    setTitleTextPromoBanner(response.data.data.items[0].promoBanner.title);
                 }
             } catch (error) {
                 console.error("Error fetching post data:", error);
@@ -306,7 +302,7 @@ export default function PostsPage({ params }) {
 
 
             alert("Cập nhật bài viết thành công!");
-            window.location.href = "/admin/posts";
+            // window.location.href = "/admin/posts";
         } catch (error) {
             console.error("Lỗi khi lưu blog:", error);
             alert("Có lỗi xảy ra khi lưu bài viết.");
@@ -315,13 +311,11 @@ export default function PostsPage({ params }) {
         }
     };
 
-
-
     return (
         <div className={styles.container}>
             {loading && <FullScreenLoader />}
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl text-primary font-bold">Cập nhật bài viết mới</h1>
+                <h1 className="text-2xl text-primary font-bold">Cập nhật bài viết</h1>
                 <div className="mx-10">
                     <button
                         onClick={handleSave}
@@ -389,16 +383,11 @@ export default function PostsPage({ params }) {
                     <EditContent editor={editor} />
                 </div>
                 <div className="w-1/2 border rounded-md " >
-                    <PreviewConten postJson={postJson} />
+                    {postJson && <PreviewConten postJson={postJson} />}
                 </div>
             </div>
             <div className="flex gap-2 mb-10">
-                {/* <div className="w-1/2 border rounded-md">
-                    <PreviewCode postHtml={postHtml} />
-                </div> */}
-                {/* <div className="w-1/2 border rounded-md">
-                    <PreviewJson postJson={postJson} />
-                </div> */}
+
             </div>
             <h1 className="text-2xl text-primary font-bold">Bài viết liên quan</h1>
             <TableRelatedPosts blogs={blogs} selectedBlogIds={selectedBlogIds} setSelectedBlogIds={setSelectedBlogIds} />
@@ -416,9 +405,9 @@ export const uploadToCloudinary = async (file) => {
             method: "POST",
             body: formData,
         });
-
+        console.log("res upload image", res)
         const data = await res.json();
-
+        console.log("res upload data", data)
         if (!res.ok) throw new Error(data.error?.message || "Upload thất bại");
 
         return data.secure_url;

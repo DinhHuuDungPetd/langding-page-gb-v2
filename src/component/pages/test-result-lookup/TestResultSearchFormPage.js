@@ -18,8 +18,7 @@ export default function Account() {
                     Trang chủ &gt; <span className="font-normal">Kết quả xét nghiệm</span>
                 </div>
             </div>
-            {/* {accessToken ? <LabResultSearchPage /> : <SampleLookup />} */}
-            <SampleLookup />
+            {accessToken ? <LabResultSearchPage /> : <SampleLookup />}
         </div>
     );
 }

@@ -605,7 +605,7 @@
         "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1747449401/rc2e9cpjhky3ewwa4zuf.jpg",
         "title": "Green lab vươn xa"
       },
-      "views": 2,
+      "views": 6,
       "status": true,
       "postJson": {
         "type": "doc",
@@ -3175,15 +3175,15 @@
     },
     {
       "id": "171367",
-      "title": "1",
-      "description": "1",
+      "title": "1258415",
+      "description": "14816549849845615654",
       "time": "2025-05-16T08:36:35.024Z",
       "imageTitle": {
-        "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1747384669/yqle1czjd2tojl9uk4s5.jpg",
+        "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1747812829/nmtnbq1flkshtbnalxa8.jpg",
         "title": "1"
       },
       "sideBanner": {
-        "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1747384672/aiutagu62orp8pfkelbk.jpg",
+        "url": "https://res.cloudinary.com/dgfwxibj4/image/upload/v1747812831/y1nnwmr3lo4fwcftedre.jpg",
         "title": "1"
       },
       "promoBanner": {
@@ -3594,8 +3594,7 @@
       "id": "487d"
     },
     {
-      "id": "84fd",
-      "id_blog": "171367",
+      "id_blog": 171367,
       "related_blog_id": [
         {
           "id": "382521"
@@ -3618,7 +3617,8 @@
         {
           "id": "16225"
         }
-      ]
+      ],
+      "id": "84fd"
     },
     {
       "id": "dfdc",

@@ -4,23 +4,78 @@ import axios from 'axios';
 import NewCard from "@/component/pages/news-events/component/NewCard";
 import BookingForm from "@/component/pages/news-events/component/BookingForm";
 import PopularNews from "@/component/pages/news-events/component/PopularNews";
+import SearchBlog from "@/component/pages/news-events/component/SearchBlog";
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
 import { useSearchParams } from 'next/navigation';
 export default function NewsEvents() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const PAGE_SIZE = 7;
     const [categorys, setCategorys] = useState([]);
+    const [blogs, setBlogs] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalCount, setTotalCount] = useState(0);
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get('search')?.toLowerCase() || '';
 
     useEffect(() => {
-        axios.get(`${baseUrl}/categorys`)
-            .then(response => {
-                const activeCategories = response.data.filter(cat => cat.status === true);
-                setCategorys(activeCategories);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        getCategoryAll();
     }, []);
+
+    useEffect(() => {
+        fetchBlog();
+    }, [currentPage, searchQuery]);
+
+    const getCategoryAll = async () => {
+        const response = await blogAPI.get("api/v1/Category?CategoryStatus=1&PageNumber=1&PageSize=10");
+        if (response.status === 200) {
+            setCategorys(response.data.data.items)
+        }
+    }
+    const fetchBlog = async () => {
+        try {
+            const response = await blogAPI.get(
+                `api/v1/Blog?BlogTitle=${searchQuery}&PageNumber=${currentPage}&PageSize=${PAGE_SIZE}`
+            );
+            if (response.status === 200) {
+                const BlogData = response.data.data.items;
+                setBlogs(BlogData);
+                setTotalCount(response.data.data.totalCount);
+            }
+        } catch (err) {
+            console.error("Error fetching blog:", err);
+        }
+    };
+    useEffect(() => {
+        if (totalCount) {
+            const pages = Math.ceil(totalCount / PAGE_SIZE);
+            setTotalPages(pages);
+        }
+    }, [totalCount]);
+
+    const handleClickPage = (page) => {
+        if (page !== currentPage) {
+            setCurrentPage(page);
+        }
+    };
+
+    const getPaginationItems = () => {
+        let startPage, endPage;
+        if (totalPages <= 3) {
+            startPage = 1;
+            endPage = totalPages;
+        } else if (currentPage === 1) {
+            startPage = 1;
+            endPage = 3;
+        } else if (currentPage === totalPages) {
+            startPage = totalPages - 2;
+            endPage = totalPages;
+        } else {
+            startPage = currentPage - 1;
+            endPage = currentPage + 1;
+        }
+        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+    };
+
     return (
         <div>
             <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747017912/backgroundMobile/skwnwgkb13t5kaqlfl3z.jpg)] md:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/kwicnww6fxa63f9fplra.webp)]  bg-blend-multiply">
@@ -31,7 +86,18 @@ export default function NewsEvents() {
             <div className="container mx-auto px-4 py-8">
                 <div className="flex flex-col lg:flex-row gap-8">
                     <div className="w-full lg:w-2/3">
-                        <NewCard categorys={categorys} />
+                        {searchQuery ?
+                            <SearchBlog
+                                categorys={categorys}
+                                blogs={blogs}
+                                handleClickPage={handleClickPage}
+                                getPaginationItems={getPaginationItems}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                                totalPages={totalPages}
+                            />
+                            :
+                            <NewCard categorys={categorys} />}
                     </div>
 
                     <div className="w-full lg:w-1/3">

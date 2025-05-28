@@ -1,81 +1,84 @@
-
 "use client";
 import { useEffect, useState } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
 import Image from 'next/image';
-import axios from 'axios';
 import Link from "next/link";
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
 
 export default function NewBlogs({ category }) {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const [featuredNews, setFeaturedNews] = useState(null);
     const [sideNews, setSideNews] = useState([]);
-    useEffect(() => {
-        const fetchBlogs = async () => {
-            try {
-                const res = await axios.get(`${baseUrl}/blogs`);
-                const blogs = res.data.filter(blog => blog.status === true); // Lọc blog có status = true
 
-                if (!category?.id_bogs) return;
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('vi-VN', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        });
+    };
 
-                const sortedBlogIds = [...category.id_bogs].sort((a, b) => Number(a.priority) - Number(b.priority));
-                const selectedBlogs = sortedBlogIds
-                    .map(b => blogs.find(blog => blog.id === b.id))
-                    .filter(Boolean)
-                    .slice(0, 5);
+    const getCategoryBlog = async () => {
+        try {
+            const response = await blogAPI.get(
+                `api/v1/Blog?CategoryId=${category.categoryId}&BlogStatus=1&PageNumber=1&PageSize=10`
+            );
+
+            if (response.status === 200) {
+                const blogs = response.data.data.items;
+
+                const activeBlogs = blogs.filter(b => b.blogStatus === 1);
+                const sortedBlogs = [...activeBlogs].sort((a, b) => a.blogPriority - b.blogPriority);
+                const selectedBlogs = sortedBlogs.slice(0, 5);
 
                 if (selectedBlogs.length === 0) return;
 
                 const first = selectedBlogs[0];
                 setFeaturedNews({
-                    id: first.id,
-                    title: first.title,
-                    description: first.description,
+                    id: first.blogId,
+                    title: first.blogTitle,
+                    description: first.blogDescription,
                     imageUrl: first.imageTitle?.url || "/default.jpg",
                     titleImage: first.imageTitle?.title,
-                    date: new Date(first.time).toLocaleDateString('vi-VN', {
-                        weekday: 'long',
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                    }),
+                    date: formatDate(first.blogCreatedAt),
                 });
 
                 const sides = selectedBlogs.slice(1).map(blog => ({
-                    id: blog.id,
-                    title: blog.title,
+                    id: blog.blogId,
+                    title: blog.blogTitle,
+                    description: blog.blogDescription,
                     imageUrl: blog.imageTitle?.url || "/default.jpg",
                     titleImage: blog.imageTitle?.title,
-                    date: new Date(blog.time).toLocaleDateString('vi-VN', {
-                        weekday: 'long',
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                    }),
+                    date: formatDate(blog.blogCreatedAt),
                 }));
 
                 setSideNews(sides);
-            } catch (error) {
-                console.error("Error fetching blogs:", error);
             }
-        };
+        } catch (error) {
+            console.error('Failed to fetch blogs:', error);
+        }
+    };
 
-        fetchBlogs();
+    useEffect(() => {
+        if (category?.categoryId) {
+            getCategoryBlog();
+        }
     }, [category]);
-
 
     if (!featuredNews) return null;
 
     return (
         <div className="bg-mint p-4 rounded-md mb-5">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg sm:text-xl font-bold text-primary">{category.name}</h2>
-                <Link href={`/tin-tuc-su-kien/${category.id}`} className="text-blue-500 text-sm font-medium hover:underline">Xem thêm</Link>
+                <h2 className="text-lg sm:text-xl font-bold text-primary">{category.categoryName}</h2>
+                <Link href={`/tin-tuc-su-kien/${category.categoryId}`} className="text-blue-500 text-sm font-medium hover:underline">
+                    Xem thêm
+                </Link>
             </div>
 
             <div className="md:flex gap-4">
                 <div className="md:w-[60%] mb-4">
-                    <Link href={`/tin-tuc-su-kien/${category.id}/${featuredNews.id}`}>
+                    <Link href={`/tin-tuc-su-kien/${category.categoryId}/${featuredNews.id}`}>
                         <div className="rounded overflow-hidden">
                             <Image
                                 src={featuredNews.imageUrl}
@@ -102,7 +105,7 @@ export default function NewBlogs({ category }) {
                 <div className="md:w-[40%] md:mt-0 space-y-5">
                     {sideNews.map((news, index) => (
                         <div key={index}>
-                            <Link href={`/tin-tuc-su-kien/${category.id}/${news.id}`} className="flex items-start gap-5">
+                            <Link href={`/tin-tuc-su-kien/${category.categoryId}/${news.id}`} className="flex items-start gap-5">
                                 <div className="h-25 rounded overflow-hidden w-1/2">
                                     <Image
                                         src={news.imageUrl}
@@ -117,6 +120,9 @@ export default function NewBlogs({ category }) {
                                     <h4 className="text-sm font-semibold text-primary hover:text-midnight leading-snug line-clamp-3">
                                         {news.title}
                                     </h4>
+                                    <p className="text-sm text-gray-700 mt-1 line-clamp-4" title={featuredNews.description}>
+                                        {news.description}
+                                    </p>
                                     <div className="flex items-center text-gray-500 text-xs mt-1">
                                         <FaCalendarAlt className="w-3 h-3 mr-1" />
                                         {news.date}
