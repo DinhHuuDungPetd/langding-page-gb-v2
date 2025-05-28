@@ -6,6 +6,8 @@ import SearchModal from "@/component/pages/admin/categorys/component/SearchModal
 import axios from 'axios';
 import { useEffect, useState } from "react";
 import FullScreenLoader from "@/component/FullScreenLoader";
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+
 export default function CategorysPage({ params }) {
     const id = params.slug;
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -23,10 +25,20 @@ export default function CategorysPage({ params }) {
     const [previewSideBanner, setPreviewSideBanner] = useState("");
     const [previewPromoBanner, setPreviewPromoBanner] = useState("");
     const [sort, setSort] = useState(true);
-    const getBlogs = async () => {
+
+    const getBlogs = async (searchName) => {
         try {
-            const response = await axios.get(`${baseUrl}/blogs`);
-            setBlogs(response.data);
+            const response = await blogAPI.get(`api/v1/Blog?BlogTitle=${searchName}&BlogId=0`);
+            setBlogs(response.data.data.items);
+        } catch (error) {
+            console.error('Error fetching blogs:', error);
+        }
+    };
+    const getCategoryBlogs = async () => {
+        try {
+            const response = await blogAPI.get(`api/v1/Blog?CategoryId=${id}`);
+            const relatedBlogs = response.data.data.items || [];
+            setSelectedBlogIds(relatedBlogs.map(blog => ({ id: blog.blogId })));
         } catch (error) {
             console.error('Error fetching blogs:', error);
         }
@@ -34,14 +46,13 @@ export default function CategorysPage({ params }) {
 
     const getCategorysById = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/categorys/${id}`);
-            setCategorys(response.data);
-            setPreviewSideBanner(response.data.sideBanner.url);
-            setPreviewPromoBanner(response.data.promoBanner.url);
-            setTitleTextSideBanner(response.data.sideBanner.title);
-            setTitleTextPromoBanner(response.data.promoBanner.title);
-            setSelectedBlogIds(response.data.id_bogs || []);
-            setName(response.data.name)
+            const response = await blogAPI.get(`api/v1/Category?CategoryId=${id}`)
+            setCategorys(response.data.data.items[0]);
+            setPreviewSideBanner(response.data.data.items[0].sideBanner.url);
+            setPreviewPromoBanner(response.data.data.items[0].promoBanner.url);
+            setTitleTextSideBanner(response.data.data.items[0].sideBanner.title);
+            setTitleTextPromoBanner(response.data.data.items[0].promoBanner.title);
+            setName(response.data.data.items[0].categoryName)
         } catch (error) {
             console.error('Error fetching categorys:', error);
         }
@@ -49,13 +60,13 @@ export default function CategorysPage({ params }) {
 
     useEffect(() => {
         getCategorysById();
-        getBlogs()
+        getCategoryBlogs();
+        getBlogs(searchName)
     }, []);
 
-    const filteredBlogs = blogs.filter(blog => {
-        if (!searchName) return blog;
-        return blog.title.toLowerCase().includes(searchName?.toLowerCase());
-    });
+    useEffect(() => {
+        getBlogs(searchName)
+    }, [searchName]);
 
     const handleSave = async () => {
         if (!name.trim()) {
@@ -96,7 +107,7 @@ export default function CategorysPage({ params }) {
         setLoading(true);
         try {
             const updatedBlogIds = selectedBlogIds.map(blog => {
-                const match = selectedPrioritys.find(p => p.id === blog.id);
+                const match = selectedPrioritys.find(p => p.id === blog.blogId);
                 return match ? { ...blog, priority: match.priority.toString() } : blog;
             });
 
@@ -151,12 +162,12 @@ export default function CategorysPage({ params }) {
         if (sort) {
             const selectedIds = selectedBlogIds.map(item => item.id.toString());
             const selectedBlogs = blogs
-                .filter(blog => selectedIds.includes(blog.id.toString()))
+                .filter(blog => selectedIds.includes(blog.blogId.toString()))
                 .sort((a, b) => new Date(b.time) - new Date(a.time));
             setBlogs(selectedBlogs);
             setSort(false)
         } else {
-            getBlogs()
+            getBlogs(searchName)
             setSort(true)
         }
 
@@ -206,9 +217,9 @@ export default function CategorysPage({ params }) {
                 </div>
 
                 {sort ?
-                    <TablePosts blogs={filteredBlogs} selectedBlogIds={selectedBlogIds} setSelectedBlogIds={setSelectedBlogIds} />
+                    <TablePosts blogs={blogs} selectedBlogIds={selectedBlogIds} setSelectedBlogIds={setSelectedBlogIds} />
                     :
-                    <TablePriority blogs={filteredBlogs} selectedPrioritys={selectedPrioritys} setSelectedPrioritys={setSelectedPrioritys} />
+                    <TablePriority blogs={blogs} selectedPrioritys={selectedPrioritys} setSelectedPrioritys={setSelectedPrioritys} />
                 }
 
 

@@ -27,8 +27,8 @@ export default function CustomMultiSelect({ categorys, selectedCategoryIds, setS
 
   const getSelectedNames = () => {
     return categorys
-      .filter((cat) => selectedCategoryIds.includes(cat.id))
-      .map((cat) => cat.name);
+      .filter((cat) => selectedCategoryIds.includes(cat.categoryId))
+      .map((cat) => cat.categoryName);
   };
 
   return (
@@ -48,18 +48,20 @@ export default function CustomMultiSelect({ categorys, selectedCategoryIds, setS
 
       {isOpen && (
         <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
-          {categorys.map((category) => (
-            <div
-              key={category.id}
-              onClick={() => toggleSelect(category.id)}
-              className={`cursor-pointer px-4 py-2 hover:bg-blue-100 ${selectedCategoryIds.includes(category.id)
-                  ? 'bg-blue-500 text-white'
-                  : ''
-                }`}
-            >
-              {category.name}
-            </div>
-          ))}
+          {categorys.length > 0 ? (
+            categorys.map((category) => (
+              <div
+                key={category.id}
+                onClick={() => toggleSelect(category.categoryId)}
+                className={`cursor-pointer px-4 py-2 hover:bg-blue-100 ${selectedCategoryIds.includes(category.categoryId) ? 'bg-blue-500 text-white' : ''
+                  }`}
+              >
+                {category.categoryName}
+              </div>
+            ))
+          ) : (
+            <div className="px-4 py-2 text-gray-500">Không có danh mục nào</div>
+          )}
         </div>
       )}
     </div>

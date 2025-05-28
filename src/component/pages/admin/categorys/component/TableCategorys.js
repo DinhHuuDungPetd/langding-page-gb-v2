@@ -75,13 +75,13 @@ export default function TableCategorys({ setLoading, categorys, getCategorys }) 
                         currentItems.map((item, index) => (
                             <tr key={`table-post-${index}`} className="border-b hover:bg-green-100">
                                 <td className="px-4 py-3 font-medium">{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                                <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.name}</td>
-                                <td className="px-4 py-3">{formatDate(item.time)}</td>
+                                <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.categoryName}</td>
+                                <td className="px-4 py-3">{formatDate(item.categoryCreateAt)}</td>
                                 <td className="px-4 py-3">
                                     <label className="relative inline-flex items-center cursor-pointer">
                                         <input
                                             type="checkbox"
-                                            checked={item.status === true}
+                                            checked={item.categoryStatus === 1}
                                             onChange={(e) => handleUpdateStatus(item.id, e.target.checked)}
                                             className="sr-only peer"
                                         />
@@ -95,7 +95,7 @@ export default function TableCategorys({ setLoading, categorys, getCategorys }) 
                                 </td>
                                 <td className="px-4 py-3">
                                     <div className="flex gap-2">
-                                        <Link href={`/admin/categorys/edit/${item.id}`}>
+                                        <Link href={`/admin/categorys/edit/${item.categoryId}`}>
                                             <button className="text-blue-500 hover:text-blue-700 font-medium cursor-pointer" onClick={() => setLoading(true)}>Sửa</button>
                                         </Link>
                                     </div>

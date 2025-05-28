@@ -1,29 +1,32 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import axios from 'axios';
 import Link from "next/link";
 import { FaCalendarAlt } from "react-icons/fa";
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
 
 export default function PopularNews() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const [blogs, setBlogs] = useState([]);
-
-    const getBlogs = async () => {
-        try {
-            const response = await axios.get(`${baseUrl}/blogs`);
-            setBlogs(response.data);
-        } catch (error) {
-            console.error('Error fetching blogs:', error);
-        }
-    };
+    const [blog, setBlog] = useState([]);
 
     useEffect(() => {
-        getBlogs();
+        const fetchBlog = async () => {
+            try {
+                const response = await blogAPI.get(
+                    `api/v1/Blog?BlogStatus=1`
+                );
+                if (response.status === 200) {
+                    const categoryData = response.data.data.items;
+                    setBlog(categoryData);
+                }
+            } catch (err) {
+                console.error("Error fetching blog:", err);
+            }
+        };
+
+        fetchBlog();
     }, []);
 
-    const filteredBlogs = blogs.filter(blog => blog.status === true);
-    const sortedNews = [...filteredBlogs].sort((a, b) => b.views - a.views); // Lưu ý: bỏ `new Date()` vì views là số
+    const sortedNews = [...blog].sort((a, b) => b.blogView - a.blogView);
     const latestNews = sortedNews.slice(0, 4);
 
     const formatDate = (isoDate) => {
@@ -43,7 +46,7 @@ export default function PopularNews() {
                 {latestNews && latestNews.length > 0 ? (
                     latestNews.map((item, index) => (
                         <Link
-                            href={`/tin-tuc-su-kien/news/${item.id}`}
+                            href={`/tin-tuc-su-kien/news/${item.blogId}`}
                             key={`table-news-${index}`}
                             className="flex gap-4 mb-6 items-start pb-4"
                         >
@@ -59,13 +62,13 @@ export default function PopularNews() {
                             <div className="flex flex-col justify-start gap-1">
                                 <div className="flex items-center text-gray-500 text-xs">
                                     <FaCalendarAlt className="mr-1" />
-                                    <span>{formatDate(item.time)}</span>
+                                    <span>{formatDate(item.blogCreatedAt)}</span>
                                 </div>
                                 <h4 className="text-sm sm:text-base font-semibold text-primary hover:text-midnight leading-snug line-clamp-2 ">
-                                    {item.title}
+                                    {item.blogTitle}
                                 </h4>
                                 <p className="text-sm sm:text-base text-gray-700 line-clamp-2">
-                                    {item.description}
+                                    {item.blogDescription}
                                 </p>
                             </div>
                         </Link>

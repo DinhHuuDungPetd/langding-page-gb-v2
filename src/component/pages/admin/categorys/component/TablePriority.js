@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import axios from "axios";
 import { MdFirstPage, MdLastPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import CustomCheckbox from "@/component/CustomCheckbox";
@@ -10,7 +9,7 @@ export default function TablePriority({ blogs, selectedPrioritys, setSelectedPri
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
 
-    const sortedBlogs = [...blogs].sort((a, b) => a.time.localeCompare(b.time));
+    const sortedBlogs = [...blogs].sort((a, b) => a.blogCreatedAt.localeCompare(b.blogCreatedAt));
     const totalPages = Math.ceil(sortedBlogs.length / itemsPerPage);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -75,22 +74,22 @@ export default function TablePriority({ blogs, selectedPrioritys, setSelectedPri
                 <tbody className="bg-white">
                     {currentItems.length > 0 ? (
                         currentItems.map((item, index) => (
-                            <tr key={item.id} className="border-b hover:bg-green-100">
+                            <tr key={item.blogId} className="border-b hover:bg-green-100">
                                 <td className="px-4 py-3 font-medium">
                                     {index + 1 + (currentPage - 1) * itemsPerPage}
                                 </td>
                                 <td className="px-4 py-3 font-medium text-center">
                                     <CustomCheckbox
-                                        id={item.id}
+                                        id={item.blogId}
                                         priority={
-                                            selectedPrioritys.find(p => p.id === item.id)?.priority
+                                            selectedPrioritys.find(p => p.id === item.blogId)?.priority
                                         }
                                         onChange={handlePriorityChange}
                                     />
                                 </td>
-                                <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.title}</td>
+                                <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.blogTitle}</td>
                                 <td className="px-4 py-3 font-medium text-md w-1/3 break-words whitespace-normal">
-                                    {item.description}
+                                    {item.blogDescription}
                                 </td>
                                 <td className="px-4 py-3">
                                     <Image
@@ -101,7 +100,7 @@ export default function TablePriority({ blogs, selectedPrioritys, setSelectedPri
                                         className="rounded-md object-cover"
                                     />
                                 </td>
-                                <td className="px-4 py-3">{formatDate(item.time)}</td>
+                                <td className="px-4 py-3">{formatDate(item.blogCreatedAt)}</td>
                             </tr>
                         ))
                     ) : (

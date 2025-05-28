@@ -1,63 +1,30 @@
 "use client";
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import { MdFirstPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
-import axios from 'axios';
 
-export default function TablePosts({ setLoading, blogs, getBlogs }) {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+export default function TablePosts({ setLoading, blogs, fetchBlog, getPaginationItems, handleClickPage, currentPage, setCurrentPage, totalPages }) {
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 7;
-
-    const handleUpdateStatus = async (id, isChecked) => {
-        try {
-            setLoading(true);
-            await axios.patch(`${baseUrl}/blogs/${id}`, { status: isChecked });
-            await getBlogs();
-        } catch (error) {
-            console.error("Error updating blog status:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const sortedNews = [...blogs].sort((a, b) => a?.time?.localeCompare(b?.time));
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = sortedNews.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(sortedNews.length / itemsPerPage);
-
-    const handleClickPage = (number) => {
-        setCurrentPage(number);
-    };
-
-    const getPaginationItems = () => {
-        let startPage, endPage;
-        if (totalPages <= 3) {
-            startPage = 1;
-            endPage = totalPages;
-        } else if (currentPage === 1) {
-            startPage = 1;
-            endPage = 3;
-        } else if (currentPage === totalPages) {
-            startPage = totalPages - 2;
-            endPage = totalPages;
-        } else {
-            startPage = currentPage - 1;
-            endPage = currentPage + 1;
-        }
-        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
-    };
-
+    // const handleUpdateStatus = async (id, isChecked) => {
+    //     try {
+    //         setLoading(true);
+    //         await axios.patch(`${baseUrl}/blogs/${id}`, { status: isChecked });
+    //         await fetchBlog();
+    //     } catch (error) {
+    //         console.error("Error updating blog status:", error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
-        return `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`;
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `Thứ Sáu, ${day} tháng ${month}, ${year}`;
     };
-
     return (
         <>
 
@@ -74,12 +41,12 @@ export default function TablePosts({ setLoading, blogs, getBlogs }) {
                     </tr>
                 </thead>
                 <tbody className="bg-white">
-                    {currentItems.length > 0 ? (
-                        currentItems.map((item, index) => (
+                    {blogs.length > 0 ? (
+                        blogs.map((item, index) => (
                             <tr key={`table-post-${index}`} className="border-b hover:bg-green-100">
-                                <td className="px-4 py-3 font-medium">{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                                <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.title}</td>
-                                <td className="px-4 py-3 font-medium text-md w-1/4 break-words whitespace-normal">{item.description}</td>
+                                <td className="px-4 py-3 font-medium">{index + 1 + (currentPage - 1) * 4}</td>
+                                <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.blogTitle}</td>
+                                <td className="px-4 py-3 font-medium text-md w-1/4 break-words whitespace-normal">{item.blogDescription}</td>
                                 <td className="px-4 py-3">
                                     <Image
                                         src={item.imageTitle.url}
@@ -89,12 +56,12 @@ export default function TablePosts({ setLoading, blogs, getBlogs }) {
                                         className="rounded-md object-cover"
                                     />
                                 </td>
-                                <td className="px-4 py-3">{formatDate(item.time)}</td>
+                                <td className="px-4 py-3">{formatDate(item.blogCreatedAt)}</td>
                                 <td className="px-4 py-3">
                                     <label className="relative inline-flex items-center cursor-pointer">
                                         <input
                                             type="checkbox"
-                                            checked={item.status === true}
+                                            checked={item.blogStatus === 1}
                                             onChange={(e) => handleUpdateStatus(item.id, e.target.checked)}
                                             className="sr-only peer"
                                         />
@@ -108,7 +75,7 @@ export default function TablePosts({ setLoading, blogs, getBlogs }) {
                                 </td>
                                 <td className="px-4 py-3">
                                     <div className="flex gap-2">
-                                        <Link href={`/admin/posts/updatePosts/${item.id}`}>
+                                        <Link href={`/admin/posts/updatePosts/${item.blogId}`}>
                                             <button className="text-blue-500 hover:text-blue-700 font-medium cursor-pointer" onClick={() => setLoading(true)}>Sửa</button>
                                         </Link>
                                     </div>

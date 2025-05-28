@@ -195,7 +195,7 @@ export default function Blog({ blog }) {
             <div className="flex flex-wrap items-center justify-center md:justify-start text-gray-400 text-sm border-b pb-4 mb-4 px-4 gap-x-4 gap-y-2">
                 <div className="flex items-center space-x-2">
                     <FaCalendarAlt className="text-green-700" size={20} />
-                    <span>Ngày đăng: {formatDate(blog?.time)}</span>
+                    <span>Ngày đăng: {formatDate(blog?.blogCreatedAt)}</span>
                 </div>
 
                 <div className="hidden md:block h-4 border-l border-gray-300 mx-2" />
@@ -209,21 +209,21 @@ export default function Blog({ blog }) {
 
                 <div className="flex items-center space-x-2">
                     <FaEye className="text-green-700" size={20} />
-                    <span>{blog.views}</span>
+                    <span>{blog.blogView}</span>
                 </div>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-3">{blog?.title}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-3 uppercase">{blog?.blogTitle}</h1>
 
             <h5 className="mb-4 medium-italic text-sm sm:text-base text-pretty text-gray-500">
-                {blog?.description}
+                {blog?.blogDescription}
             </h5>
 
             <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 text-sm md:text-base space-y-2">
                 {(() => {
                     const numbering = { 2: 0, 3: 0, 4: 0 };
 
-                    return blog.postJson?.content
+                    return blog.blogPostJson?.content
                         ?.filter((section) => section.type === "heading" && section.content?.[0]?.text)
                         .map((section, index) => {
                             const level = section.attrs?.level || 2;
@@ -275,7 +275,7 @@ export default function Blog({ blog }) {
                 })()}
             </ul>
 
-            {blog.postJson.content?.map((section, index) => renderContent(section, index))}
+            {blog.blogPostJson.content?.map((section, index) => renderContent(section, index))}
         </div >
     );
 }

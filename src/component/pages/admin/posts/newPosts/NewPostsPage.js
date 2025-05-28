@@ -14,6 +14,8 @@ import PreviewCode from "@/component/pages/admin/posts/component/PreviewCode"
 import { createEditor } from '@/component/pages/admin/posts/component/editorConfig';
 import CustomSelect from '@/component/CustomSelect'
 import FullScreenLoader from "@/component/FullScreenLoader";
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+
 export default function PostsPage() {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const [loading, setLoading] = useState(true);
@@ -43,10 +45,10 @@ export default function PostsPage() {
     useEffect(() => {
         const fetchPostData = async () => {
             try {
-                const response1 = await axios.get(`${baseUrl}/blogs`)
-                const response2 = await axios.get(`${baseUrl}/categorys`)
-                setBlogs(response1.data);
-                setCategorys(response2.data)
+                const response1 = await blogAPI.get(`api/v1/Blog?BlogId=0`);
+                const response2 = await blogAPI.get(`api/v1/Category?CategoryId=0&BlogId=0`)
+                setBlogs(response1.data.data.items);
+                setCategorys(response2.data.data.items)
             } catch (error) {
                 console.error("Error fetching post data:", error);
             }
@@ -341,9 +343,9 @@ export const uploadToCloudinary = async (file) => {
             method: "POST",
             body: formData,
         });
-
+        console.log("res upload image", res)
         const data = await res.json();
-
+        console.log("res upload image", data)
         if (!res.ok) throw new Error(data.error?.message || "Upload thất bại");
 
         return data.secure_url;

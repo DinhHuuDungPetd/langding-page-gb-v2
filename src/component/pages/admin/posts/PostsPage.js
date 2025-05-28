@@ -5,28 +5,66 @@ import TablePosts from "@/component/pages/admin/posts/component/TablePosts"
 import axios from 'axios';
 import { useEffect, useState } from "react";
 import FullScreenLoader from "@/component/FullScreenLoader";
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
 export default function PostsPage() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const PAGE_SIZE = 4;
     const [loading, setLoading] = useState(false);
     const [blogs, setBlogs] = useState([]);
     const [searchName, setSearchName] = useState("");
-    const getBlogs = async () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalCount, setTotalCount] = useState(0);
+
+    const fetchBlog = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/blogs`);
-            setBlogs(response.data);
-        } catch (error) {
-            console.error('Error fetching blogs:', error);
+            const response = await blogAPI.get(
+                `api/v1/Blog?BlogTitle=${searchName}&PageNumber=${currentPage}&PageSize=${PAGE_SIZE}`
+            );
+            if (response.status === 200) {
+                const BlogData = response.data.data.items;
+                setBlogs(BlogData);
+                setTotalCount(response.data.data.totalCount);
+            }
+        } catch (err) {
+            console.error("Error fetching blog:", err);
         }
     };
 
-    const filteredBlogs = blogs.filter(blog => {
-        if (!searchName) return blog;
-        return blog.title.toLowerCase().includes(searchName?.toLowerCase());
-    });
+    useEffect(() => {
+        fetchBlog();
+    }, [currentPage, searchName]);
+
 
     useEffect(() => {
-        getBlogs();
-    }, []);
+        if (totalCount) {
+            const pages = Math.ceil(totalCount / PAGE_SIZE);
+            setTotalPages(pages);
+        }
+    }, [totalCount]);
+
+    const handleClickPage = (page) => {
+        if (page !== currentPage) {
+            setCurrentPage(page);
+        }
+    };
+
+    const getPaginationItems = () => {
+        let startPage, endPage;
+        if (totalPages <= 3) {
+            startPage = 1;
+            endPage = totalPages;
+        } else if (currentPage === 1) {
+            startPage = 1;
+            endPage = 3;
+        } else if (currentPage === totalPages) {
+            startPage = totalPages - 2;
+            endPage = totalPages;
+        } else {
+            startPage = currentPage - 1;
+            endPage = currentPage + 1;
+        }
+        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+    };
 
     return (
         <div>
@@ -45,7 +83,16 @@ export default function PostsPage() {
                 <SearchModal searchName={searchName} setSearchName={setSearchName} />
             </div>
             <div>
-                <TablePosts setLoading={setLoading} blogs={filteredBlogs} getBlogs={getBlogs} />
+                <TablePosts
+                    setLoading={setLoading}
+                    blogs={blogs}
+                    fetchBlog={fetchBlog}
+                    handleClickPage={handleClickPage}
+                    getPaginationItems={getPaginationItems}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPages={totalPages}
+                />
             </div>
 
         </div>

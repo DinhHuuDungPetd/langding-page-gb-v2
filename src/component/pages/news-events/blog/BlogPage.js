@@ -6,42 +6,70 @@ import RelatedPosts from "@/component/pages/news-events/component/RelatedPosts";
 import BookingForm from "@/component/pages/news-events/component/BookingForm";
 import PopularNews from "@/component/pages/news-events/component/PopularNews";
 import Image from "next/image";
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+
 export default function BlogPage({ params }) {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const PAGE_SIZE = 4;
     const { slug } = params;
     const id = parseInt(slug, 10);
 
     const [blog, setBlog] = useState(null);
-    const [blogsRelated, setBlogsRelated] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalCount, setTotalCount] = useState(0);
+
+    const fetchBlog = async () => {
+        try {
+            const response = await blogAPI.get(
+                `api/v1/Blog?BlogId=${id}&BlogStatus=1&PageNumber=${currentPage}&PageSize=${PAGE_SIZE}`
+            );
+            if (response.status === 200) {
+                const BlogData = response.data.data.items[0];
+                setBlog(BlogData);
+                setTotalCount(response.data.data.totalCount);
+            }
+        } catch (err) {
+            console.error("Error fetching blog:", err);
+        }
+    };
+
     useEffect(() => {
         if (!isNaN(id)) {
-            axios.get(`${baseUrl}/blogs/${id}`)
-                .then(response => {
-                    setBlog(response.data);
-                    const updatedViews = response.data.views + 1;
-                    axios.put(`${baseUrl}/blogs/${id}`, {
-                        ...response.data,
-                        views: updatedViews
-                    })
-                        .catch(error => {
-                            console.error('Error updating views:', error);
-                        });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            fetchBlog(1);
 
-            axios.get(`${baseUrl}/blogs_related?id_blog=${id}`)
-                .then(response => {
-                    setBlogsRelated(response.data[0]?.related_blog_id || []);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        } else {
-            setError('ID không hợp lệ');
         }
-    }, [id]);
+    }, [id, currentPage]);
+
+    useEffect(() => {
+        if (totalCount) {
+            const pages = Math.ceil(totalCount / PAGE_SIZE);
+            setTotalPages(pages);
+        }
+    }, [totalCount]);
+
+    const handleClickPage = (page) => {
+        if (page !== currentPage) {
+            setCurrentPage(page);
+        }
+    };
+
+    const getPaginationItems = () => {
+        let startPage, endPage;
+        if (totalPages <= 3) {
+            startPage = 1;
+            endPage = totalPages;
+        } else if (currentPage === 1) {
+            startPage = 1;
+            endPage = 3;
+        } else if (currentPage === totalPages) {
+            startPage = totalPages - 2;
+            endPage = totalPages;
+        } else {
+            startPage = currentPage - 1;
+            endPage = currentPage + 1;
+        }
+        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+    };
 
     return (
         <div>
@@ -55,14 +83,19 @@ export default function BlogPage({ params }) {
                 <div className="flex flex-col lg:flex-row gap-8">
                     <div className="w-full lg:w-2/3 ">
                         {blog ? <Blog blog={blog} /> : 'Loading...'}
-                        <div className=" mx-auto px-4 py-2 container">
-                            {Array.isArray(blogsRelated) && blogsRelated.length > 0 && (
-                                <div>
-                                    <h3 className="font-bold text-2xl text-primary uppercase">Các bài viết liên quan</h3>
-                                    <RelatedPosts blogsRelated={blogsRelated} />
-                                </div>
-                            )}
-                        </div>
+                        {blog ?
+                            <RelatedPosts
+                                blog={blog?.blogRelated}
+                                handleClickPage={handleClickPage}
+                                getPaginationItems={getPaginationItems}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                                totalPages={totalPages}
+                            />
+                            : 'Loading...'
+                        }
+
+
                     </div>
 
                     <div className="w-full lg:w-[35%] my-5">

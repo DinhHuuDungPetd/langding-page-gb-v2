@@ -5,77 +5,21 @@ import { MdFirstPage } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 import { GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
-import axios from "axios";
 import Link from "next/link";
-export default function RelatedPosts({ blogsRelated }) {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const [relatedData, setRelatedData] = useState([]);
+export default function RelatedPosts({ blog, getPaginationItems, handleClickPage, currentPage, setCurrentPage, totalPages }) {
 
-    useEffect(() => {
-        const fetchRelatedData = async () => {
-            if (!blogsRelated?.length) return;
-            const fetchPromises = blogsRelated.map((item) =>
-                axios.get(`${baseUrl}/blogs/${item.id}`)
-                    .then((res) => res.data)
-                    .catch((err) => {
-                        console.error("Error fetching related blog:", err);
-                        return null;
-                    })
-            );
-            const results = await Promise.all(fetchPromises);
-            const filtered = results.filter(Boolean);
-            setRelatedData(filtered);
-        };
 
-        fetchRelatedData();
-
-    }, [blogsRelated]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 4;
-
-    const filteredBlogs = relatedData.filter(blog => blog.status === true);
-    const sortedNews = [...filteredBlogs].sort((a, b) => new Date(b.time) - new Date(a.time));
-
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = sortedNews.slice(indexOfFirstItem, indexOfLastItem);
-
-    const totalPages = Math.ceil(sortedNews.length / itemsPerPage);
-
-    const handleClickPage = (number) => {
-        setCurrentPage(number);
-    };
-
-    const getPaginationItems = () => {
-        let startPage, endPage;
-
-        if (totalPages <= 3) {
-            startPage = 1;
-            endPage = totalPages;
-        } else if (currentPage === 1) {
-            startPage = 1;
-            endPage = 3;
-        } else if (currentPage === totalPages) {
-            startPage = totalPages - 2;
-            endPage = totalPages;
-        } else {
-            startPage = currentPage - 1;
-            endPage = currentPage + 1;
-        }
-
-        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
-    };
     return (
         <div className="w-full">
-            <div className="mx-auto py-4 px-2 flex flex-wrap justify-center gap-x-4 gap-y-6">
-                {currentItems.length > 0 ? (
-                    currentItems.map((item, index) => (
+            <div className="mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {blog?.length > 0 ? (
+                    blog.map((item, index) => (
                         <Link
                             href={`/tin-tuc-su-kien/${item.id}`}
                             key={`related-post-${index}`}
-                            className="w-full sm:w-[45%] md:w-[40%] lg:w-[23%] text-center"
+                            className="text-center block"
                         >
-                            <div className="relative w-full h-[150px] lg:h-[100px] rounded-lg overflow-hidden">
+                            <div className="relative w-full aspect-[16/10] rounded-lg overflow-hidden">
                                 <Image
                                     src={item.imageTitle.url}
                                     alt={item.imageTitle.title || "Related post"}
@@ -86,9 +30,9 @@ export default function RelatedPosts({ blogsRelated }) {
                             </div>
                             <h3
                                 className="text-md sm:text-lg text-primary hover:text-midnight font-bold font-fz-poppins mt-4 truncate max-w-full cursor-default"
-                                title={item.title}
+                                title={item.blogTitle}
                             >
-                                {item.title}
+                                {item.blogTitle}
                             </h3>
                         </Link>
                     ))
