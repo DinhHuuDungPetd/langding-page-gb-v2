@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import React from "react";
-import axios from "axios";
 import UpImage from "@/component/pages/admin/posts/component/UpImage";
 import TableRelatedPosts from "@/component/pages/admin/posts/component/TableRelatedPosts"
 import EditContent from "@/component/pages/admin/posts/component/EditContent"
@@ -17,10 +16,8 @@ import { blogAPI } from "@/hooks/authorizeAxiosInstance";
 export default function PostsPage({ params }) {
     const { slug } = params;
     const id = parseInt(slug, 10);
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState([]);
-    const [blogsRelated, setblogsRelated] = useState(null);
     const [postJson, setPostJson] = useState(null);
     const [upFile, setUpFile] = useState(null);
     const [upFileSideBanner, setUpFileSideBanner] = useState(null);
@@ -170,139 +167,36 @@ export default function PostsPage({ params }) {
 
         const processedJson = await processEditorImages(postJson, imageFileMap);
 
-        let uploadedImageUrl = previewImage || "";
-        let uploadedSideBannerUrl = previewSideBanner || "";
-        let uploadedPromoBanner = previewPromoBanner || "";
+        let uploadedImage = upFile || "";
+        let uploadedSideBanner = upFileSideBanner || "";
+        let uploadedPromoBanner = upFilePromoBanner || "";
 
-        // Nếu có ảnh mới => upload
-        try {
-            if (upFile) uploadedImageUrl = await uploadToCloudinary(upFile);
-            if (upFileSideBanner) uploadedSideBannerUrl = await uploadToCloudinary(upFileSideBanner);
-            if (upFilePromoBanner) uploadedPromoBanner = await uploadToCloudinary(upFilePromoBanner);
-        } catch (err) {
-            console.error("Upload failed, cancel saving.");
-            alert("Image upload failed, please try again.");
-            return;
-        }
-        if (!uploadedImageUrl) {
-            alert("Side banner is required.");
-            return;
-        }
-        if (!uploadedSideBannerUrl) {
-            alert("Side banner is required.");
-            return;
-        }
-        if (!uploadedPromoBanner) {
-            alert("Promo banner is required.");
-            return;
-        }
         const blog = {
-            id: id,
+            blogId: id,
             title: title.trim(),
             description: description.trim(),
-            imageTitle: {
-                url: uploadedImageUrl,
-                title: titleText.trim()
-            },
-            sideBanner: {
-                url: uploadedSideBannerUrl,
-                title: titleTextSideBanner.trim()
-            },
-            promoBanner: {
-                url: uploadedPromoBanner,
-                title: titleTextPromoBanner.trim()
-            },
+            blogImageBase64: uploadedImage,
+            blogImageTitle: titleText.trim(),
+            sideBannerBase64: uploadedSideBanner,
+            sideBannerTitle: titleTextSideBanner.trim(),
+            promoBannerBase64: uploadedPromoBanner,
+            promoBannerTitle: titleTextPromoBanner.trim(),
             views: 0,
-            status: true,
+            status: 1,
             postJson: processedJson,
-        };
-
-        const blog_related = {
-            id_blog: id,
-            related_blog_id: selectedBlogIds.map(item => ({ id: item.id }))
+            relatedBlogIds: selectedBlogIds.map(blog => blog.id),
+            categoryIds: selectedCategoryIds
         };
 
         try {
-
-            await axios.patch(`${baseUrl}/blogs/${id}`, blog);
-
-            // Liên kết blog liên quan
-
-            await axios.put(`${baseUrl}/blogs_related/${blogsRelated.id}`, blog_related);
-
-            for (const related of selectedBlogIds) {
-                const getRes = await axios.get(`${baseUrl}/blogs_related?id_blog=${related.id}`);
-                const existing = getRes.data[0];
-
-                if (existing) {
-                    const currentList = existing.related_blog_id || [];
-                    const isExist = currentList.some(item => item.id === id.toString());
-                    if (!isExist) {
-                        currentList.push({ id: id.toString() });
-                        await axios.put(`${baseUrl}/blogs_related/${existing.id}`, {
-                            ...existing,
-                            related_blog_id: currentList
-                        });
-                    }
-                }
+            const response = await blogAPI.post(`api/v1/Blog`, blog);
+            if (response.status === 200) {
+                alert("Cập nhật bài viết thành công!");
+                window.location.href = "/admin/posts";
+            } else {
+                alert("Cập nhật bài viết không thành công");
             }
 
-
-            // Cập nhật danh mục (gỡ cũ - thêm mới)
-            const response = await axios.get(`${baseUrl}/categorys`);
-            const previousCategoryIds = response.data
-                .filter(category => category.id_bogs?.some(bog => bog.id === id.toString()))
-                .map(category => category.id);
-
-            // Gỡ danh mục không còn chọn
-            const removedCategoryIds = previousCategoryIds.filter(
-                prevId => !selectedCategoryIds.includes(prevId)
-            );
-
-            for (const removedId of removedCategoryIds) {
-                const getRes = await axios.get(`${baseUrl}/categorys/${removedId}`);
-                const existing = getRes.data;
-
-                if (existing) {
-                    const updatedList = (existing.id_bogs || []).filter(bog => bog.id !== id.toString());
-                    await axios.put(`${baseUrl}/categorys/${removedId}`, {
-                        ...existing,
-                        id_bogs: updatedList
-                    });
-                }
-            }
-
-            // Thêm mới danh mục được chọn
-            for (const relatedId of selectedCategoryIds) {
-                const getRes = await axios.get(`${baseUrl}/categorys/${relatedId}`);
-                const existing = getRes.data;
-
-                if (existing) {
-                    let currentList = existing.id_bogs || [];
-
-                    // Loại bỏ các bản ghi trùng lặp (dựa trên id)
-                    currentList = currentList.reduce((acc, curr) => {
-                        if (!acc.some(item => item.id === curr.id)) {
-                            acc.push(curr);
-                        }
-                        return acc;
-                    }, []);
-
-                    const isExist = currentList.some(item => item.id === id.toString());
-                    if (!isExist) {
-                        currentList.push({ id: id.toString(), priority: "0" });
-
-                        await axios.put(`${baseUrl}/categorys/${relatedId}`, {
-                            ...existing,
-                            id_bogs: currentList
-                        });
-                    }
-                }
-            }
-
-
-            alert("Cập nhật bài viết thành công!");
-            // window.location.href = "/admin/posts";
         } catch (error) {
             console.error("Lỗi khi lưu blog:", error);
             alert("Có lỗi xảy ra khi lưu bài viết.");

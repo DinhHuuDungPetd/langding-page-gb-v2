@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import UpImage from "@/component/pages/admin/categorys/component/UpImage";
-import axios from 'axios';
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
 import FullScreenLoader from "@/component/FullScreenLoader";
+
 export default function SearchModal({ getCategorys }) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const [isOpen, setIsOpen] = useState(false);
@@ -45,24 +46,24 @@ export default function SearchModal({ getCategorys }) {
 
         setLoading(true);
         try {
-            const now = new Date();
-            const formattedTime = now.toISOString();
-
-            const uploadedSideBannerUrl = await uploadToCloudinary(upFileSideBanner);
-            const uploadedPromoBannerUrl = await uploadToCloudinary(upFilePromoBanner);
 
             const categorys = {
-                name: name.trim(),
-                time: formattedTime,
-                sideBanner: { url: uploadedSideBannerUrl, title: titleTextSideBanner.trim() },
-                promoBanner: { url: uploadedPromoBannerUrl, title: titleTextPromoBanner.trim() },
+                title: name.trim(),
+                SideBannerBase64: upFileSideBanner,
+                sideBannerTitle: titleTextSideBanner.trim(),
+                promoBannerBase64: upFilePromoBanner,
+                promoBannerTitle: titleTextPromoBanner.trim(),
                 priority: "0",
-                status: true,
-                id_bogs: []
+                status: 1
             };
 
-            await axios.post(`${baseUrl}/categorys`, categorys);
-            alert('Lưu danh mục thành công!');
+            const response = await blogAPI.post(`api/v1/Category`, categorys);
+            if (response.status === 200) {
+                alert("Lưu danh mục  thành công");
+                await getCategorys();
+            } else {
+                alert("Lưu danh mục  không thành công");
+            }
         } catch (error) {
             console.error('Lỗi khi lưu danh mục:', error);
             alert('Đã xảy ra lỗi khi lưu danh mục. Vui lòng thử lại.');
@@ -130,24 +131,3 @@ export default function SearchModal({ getCategorys }) {
         </>
     );
 }
-export const uploadToCloudinary = async (file) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "greenlab"); // Đổi theo preset của bạn
-
-    try {
-        const res = await fetch("https://api.cloudinary.com/v1_1/dgfwxibj4/image/upload", {
-            method: "POST",
-            body: formData,
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) throw new Error(data.error?.message || "Upload thất bại");
-
-        return data.secure_url;
-    } catch (error) {
-        console.error("Lỗi upload Cloudinary:", error);
-        throw error;
-    }
-};

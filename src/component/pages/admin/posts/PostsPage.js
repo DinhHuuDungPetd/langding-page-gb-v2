@@ -2,7 +2,6 @@
 import Link from "next/link";
 import SearchModal from "@/component/pages/admin/posts/component/SearchModal";
 import TablePosts from "@/component/pages/admin/posts/component/TablePosts"
-import axios from 'axios';
 import { useEffect, useState } from "react";
 import FullScreenLoader from "@/component/FullScreenLoader";
 import { blogAPI } from "@/hooks/authorizeAxiosInstance";
@@ -92,6 +91,7 @@ export default function PostsPage() {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     totalPages={totalPages}
+                    PAGE_SIZE={PAGE_SIZE}
                 />
             </div>
 

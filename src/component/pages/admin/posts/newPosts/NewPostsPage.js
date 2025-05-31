@@ -2,22 +2,18 @@
 
 import { useEffect, useState } from "react";
 import React from "react";
-import axios from "axios";
 import UpImage from "@/component/pages/admin/posts/component/UpImage";
 import TableRelatedPosts from "@/component/pages/admin/posts/component/TableRelatedPosts"
 import EditContent from "@/component/pages/admin/posts/component/EditContent"
 import PreviewConten from "@/component/pages/admin/posts/component/PreviewConten"
 import styles from "@/component/style/BlogContent.module.css";
-import { imageFileMap } from "@/component/pages/admin/posts/component/customTiptap/imageFileMap";
-import PreviewJson from "@/component/pages/admin/posts/component/PreviewJson"
-import PreviewCode from "@/component/pages/admin/posts/component/PreviewCode"
 import { createEditor } from '@/component/pages/admin/posts/component/editorConfig';
 import CustomSelect from '@/component/CustomSelect'
 import FullScreenLoader from "@/component/FullScreenLoader";
 import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { imageFileMap } from "@/component/pages/admin/posts/component/customTiptap/imageFileMap";
 
 export default function PostsPage() {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState([]);
     const [postJson, setPostJson] = useState(null);
@@ -102,9 +98,6 @@ export default function PostsPage() {
 
     const handleSave = async () => {
         setLoading(true);
-        const now = new Date();
-        const formattedTime = now.toISOString();
-        const idblog = String(Math.floor(Math.random() * 1000000));
 
         // Validate bắt buộc
         if (!title.trim()) {
@@ -155,96 +148,32 @@ export default function PostsPage() {
             return;
         }
 
-
-
         try {
             const processedJson = await processEditorImages(postJson, imageFileMap);
 
-            // Upload hình ảnh
-            const [uploadedImageUrl, uploadedSideBannerUrl, uploadedPromoBanner] = await Promise.all([
-                uploadToCloudinary(upFile),
-                uploadToCloudinary(upFileSideBanner),
-                uploadToCloudinary(upFilePromoBanner)
-            ]);
-
             const blog = {
-                id: idblog,
                 title: title.trim(),
                 description: description.trim(),
-                time: formattedTime,
-                imageTitle: {
-                    url: uploadedImageUrl,
-                    title: titleText.trim()
-                },
-                sideBanner: {
-                    url: uploadedSideBannerUrl,
-                    title: titleTextSideBanner.trim()
-                },
-                promoBanner: {
-                    url: uploadedPromoBanner,
-                    title: titleTextPromoBanner.trim()
-                },
+                blogImageBase64: upFile,
+                blogImageTitle: titleText.trim(),
+                sideBannerBase64: upFileSideBanner,
+                sideBannerTitle: titleTextSideBanner.trim(),
+                promoBannerBase64: upFilePromoBanner,
+                promoBannerTitle: titleTextPromoBanner.trim(),
                 views: 0,
-                status: true,
+                status: 1,
                 postJson: processedJson,
+                relatedBlogIds: selectedBlogIds.map(blog => blog.id),
+                categoryIds: selectedCategoryIds
             };
-
-            const blog_related = {
-                id_blog: idblog,
-                related_blog_id: selectedBlogIds?.map(item => ({ id: item.id }) || [])
-            };
-
-            await axios.post(`${baseUrl}/blogs`, blog);
-
-            // Liên kết blog liên quan
-
-            await axios.post(`${baseUrl}/blogs_related`, blog_related);
-
-            for (const related of selectedBlogIds) {
-                const getRes = await axios.get(`${baseUrl}/blogs_related?id_blog=${related.id}`);
-                const existing = getRes.data[0];
-
-                if (existing) {
-                    const currentList = existing.related_blog_id || [];
-                    const isExist = currentList.some(item => item.id === idblog);
-
-                    if (!isExist) {
-                        currentList.push({ id: idblog });
-                        await axios.put(`${baseUrl}/blogs_related/${existing.id}`, {
-                            ...existing,
-                            related_blog_id: currentList
-                        });
-                    }
-                } else {
-                    await axios.post(`${baseUrl}/blogs_related`, {
-                        id_blog: related.id,
-                        related_blog_id: [{ id: idblog }]
-                    });
-                }
+            const response = await blogAPI.post(`api/v1/Blog`, blog);
+            if (response.status === 200) {
+                alert("Thêm bài viết thành công!");
+                window.location.href = "/admin/posts";
+            } else {
+                alert("Thêm bài viết không thành công");
             }
 
-
-            // Gắn blog vào danh mục
-            for (const relatedId of selectedCategoryIds) {
-                const getRes = await axios.get(`${baseUrl}/categorys/${relatedId}`);
-                const existing = getRes.data;
-
-                if (existing) {
-                    const currentList = existing.id_bogs || [];
-                    const isExist = currentList.some(item => item.id === idblog);
-
-                    if (!isExist) {
-                        currentList.push({ id: idblog, priority: "0" });
-                        await axios.put(`${baseUrl}/categorys/${relatedId}`, {
-                            ...existing,
-                            id_bogs: currentList
-                        });
-                    }
-                }
-            }
-
-            alert("Thêm bài viết thành công!");
-            window.location.href = "/admin/posts";
         } catch (error) {
             console.error("Lỗi khi lưu blog:", error);
             alert("Có lỗi xảy ra khi lưu bài viết.");
@@ -332,7 +261,6 @@ export default function PostsPage() {
         </div>
     );
 }
-
 export const uploadToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -345,7 +273,7 @@ export const uploadToCloudinary = async (file) => {
         });
         console.log("res upload image", res)
         const data = await res.json();
-        console.log("res upload image", data)
+        console.log("res upload data", data)
         if (!res.ok) throw new Error(data.error?.message || "Upload thất bại");
 
         return data.secure_url;
@@ -354,4 +282,3 @@ export const uploadToCloudinary = async (file) => {
         throw error;
     }
 };
-

@@ -1,60 +1,38 @@
 "use client";
-import { useState } from "react";
 import { MdFirstPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
-import axios from 'axios';
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
 
-export default function TableCategorys({ setLoading, categorys, getCategorys }) {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+export default function TableCategorys({ PAGE_SIZE, setLoading, categorys, getCategorys, getPaginationItems, handleClickPage, currentPage, setCurrentPage, totalPages }) {
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 7;
 
     const handleUpdateStatus = async (id, isChecked) => {
         try {
             setLoading(true);
-            await axios.patch(`${baseUrl}/categorys/${id}`, { status: isChecked });
-            await getCategorys();
+            const response = await blogAPI.post(`api/v1/Category`, {
+                CategoryId: id,
+                Status: isChecked ? 1 : 2
+            });
+            if (response.status === 200) {
+                alert("Cập nhật trạng thái thành công");
+                await getCategorys();
+            } else {
+                alert("Cập nhật trạng thái không thành công");
+            }
         } catch (error) {
-            console.error("Error updating catagory status:", error);
+            console.error("Error updating blog status:", error);
         } finally {
             setLoading(false);
         }
     };
-
-    const sortedNews = [...categorys].sort((a, b) => a?.time?.localeCompare(b?.time));
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = sortedNews.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(sortedNews.length / itemsPerPage);
-
-    const handleClickPage = (number) => {
-        setCurrentPage(number);
-    };
-
-    const getPaginationItems = () => {
-        let startPage, endPage;
-        if (totalPages <= 3) {
-            startPage = 1;
-            endPage = totalPages;
-        } else if (currentPage === 1) {
-            startPage = 1;
-            endPage = 3;
-        } else if (currentPage === totalPages) {
-            startPage = totalPages - 2;
-            endPage = totalPages;
-        } else {
-            startPage = currentPage - 1;
-            endPage = currentPage + 1;
-        }
-        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
-    };
-
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
-        return `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`;
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `Thứ Sáu, ${day} tháng ${month}, ${year}`;
     };
 
     return (
@@ -71,10 +49,10 @@ export default function TableCategorys({ setLoading, categorys, getCategorys }) 
                     </tr>
                 </thead>
                 <tbody className="bg-white">
-                    {currentItems.length > 0 ? (
-                        currentItems.map((item, index) => (
-                            <tr key={`table-post-${index}`} className="border-b hover:bg-green-100">
-                                <td className="px-4 py-3 font-medium">{index + 1 + (currentPage - 1) * itemsPerPage}</td>
+                    {categorys.length > 0 ? (
+                        categorys.map((item, index) => (
+                            <tr key={`table-post-${item.categoryId}`} className="border-b hover:bg-green-100">
+                                <td className="px-4 py-3 font-medium">{index + 1 + (currentPage - 1) * PAGE_SIZE}</td>
                                 <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.categoryName}</td>
                                 <td className="px-4 py-3">{formatDate(item.categoryCreateAt)}</td>
                                 <td className="px-4 py-3">
@@ -82,7 +60,7 @@ export default function TableCategorys({ setLoading, categorys, getCategorys }) 
                                         <input
                                             type="checkbox"
                                             checked={item.categoryStatus === 1}
-                                            onChange={(e) => handleUpdateStatus(item.id, e.target.checked)}
+                                            onChange={(e) => handleUpdateStatus(item.categoryId, e.target.checked)}
                                             className="sr-only peer"
                                         />
                                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-central

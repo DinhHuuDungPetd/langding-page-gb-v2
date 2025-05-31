@@ -51,7 +51,7 @@ export default function CustomMultiSelect({ categorys, selectedCategoryIds, setS
           {categorys.length > 0 ? (
             categorys.map((category) => (
               <div
-                key={category.id}
+                key={category.categoryId}
                 onClick={() => toggleSelect(category.categoryId)}
                 className={`cursor-pointer px-4 py-2 hover:bg-blue-100 ${selectedCategoryIds.includes(category.categoryId) ? 'bg-blue-500 text-white' : ''
                   }`}

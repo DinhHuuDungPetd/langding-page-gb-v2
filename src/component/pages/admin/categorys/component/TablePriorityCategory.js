@@ -4,12 +4,31 @@ import Image from "next/image";
 import { MdFirstPage, MdLastPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import CustomCheckbox from "@/component/CustomCheckbox";
-
-export default function TablePriority({ blogs, selectedPrioritys, setSelectedPrioritys }) {
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+export default function TablePriority({ selectedPrioritys, setSelectedPrioritys }) {
+    const [categorys, setCategorys] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 3;
+    const itemsPerPage = 5;
 
-    const sortedBlogs = [...blogs].sort((a, b) => a.blogCreatedAt.localeCompare(b.blogCreatedAt));
+    useEffect(() => {
+        getCategorys();
+    }, []);
+
+    const getCategorys = async () => {
+        try {
+            const response = await blogAPI.get(
+                `api/v1/Category?PageNumber=1&PageSize=0`
+            );
+            if (response.status === 200) {
+                const CategoryData = response.data.data.items;
+                setCategorys(CategoryData);
+            }
+        } catch (err) {
+            console.error("Error fetching blog:", err);
+        }
+    };
+
+    const sortedBlogs = [...categorys].sort((a, b) => a.categoryCreateAt.localeCompare(b.categoryCreateAt));
     const totalPages = Math.ceil(sortedBlogs.length / itemsPerPage);
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -46,17 +65,18 @@ export default function TablePriority({ blogs, selectedPrioritys, setSelectedPri
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
     };
-    const handlePriorityChange = (id, isChecked) => {
+    const handlePriorityChange = (categoryId, isChecked) => {
         if (isChecked) {
             const newPriority = selectedPrioritys.length + 1;
-            setSelectedPrioritys(prev => [...prev, { id, priority: newPriority }]);
+            setSelectedPrioritys(prev => [...prev, { categoryId, priority: newPriority }]);
         } else {
             const updated = selectedPrioritys
-                .filter(item => item.id !== id)
+                .filter(item => item.categoryId !== categoryId)
                 .map((item, index) => ({ ...item, priority: index + 1 }));
             setSelectedPrioritys(updated);
         }
     };
+
 
     return (
         <>
@@ -65,45 +85,32 @@ export default function TablePriority({ blogs, selectedPrioritys, setSelectedPri
                     <tr>
                         <th className="px-4 py-3 font-medium text-xl">#</th>
                         <th className="px-4 py-3 font-medium text-xl"></th>
+                        <th className="px-4 py-3 font-medium text-xl">ID</th>
                         <th className="px-4 py-3 font-medium text-xl">Tên</th>
-                        <th className="px-4 py-3 font-medium text-xl">Mô tả</th>
-                        <th className="px-4 py-3 font-medium text-xl">Hình ảnh</th>
                         <th className="px-4 py-3 font-medium text-xl">Thời gian</th>
                     </tr>
                 </thead>
                 <tbody className="bg-white">
                     {currentItems.length > 0 ? (
                         currentItems.map((item, index) => (
-                            <tr key={item.blogId} className="border-b hover:bg-green-100">
+                            <tr key={item.categoryId} className="border-b hover:bg-green-100">
                                 <td className="px-4 py-3 font-medium">
                                     {index + 1 + (currentPage - 1) * itemsPerPage}
                                 </td>
-                                <td className="px-4 py-3 font-medium">
-                                    {item.blogId}
-                                </td>
                                 <td className="px-4 py-3 font-medium text-center">
                                     <CustomCheckbox
-                                        id={item.blogId}
+                                        id={item.categoryId}
                                         priority={
-                                            selectedPrioritys.find(p => p.id === item.blogId)?.priority
+                                            selectedPrioritys.find(p => p.categoryId === item.categoryId)?.priority
                                         }
                                         onChange={handlePriorityChange}
                                     />
                                 </td>
-                                <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.blogTitle}</td>
-                                <td className="px-4 py-3 font-medium text-md w-1/3 break-words whitespace-normal">
-                                    {item.blogDescription}
+                                <td className="px-4 py-3 font-medium">
+                                    {item.categoryId}
                                 </td>
-                                <td className="px-4 py-3">
-                                    <Image
-                                        src={item.imageTitle.url}
-                                        alt="Ảnh bài viết"
-                                        width={200}
-                                        height={60}
-                                        className="rounded-md object-cover"
-                                    />
-                                </td>
-                                <td className="px-4 py-3">{formatDate(item.blogCreatedAt)}</td>
+                                <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.categoryName}</td>
+                                <td className="px-4 py-3">{formatDate(item.categoryCreateAt)}</td>
                             </tr>
                         ))
                     ) : (
