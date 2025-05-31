@@ -4,20 +4,29 @@ import { MdFirstPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
+import { blogAPI } from "@/hooks/authorizeAxiosInstance";
 
-export default function TablePosts({ setLoading, blogs, fetchBlog, getPaginationItems, handleClickPage, currentPage, setCurrentPage, totalPages }) {
+export default function TablePosts({ PAGE_SIZE,setLoading, blogs, fetchBlog, getPaginationItems, handleClickPage, currentPage, setCurrentPage, totalPages }) {
 
-    // const handleUpdateStatus = async (id, isChecked) => {
-    //     try {
-    //         setLoading(true);
-    //         await axios.patch(`${baseUrl}/blogs/${id}`, { status: isChecked });
-    //         await fetchBlog();
-    //     } catch (error) {
-    //         console.error("Error updating blog status:", error);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
+    const handleUpdateStatus = async (id, isChecked) => {
+        try {
+            setLoading(true);
+            const response = await blogAPI.post(`api/v1/Blog`, {
+                BlogId: id,
+                Status: isChecked ? 1 : 2
+            });
+            if (response.status === 200) {
+                alert("Cập nhật trạng thái thành công");
+                await fetchBlog();
+            } else {
+                alert("Cập nhật trạng thái không thành công");
+            }
+        } catch (error) {
+            console.error("Error updating blog status:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
         const day = String(date.getDate()).padStart(2, '0');
@@ -44,7 +53,7 @@ export default function TablePosts({ setLoading, blogs, fetchBlog, getPagination
                     {blogs.length > 0 ? (
                         blogs.map((item, index) => (
                             <tr key={`table-post-${index}`} className="border-b hover:bg-green-100">
-                                <td className="px-4 py-3 font-medium">{index + 1 + (currentPage - 1) * 4}</td>
+                                <td className="px-4 py-3 font-medium">{index + 1 + (currentPage - 1) * PAGE_SIZE}</td>
                                 <td className="px-4 py-3 font-medium text-xl text-midnight w-1/5">{item.blogTitle}</td>
                                 <td className="px-4 py-3 font-medium text-md w-1/4 break-words whitespace-normal">{item.blogDescription}</td>
                                 <td className="px-4 py-3">
@@ -62,7 +71,7 @@ export default function TablePosts({ setLoading, blogs, fetchBlog, getPagination
                                         <input
                                             type="checkbox"
                                             checked={item.blogStatus === 1}
-                                            onChange={(e) => handleUpdateStatus(item.id, e.target.checked)}
+                                            onChange={(e) => handleUpdateStatus(item.blogId, e.target.checked)}
                                             className="sr-only peer"
                                         />
                                         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-central

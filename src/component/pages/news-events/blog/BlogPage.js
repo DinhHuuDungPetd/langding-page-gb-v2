@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import Blog from "@/component/pages/news-events/component/Blog";
 import RelatedPosts from "@/component/pages/news-events/component/RelatedPosts";
 import BookingForm from "@/component/pages/news-events/component/BookingForm";

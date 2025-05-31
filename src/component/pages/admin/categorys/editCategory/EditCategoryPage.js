@@ -3,18 +3,15 @@ import TablePosts from "@/component/pages/admin/categorys/component/TablePosts"
 import TablePriority from "@/component/pages/admin/categorys/component/TablePriority"
 import UpImage from "@/component/pages/admin/categorys/component/UpImage";
 import SearchModal from "@/component/pages/admin/categorys/component/SearchModal"
-import axios from 'axios';
 import { useEffect, useState } from "react";
 import FullScreenLoader from "@/component/FullScreenLoader";
 import { blogAPI } from "@/hooks/authorizeAxiosInstance";
 
 export default function CategorysPage({ params }) {
     const id = params.slug;
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const [loading, setLoading] = useState(false);
     const [selectedBlogIds, setSelectedBlogIds] = useState([]);
     const [selectedPrioritys, setSelectedPrioritys] = useState([]);
-    const [categorys, setCategorys] = useState({});
     const [blogs, setBlogs] = useState([]);
     const [name, setName] = useState("");
     const [searchName, setSearchName] = useState("");
@@ -28,7 +25,7 @@ export default function CategorysPage({ params }) {
 
     const getBlogs = async (searchName) => {
         try {
-            const response = await blogAPI.get(`api/v1/Blog?BlogTitle=${searchName}&BlogId=0`);
+            const response = await blogAPI.get(`api/v1/Blog?BlogTitle=${searchName}`);
             setBlogs(response.data.data.items);
         } catch (error) {
             console.error('Error fetching blogs:', error);
@@ -47,7 +44,6 @@ export default function CategorysPage({ params }) {
     const getCategorysById = async () => {
         try {
             const response = await blogAPI.get(`api/v1/Category?CategoryId=${id}`)
-            setCategorys(response.data.data.items[0]);
             setPreviewSideBanner(response.data.data.items[0].sideBanner.url);
             setPreviewPromoBanner(response.data.data.items[0].promoBanner.url);
             setTitleTextSideBanner(response.data.data.items[0].sideBanner.title);
@@ -84,72 +80,46 @@ export default function CategorysPage({ params }) {
             return;
         }
 
-        if (!previewSideBanner && !upFileSideBanner) {
-            alert("Vui lòng chọn hoặc tải lên side banner.");
-            return;
-        }
-
-        if (!previewPromoBanner && !upFilePromoBanner) {
-            alert("Vui lòng chọn hoặc tải lên promo banner.");
-            return;
-        }
-
         if (selectedBlogIds.length === 0) {
             alert("Vui lòng chọn ít nhất một bài viết.");
             return;
         }
 
-        // if (selectedPrioritys.length > 0 && selectedPrioritys.length !== selectedBlogIds.length) {
-        //     alert("Số lượng blog được chọn và blog có ưu tiên không khớp.");
-        //     return;
-        // }
-
         setLoading(true);
         try {
-            const updatedBlogIds = selectedBlogIds.map(blog => {
-                const match = selectedPrioritys.find(p => p.id === blog.blogId);
-                return match ? { ...blog, priority: match.priority.toString() } : blog;
-            });
+            // Tạo object để tra cứu priority từ selectedPrioritys
+            const priorityMap = selectedPrioritys.reduce((map, item) => {
+                map[item.id] = item.priority;
+                return map;
+            }, {});
 
-            let uploadedSideBannerUrl = "";
-            let uploadedPromoBanner = "";
+            // Gộp selectedBlogIds và selectedPrioritys
+            const mergedCategoryBlogs = selectedBlogIds.map(item => ({
+                BlogId: item.id,
+                Priority: priorityMap[item.id] !== undefined ? priorityMap[item.id] : 0
+            }));
 
-            if (upFileSideBanner) {
-                try {
-                    uploadedSideBannerUrl = await uploadToCloudinary(upFileSideBanner);
-                } catch (err) {
-                    console.error("Upload failed, cancel saving.");
-                    alert("Tải ảnh lên thất bại. Vui lòng thử lại.");
-                    return;
-                }
-            }
-            if (upFilePromoBanner) {
-                try {
-                    uploadedPromoBanner = await uploadToCloudinary(upFilePromoBanner);
-                } catch (err) {
-                    console.error("Upload failed, cancel saving.");
-                    alert("Tải ảnh lên thất bại. Vui lòng thử lại.");
-                    return;
-                }
-            }
-            const updatedCategory = {
-                ...categorys,
-                name: name.trim(),
-                sideBanner: {
-                    url: uploadedSideBannerUrl || previewSideBanner,
-                    title: titleTextSideBanner.trim()
-                },
-                promoBanner: {
-                    url: uploadedPromoBanner || previewPromoBanner,
-                    title: titleTextPromoBanner.trim()
-                },
-                id_bogs: updatedBlogIds
+            // Cập nhật categorys
+            const categorys = {
+                CategoryId: id,
+                Title: name,
+                Priority: 0,
+                sideBannerBase64: upFileSideBanner || "",
+                sideBannerTitle: titleTextSideBanner.trim(),
+                promoBannerBase64: upFilePromoBanner || "",
+                promoBannerTitle: titleTextPromoBanner.trim(),
+                status: 1,
+                CategoryBlogs: mergedCategoryBlogs
             };
 
-            await axios.put(`${baseUrl}/categorys/${id}`, updatedCategory);
-
-            alert("Cập nhật danh mục thành công!");
-            window.location.href = "/admin/categorys";
+            const response = await blogAPI.post(`api/v1/Category`, categorys);
+            if (response.status === 200) {
+                alert("Cập nhật danh mục  thành công");
+                window.location.href = "/admin/categorys";
+            } else {
+                alert("Cập nhật danh mục  không thành công");
+            }
+            console.log("Categorys data to be saved:", categorys);
         } catch (error) {
             console.error("Lỗi khi lưu thông tin:", error);
             alert("Có lỗi xảy ra khi lưu danh mục.");
