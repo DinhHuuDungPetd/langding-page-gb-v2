@@ -3,10 +3,17 @@ import AddModal from "@/component/pages/admin/categorys/component/AddModal";
 import TableCategorys from "@/component/pages/admin/categorys/component/TableCategorys"
 import { useEffect, useState } from "react";
 import FullScreenLoader from "@/component/FullScreenLoader";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 import TablePriorityCategory from "@/component/pages/admin/categorys/component/TablePriorityCategory"
+import { usePermission } from '@/hooks/usePermission';
+import { permissions } from '@/hooks/permissions';
 
 export default function CategorysPage() {
+    const canView = usePermission([
+        permissions.users.view,
+        permissions.roles.view,
+        permissions.rolesClaims.view
+    ]);
     const PAGE_SIZE = 4;
     const [loading, setLoading] = useState(false);
     const [categorys, setCategorys] = useState([]);
@@ -16,9 +23,17 @@ export default function CategorysPage() {
     const [selectedPrioritys, setSelectedPrioritys] = useState([]);
     const [sort, setSort] = useState(true);
 
+    useEffect(() => {
+        if (!canView) {
+            window.location.href = "/unauthorized";
+        }
+    }, [canView]);
+
+    if (!canView) return (<></>);
+
     const getCategorys = async () => {
         try {
-            const response = await blogAPI.get(
+            const response = await dataTestAPI.get(
                 `api/v1/Category?PageNumber=${currentPage}&PageSize=${PAGE_SIZE}`
             );
             if (response.status === 200) {
@@ -78,7 +93,7 @@ export default function CategorysPage() {
 
     const handleSave = async () => {
         try {
-            const response = await blogAPI.post(
+            const response = await dataTestAPI.post(
                 `api/v1/Category/sort`,
                 {
                     sortCategory: selectedPrioritys // cần bọc trong {}

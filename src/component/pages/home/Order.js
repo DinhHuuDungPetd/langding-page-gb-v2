@@ -20,6 +20,41 @@ export default function OrderComponent() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const getAvailableTimeSlots = () => {
+        const slots = [
+            "08h00-09h00",
+            "09h00-10h00",
+            "10h00-11h00",
+            "11h00-12h00",
+            "12h00-13h00",
+            "13h00-14h00",
+            "14h00-15h00",
+            "15h00-16h00",
+            "16h00-17h00",
+            "17h00-18h00",
+            "18h00-19h00",
+            "19h00-20h00",
+            "20h00-21h00",
+            "21h00-22h00",
+        ];
+
+        const now = new Date();
+        const selectedDate = new Date(formData.date);
+
+        // Nếu không chọn ngày hoặc không phải hôm nay, hiện tất cả
+        if (!formData.date || selectedDate.toDateString() !== now.toDateString()) {
+            return slots;
+        }
+
+        // Nếu là hôm nay, lọc những khung giờ chưa qua
+        const currentHour = now.getHours();
+        return slots.filter(slot => {
+            const [startHour] = slot.split("-")[0].split("h");
+            return parseInt(startHour) > currentHour;
+        });
+    };
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
@@ -28,16 +63,30 @@ export default function OrderComponent() {
 
         try {
             setIsSubmitting(true);
-            // await dataTestAPI.post("/api/v1/orders", formData);
-            alert("Đặt lịch thành công!");
-            setFormData({
-                name: "",
-                phone: "",
-                address: "",
-                date: "",
-                timeSlot: "",
-                note: ""
-            });
+            const orderData = {
+                PatientName: formData.name,
+                Phone: formData.phone,
+                Address: formData.address,
+                ScheduleDate: formData.date,
+                ScheduleTime: formData.timeSlot,
+                Comment: formData.note
+            }
+            const request = await dataTestAPI.post("/api/v1/Booking", orderData);
+            if (request.status == 200) {
+                alert("Đặt lịch thành công!");
+                setFormData({
+                    name: "",
+                    phone: "",
+                    address: "",
+                    date: "",
+                    timeSlot: "",
+                    note: ""
+                });
+            }
+            else {
+                alert("Đặt lịch thất bại. Vui lòng thử lại.");
+            }
+
         } catch (error) {
             alert("Đặt lịch thất bại. Vui lòng thử lại.");
         } finally {
@@ -47,15 +96,29 @@ export default function OrderComponent() {
 
     const validate = () => {
         const newErrors = {};
+        const today = new Date();
+        const selectedDate = formData.date ? new Date(formData.date) : null;
+
+        // Làm tròn today và selectedDate về 00:00 để chỉ so sánh theo ngày
+        today.setHours(0, 0, 0, 0);
+        if (selectedDate) selectedDate.setHours(0, 0, 0, 0);
+
         if (!formData.name.trim()) newErrors.name = "Vui lòng nhập họ tên";
         if (!formData.phone.trim()) newErrors.phone = "Vui lòng nhập số điện thoại";
         else if (!/^0\d{9,10}$/.test(formData.phone)) newErrors.phone = "Số điện thoại không hợp lệ";
         if (!formData.address.trim()) newErrors.address = "Vui lòng nhập địa chỉ";
-        if (!formData.date) newErrors.date = "Vui lòng chọn ngày";
+
+        if (!formData.date) {
+            newErrors.date = "Vui lòng chọn ngày";
+        } else if (selectedDate < today) {
+            newErrors.date = "Ngày lấy mẫu không được là ngày quá khứ";
+        }
+
         if (!formData.timeSlot) newErrors.timeSlot = "Vui lòng chọn khung giờ";
-        if (!formData.note.trim()) newErrors.note = "Vui lòng nhập ghi chú";
+
         return newErrors;
     };
+
 
     return (
         <section className="relative page py-12 px-4 sm:px-6">
@@ -118,22 +181,7 @@ export default function OrderComponent() {
                                     className="w-full bg-gray-50 border border-gray-300 px-2 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
                                 >
                                     <option value="">Chọn khung giờ</option>
-                                    {[
-                                        "8h00 - 9h00",
-                                        "9h00 - 10h00",
-                                        "10h00 - 11h00",
-                                        "11h00 - 12h00",
-                                        "12h00 - 13h00",
-                                        "13h00 - 14h00",
-                                        "14h00 - 15h00",
-                                        "15h00 - 16h00",
-                                        "16h00 - 17h00",
-                                        "17h00 - 18h00",
-                                        "18h00 - 19h00",
-                                        "19h00 - 20h00",
-                                        "20h00 - 21h00",
-                                        "21h00 - 22h00",
-                                    ].map((slot) => (
+                                    {getAvailableTimeSlots().map((slot) => (
                                         <option key={slot} value={slot}>{slot}</option>
                                     ))}
                                 </select>
@@ -144,7 +192,7 @@ export default function OrderComponent() {
                         {/* Ghi chú */}
                         <div className="flex flex-col md:flex-row gap-2">
                             <label htmlFor="note" className="text-primary md:w-1/5 font-semibold">
-                                Ghi chú:<span className="text-red-500">*</span>
+                                Ghi chú:
                             </label>
                             <div className="flex-1">
                                 <textarea

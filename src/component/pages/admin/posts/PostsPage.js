@@ -4,8 +4,16 @@ import SearchModal from "@/component/pages/admin/posts/component/SearchModal";
 import TablePosts from "@/component/pages/admin/posts/component/TablePosts"
 import { useEffect, useState } from "react";
 import FullScreenLoader from "@/component/FullScreenLoader";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
+import { usePermission } from '@/hooks/usePermission';
+import { permissions } from '@/hooks/permissions';
+
 export default function PostsPage() {
+    const canView = usePermission([
+        permissions.users.view,
+        permissions.roles.view,
+        permissions.rolesClaims.view
+    ]);
     const PAGE_SIZE = 4;
     const [loading, setLoading] = useState(false);
     const [blogs, setBlogs] = useState([]);
@@ -14,9 +22,17 @@ export default function PostsPage() {
     const [totalPages, setTotalPages] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
 
+    useEffect(() => {
+        if (!canView) {
+            window.location.href = "/unauthorized";
+        }
+    }, [canView]);
+
+    if (!canView) return (<></>);
+
     const fetchBlog = async () => {
         try {
-            const response = await blogAPI.get(
+            const response = await dataTestAPI.get(
                 `api/v1/Blog?BlogTitle=${searchName}&PageNumber=${currentPage}&PageSize=${PAGE_SIZE}`
             );
             if (response.status === 200) {

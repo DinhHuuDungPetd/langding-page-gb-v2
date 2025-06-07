@@ -4,7 +4,7 @@ import Image from "next/image";
 import { MdFirstPage, MdLastPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import CustomCheckbox from "@/component/CustomCheckbox";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 export default function TablePriority({ selectedPrioritys, setSelectedPrioritys }) {
     const [categorys, setCategorys] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,7 +16,7 @@ export default function TablePriority({ selectedPrioritys, setSelectedPrioritys 
 
     const getCategorys = async () => {
         try {
-            const response = await blogAPI.get(
+            const response = await dataTestAPI.get(
                 `api/v1/Category?PageNumber=1&PageSize=0`
             );
             if (response.status === 200) {

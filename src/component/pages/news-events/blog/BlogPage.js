@@ -5,7 +5,7 @@ import RelatedPosts from "@/component/pages/news-events/component/RelatedPosts";
 import BookingForm from "@/component/pages/news-events/component/BookingForm";
 import PopularNews from "@/component/pages/news-events/component/PopularNews";
 import Image from "next/image";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 
 export default function BlogPage({ params }) {
     const PAGE_SIZE = 4;
@@ -19,7 +19,7 @@ export default function BlogPage({ params }) {
 
     const fetchBlog = async () => {
         try {
-            const response = await blogAPI.get(
+            const response = await dataTestAPI.get(
                 `api/v1/Blog?BlogId=${id}&BlogStatus=1&PageNumber=${currentPage}&PageSize=${PAGE_SIZE}`
             );
             if (response.status === 200) {

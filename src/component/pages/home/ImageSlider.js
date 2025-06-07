@@ -58,13 +58,13 @@ const imagesMobile = [
         priority: true
     },
     {
-        src: "https://res.cloudinary.com/dgfwxibj4/image/upload/v1747295499/slider/d5l7p0bltaek9gxf5wuj.png",
+        src: "https://res.cloudinary.com/dgfwxibj4/image/upload/v1748849470/slider/al3ayhvkrs3iury2an0l.png",
         alt: "Green Lab - Đội ngũ chuyên gia hàng đầu",
         title: "Green Lab - Đội ngũ chuyên gia hàng đầu",
         priority: true
     },
     {
-        src: "https://res.cloudinary.com/dgfwxibj4/image/upload/v1747280635/slider/f8dklzl0wl6gqzwp1p8x.png",
+        src: "https://res.cloudinary.com/dgfwxibj4/image/upload/v1747295501/slider/otqosoavkdaythsk2sf5.png",
         alt: "Green Lab - Chứng nhận ISO 15189:2012",
         title: "Green Lab - Chứng nhận ISO 15189:2012",
         priority: true

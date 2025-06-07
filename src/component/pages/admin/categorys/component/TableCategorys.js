@@ -3,7 +3,7 @@ import { MdFirstPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 
 export default function TableCategorys({ PAGE_SIZE, setLoading, categorys, getCategorys, getPaginationItems, handleClickPage, currentPage, setCurrentPage, totalPages }) {
 
@@ -11,7 +11,7 @@ export default function TableCategorys({ PAGE_SIZE, setLoading, categorys, getCa
     const handleUpdateStatus = async (id, isChecked) => {
         try {
             setLoading(true);
-            const response = await blogAPI.post(`api/v1/Category`, {
+            const response = await dataTestAPI.post(`api/v1/Category`, {
                 CategoryId: id,
                 Status: isChecked ? 1 : 2
             });
@@ -32,7 +32,7 @@ export default function TableCategorys({ PAGE_SIZE, setLoading, categorys, getCa
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
-        return `Thứ Sáu, ${day} tháng ${month}, ${year}`;
+        return `${day} tháng ${month}, ${year}`;
     };
 
     return (

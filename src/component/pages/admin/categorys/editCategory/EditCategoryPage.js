@@ -5,9 +5,17 @@ import UpImage from "@/component/pages/admin/categorys/component/UpImage";
 import SearchModal from "@/component/pages/admin/categorys/component/SearchModal"
 import { useEffect, useState } from "react";
 import FullScreenLoader from "@/component/FullScreenLoader";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
+import { usePermission } from '@/hooks/usePermission';
+import { permissions } from '@/hooks/permissions';
 
 export default function CategorysPage({ params }) {
+    const canEdit = usePermission([
+        permissions.users.edit,
+        permissions.roles.edit,
+        permissions.rolesClaims.edit
+    ]);
+
     const id = params.slug;
     const [loading, setLoading] = useState(false);
     const [selectedBlogIds, setSelectedBlogIds] = useState([]);
@@ -23,9 +31,17 @@ export default function CategorysPage({ params }) {
     const [previewPromoBanner, setPreviewPromoBanner] = useState("");
     const [sort, setSort] = useState(true);
 
+    useEffect(() => {
+        if (!canEdit) {
+            window.location.href = "/unauthorized";
+        }
+    }, [canEdit]);
+
+    if (!canEdit) return (<></>);
+
     const getBlogs = async (searchName) => {
         try {
-            const response = await blogAPI.get(`api/v1/Blog?BlogTitle=${searchName}`);
+            const response = await dataTestAPI.get(`api/v1/Blog?BlogTitle=${searchName}`);
             setBlogs(response.data.data.items);
         } catch (error) {
             console.error('Error fetching blogs:', error);
@@ -33,7 +49,7 @@ export default function CategorysPage({ params }) {
     };
     const getCategoryBlogs = async () => {
         try {
-            const response = await blogAPI.get(`api/v1/Blog?CategoryId=${id}`);
+            const response = await dataTestAPI.get(`api/v1/Blog?CategoryId=${id}`);
             const relatedBlogs = response.data.data.items || [];
             setSelectedBlogIds(relatedBlogs.map(blog => ({ id: blog.blogId })));
         } catch (error) {
@@ -43,7 +59,7 @@ export default function CategorysPage({ params }) {
 
     const getCategorysById = async () => {
         try {
-            const response = await blogAPI.get(`api/v1/Category?CategoryId=${id}`)
+            const response = await dataTestAPI.get(`api/v1/Category?CategoryId=${id}`)
             setPreviewSideBanner(response.data.data.items[0].sideBanner.url);
             setPreviewPromoBanner(response.data.data.items[0].promoBanner.url);
             setTitleTextSideBanner(response.data.data.items[0].sideBanner.title);
@@ -112,7 +128,7 @@ export default function CategorysPage({ params }) {
                 CategoryBlogs: mergedCategoryBlogs
             };
 
-            const response = await blogAPI.post(`api/v1/Category`, categorys);
+            const response = await dataTestAPI.post(`api/v1/Category`, categorys);
             if (response.status === 200) {
                 alert("Cập nhật danh mục  thành công");
                 window.location.href = "/admin/categorys";

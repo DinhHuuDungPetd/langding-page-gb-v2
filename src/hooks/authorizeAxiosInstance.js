@@ -116,7 +116,7 @@ function createAxiosInstance(baseURL) {
             console.error(errorData?.mess || "Phiên đăng nhập hết hạn!");
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
-            // setTimeout(() => (window.location.href = "/login"), 1000);
+            setTimeout(() => (window.location.href = "/login"), 1000);
             break;
           case 403:
             window.location.href = "/Page403";
@@ -155,7 +155,7 @@ function createAxiosInstance(baseURL) {
 }
 
 const loginAPI = createAxiosInstance(process.env.NEXT_PUBLIC_BASE_URL_LOGIN);
+// const dataTestAPI = createAxiosInstance(process.env.NEXT_PUBLIC_BASE_URL_DATA);
 const dataTestAPI = createAxiosInstance(process.env.NEXT_PUBLIC_BASE_URL_DATA);
-const blogAPI = createAxiosInstance(process.env.NEXT_PUBLIC_BASE_URL_BLOG);
 
-export { loginAPI, dataTestAPI, blogAPI };
+export { loginAPI, dataTestAPI };

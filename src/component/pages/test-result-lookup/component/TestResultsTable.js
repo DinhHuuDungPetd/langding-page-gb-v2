@@ -1,107 +1,92 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 
-export default function TestResultsTable({ nhom_xet_nghiem }) {
+export default function TestResultsTable({ Token, sid }) {
+    const [result, setResult] = useState([]);
+    const getResult = async () => {
+        try {
+            const response = await dataTestAPI.get(`api/v1/Result?SID=${sid}`, {
+                headers: {
+                    Authorization: `Bearer ${Token}`
+                }
+            });
+            if (response.status == 200) {
+                setResult(response.data.data);
+            }
+            console.log("result", response.data.data);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
+    useEffect(() => {
+        getResult();
+    }, []);
+
     return (
         <div className="overflow-x-auto">
-            {/* Table head */}
-            <table className="min-w-full table-fixed text-sm border border-gray-200 shadow-md rounded-t-lg">
-                <thead className="bg-primary text-white font-medium">
-                    <tr>
-                        <th className="p-2 w-1/6">Xét nghiệm</th>
-                        <th className="p-2 w-1/6 text-center">Kết quả</th>
-                        <th className="p-2 w-1/6 text-center">Đơn vị</th>
-                        <th className="p-2 w-1/6 text-center">Giá trị tham chiếu</th>
-                        <th className="p-2 w-1/6 text-center">Ghi chú</th>
-                        {/* <th className="p-2 w-1/6 text-center">Máy / PP XN</th> */}
-                    </tr>
-                </thead>
-            </table>
-
-            {/* Scrollable body */}
             <div className="relative">
-                {/* Ảnh nền chỉ áp dụng cho vùng bảng, không bị cuộn */}
+                <table className="min-w-full table-fixed text-sm border border-gray-300 shadow-md rounded-t-lg">
+                    <thead className="bg-primary text-white font-medium sticky top-0 z-20">
+                        <tr>
+                            <th className="p-2 w-3/8 border border-gray-300">Xét nghiệm</th>
+                            <th className="p-2 w-1/8 border border-gray-300 text-center">Kết quả</th>
+                            <th className="p-2 w-1/8 border border-gray-300 text-center">Đơn vị</th>
+                            <th className="p-2 w-2/8 border border-gray-300 text-center">Giá trị tham chiếu</th>
+                            <th className="p-2 w-2/8 border border-gray-300 text-center">Ghi chú</th>
+                        </tr>
+                    </thead>
+
+                    <tbody className="relative z-10">
+                        {result?.length > 0 ? (
+                            result.map((item, i) => (
+                                <React.Fragment key={i}>
+                                    <tr>
+                                        <td colSpan={5} className="bg-gray-100 font-semibold p-2 border border-gray-300">
+                                            {item.categoryName}
+                                        </td>
+                                    </tr>
+                                    {item.result?.map((r, j) => {
+                                        const color =
+                                            r.color === 1
+                                                ? "text-blue-600 font-bold"
+                                                : r.color === 2
+                                                    ? "text-red-500 font-bold"
+                                                    : "";
+                                        const bold = r.bold === 1 ? "font-bold" : "";
+                                        return (
+                                            <tr key={`${i}-${j}`}>
+                                                <td className={`p-2 border border-gray-300 ${bold}`}>{r.testName}</td>
+                                                <td className={`p-2 border border-gray-300 text-center ${color}`}>{r.result || "-"}</td>
+                                                <td className="p-2 border border-gray-300 text-center">{r.unit?.trim() || "-"}</td>
+                                                <td className="p-2 border border-gray-300 text-center">{r.normalRange || "-"}</td>
+                                                <td className="p-2 border border-gray-300 text-center">{r.comment || "-"}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </React.Fragment>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={5} className="p-4 text-center text-gray-500 border border-gray-300">
+                                    Không có dữ liệu xét nghiệm.
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+
+                {/* Ảnh nền chỉ áp dụng cho tbody */}
                 <div
-                    className="absolute inset-0 bg-no-repeat bg-center bg-[length:500px_500px]  opacity-10 pointer-events-none z-10"
+                    className="absolute inset-0 bg-no-repeat bg-center bg-[length:500px_500px] opacity-10 pointer-events-none z-0"
                     style={{
-                        backgroundImage: "url('https://res.cloudinary.com/dgfwxibj4/image/upload/v1747380669/backgroundPC/lilroenrmomopl3a8qsp.png')"
+                        backgroundImage:
+                            "url('https://res.cloudinary.com/dgfwxibj4/image/upload/v1747380669/backgroundPC/lilroenrmomopl3a8qsp.png')",
                     }}
                 ></div>
-
-                {/* Vùng có thể cuộn chứa bảng */}
-                <div className="relative max-h-[80vh] overflow-x-auto z-10 mb-5">
-                    <table className="min-w-full table-fixed text-sm">
-                        <tbody>
-                            {nhom_xet_nghiem?.length > 0 ? (
-                                nhom_xet_nghiem.map((nhom, i) => (
-                                    <React.Fragment key={i}>
-                                        <tr className=" text-gray-800 underline font-bold">
-                                            <td className="p-2" colSpan={6}>{nhom.name || "-"}</td>
-                                        </tr>
-
-                                        {nhom.xet_nghiem?.map((xn1, j) => {
-                                            const highlightClass = ["Tăng", "Dương tính"].includes(xn1.ghi_chu)
-                                                ? "text-red-600"
-                                                : ["Nhỏ", "Giảm"].includes(xn1.ghi_chu)
-                                                    ? "text-blue-600"
-                                                    : "";
-
-                                            return (
-                                                <React.Fragment key={`xn1-${i}-${j}`}>
-                                                    <tr className="border-t  text-gray-600">
-                                                        <td className="p-2 w-1/6 font-bold">{xn1.ten_xet_nghiem || "-"}</td>
-                                                        <td className={`p-2 w-1/6 text-center ${highlightClass}`}>
-                                                            {xn1.ket_qua || "-"}
-                                                        </td>
-                                                        <td className="p-2 w-1/6 text-center">{xn1.don_vi || "-"}</td>
-                                                        <td className="p-2 w-1/6 text-center">{xn1.khoang_tham_chieu || "-"}</td>
-                                                        <td className="p-2 w-1/6 text-center">{xn1.ghi_chu || "-"}</td>
-                                                        {/* <td className="p-2 w-1/6 text-center">{`${xn1.may_xn || ""} / ${xn1.phuong_phap_xn || ""}`.trim()}</td> */}
-                                                    </tr>
-
-                                                    {xn1.loai_xet_nghiem?.map((xn2, k) => {
-                                                        // Xác định màu chữ dựa trên ghi_chu
-                                                        const highlightClass = ["Tăng", "Dương tính"].includes(xn2.ghi_chu)
-                                                            ? "text-red-600"
-                                                            : ["Nhỏ", "Giảm"].includes(xn2.ghi_chu)
-                                                                ? "text-blue-600"
-                                                                : "";
-                                                        { console.log(`"Dương tính" - ${xn2.ghi_chu}: ${xn2.ghi_chu === "Dương tính"}`) }
-                                                        return (
-                                                            <tr
-                                                                key={`xn2-${i}-${j}-${k}`}
-                                                                className="border-t  text-gray-600"
-                                                            >
-                                                                <td className="p-2 w-1/6">{xn2.ten_xet_nghiem || "-"}</td>
-                                                                <td className={`p-2 w-1/6 text-center ${highlightClass}`}>
-                                                                    {xn2.ket_qua || "-"}
-                                                                </td>
-                                                                <td className="p-2 w-1/6 text-center">{xn2.don_vi || "-"}</td>
-                                                                <td className="p-2 w-1/6 text-center">{xn2.khoang_tham_chieu || "-"}</td>
-                                                                <td className="p-2 w-1/6 text-center">{xn2.ghi_chu || "-"}</td>
-                                                                {/* <td className="p-2 w-1/6 text-center">{`${xn2.may_xn || ""} / ${xn2.phuong_phap_xn || ""}`.trim()}</td> */}
-                                                            </tr>
-                                                        );
-                                                    })}
-                                                </React.Fragment>
-                                            )
-                                        })}
-                                    </React.Fragment>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan={6} className="p-4 text-center text-gray-500">
-                                        Không có dữ liệu xét nghiệm.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
             </div>
-
         </div>
-
 
     );
 }

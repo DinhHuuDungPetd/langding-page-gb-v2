@@ -1,17 +1,38 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { loginAPI } from "@/hooks/authorizeAxiosInstance";
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const toggleType = () => {
         setShowPassword((prev) => !prev);
     };
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        // Handle login logic
+    const handleLogin = async (e) => {
+        e.preventDefault(); // Ngăn reload trang
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        try {
+            const userRq = {
+                username: username,
+                password: password,
+            };
+            const response = await loginAPI.post("api/v1/Auth/login", userRq);
+            if (response.status === 200) {
+                const accessToken = response.data.data.token;
+                const refreshToken = response.data.data.refreshToken;
+                localStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("refreshToken", refreshToken);
+                setTimeout(() => (window.location.href = "/admin"), 1000);
+            }
+        } catch (error) {
+            console.error("Login failed:", error);
+            alert("Đăng nhập thất bại. Vui lòng kiểm tra tài khoản và mật khẩu.");
+        }
     };
 
     return (
@@ -31,12 +52,12 @@ export default function LoginPage() {
                                 htmlFor="email"
                                 className="flex cursor-pointer items-center gap-2 text-xs font-medium leading-none text-gray-700 mb-3"
                             >
-                                Email Address
+                                Username:
                             </label>
                             <input
-                                id="email"
-                                name="email"
-                                type="email"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 placeholder="you@example.com"
                                 className="block peer w-full px-4 py-3 border border-gray-300 bg-gray-100 text-gray-800    placeholder-gray-400 transition-colors focus:border-green-500 focus:outline-0 focus:ring focus:ring-green-200 "
                             />
@@ -47,12 +68,12 @@ export default function LoginPage() {
                                 htmlFor="password"
                                 className="flex cursor-pointer items-center gap-2 text-xs font-medium leading-none text-gray-700  mb-3"
                             >
-                                Password
+                                Password:
                             </label>
                             <div className="relative">
                                 <input
-                                    id="password"
-                                    name="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Your password"
                                     className="block peer w-full px-4 py-3 border border-gray-300 bg-gray-100 text-gray-800   placeholder-gray-400 transition-colors focus:border-green-500 focus:outline-0 focus:ring focus:ring-green-200"
@@ -116,12 +137,12 @@ export default function LoginPage() {
                         </div>
                     </form>
 
-                    <div className="mt-20 text-gray-600  text-sm">
+                    {/* <div className="mt-20 text-gray-600  text-sm">
                         Don't have an account yet?{" "}
                         <a className="font-medium text-green-600 underline" href="/register">
                             Sign up
                         </a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

@@ -2,15 +2,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import { loginAPI } from "@/hooks/authorizeAxiosInstance";
-
 export default function SampleLookup() {
+
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const handleLogin = async (e) => {
         e.preventDefault(); // Ngăn reload trang
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
         try {
             const userRq = {
                 username: username,
@@ -18,11 +17,12 @@ export default function SampleLookup() {
             };
             const response = await loginAPI.post("api/v1/Auth/login", userRq);
             if (response.status === 200) {
-                const accessToken = response.data.data.token;
+                const doctorToken = response.data.data.token;
                 const refreshToken = response.data.data.refreshToken;
-                localStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("accessToken", doctorToken);
                 localStorage.setItem("refreshToken", refreshToken);
-                setTimeout(() => (window.location.href = "/tra-cuu"), 1000);
+                alert("Đăng nhập thành công.");
+                setTimeout(() => (window.location.href = `/tra-cuu/${username}`), 1000);
             }
         } catch (error) {
             console.error("Login failed:", error);

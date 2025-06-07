@@ -6,7 +6,7 @@ import OrderComponent from "@/component/pages/home/Order";
 import { FaCalendarAlt } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 import { MdFirstPage, MdLastPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
@@ -27,7 +27,7 @@ export default function CategoryPage({ params }) {
         const day = String(date.getDate()).padStart(2, "0");
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const year = date.getFullYear();
-        return `Thứ Sáu, ${day} tháng ${month}, ${year}`;
+        return `${day} tháng ${month}, ${year}`;
     };
 
     useEffect(() => {
@@ -49,7 +49,7 @@ export default function CategoryPage({ params }) {
     }, [totalCount]);
 
     const getCategoryAll = async () => {
-        const response = await blogAPI.get("api/v1/Category?CategoryId=1&CategoryStatus=1&PageNumber=1&PageSize=1");
+        const response = await dataTestAPI.get("api/v1/Category?CategoryId=1&CategoryStatus=1&PageNumber=1&PageSize=1");
         if (response.status === 200) {
             setCategory(response.data.data.items[0]);
         }
@@ -57,7 +57,7 @@ export default function CategoryPage({ params }) {
 
     const featuredBlog = async () => {
         try {
-            const response = await blogAPI.get(
+            const response = await dataTestAPI.get(
                 `api/v1/Blog?CategoryId=${id}&BlogStatus=1&PageNumber=1&PageSize=1`
             );
             if (response.status === 200) {
@@ -70,7 +70,7 @@ export default function CategoryPage({ params }) {
 
     const fetchBlog = async () => {
         try {
-            const response = await blogAPI.get(
+            const response = await dataTestAPI.get(
                 `api/v1/Blog?CategoryId=${id}&BlogStatus=1&PageNumber=${currentPage}&PageSize=${PAGE_SIZE}`
             );
             if (response.status === 200) {

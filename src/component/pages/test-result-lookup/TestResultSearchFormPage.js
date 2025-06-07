@@ -1,14 +1,26 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
 import SampleLookup from "@/component/pages/test-result-lookup/component/SampleLookup";
-import LabResultSearchPage from "@/component/pages/test-result-lookup/LabResultSearchPage";
+import { jwtDecode } from "jwt-decode";
 
 export default function Account() {
-    const [accessToken, setAccessToken] = useState(null);
 
     useEffect(() => {
-        const token = localStorage.getItem("accessToken");
-        setAccessToken(token);
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+            try {
+                const decoded = jwtDecode(accessToken);
+                const username = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+
+                if (username) {
+                    window.location.href = `/tra-cuu/${username}`;
+                } else {
+                    console.error("Không tìm thấy username trong token.");
+                }
+            } catch (error) {
+                console.error("Lỗi khi decode token:", error);
+            }
+        }
     }, []);
 
     return (
@@ -18,7 +30,7 @@ export default function Account() {
                     Trang chủ &gt; <span className="font-normal">Kết quả xét nghiệm</span>
                 </div>
             </div>
-            {accessToken ? <LabResultSearchPage /> : <SampleLookup />}
+            <SampleLookup />
         </div>
     );
 }

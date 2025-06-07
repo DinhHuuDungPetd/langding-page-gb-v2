@@ -10,10 +10,17 @@ import styles from "@/component/style/BlogContent.module.css";
 import { createEditor } from '@/component/pages/admin/posts/component/editorConfig';
 import CustomSelect from '@/component/CustomSelect'
 import FullScreenLoader from "@/component/FullScreenLoader";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 import { imageFileMap } from "@/component/pages/admin/posts/component/customTiptap/imageFileMap";
+import { usePermission } from '@/hooks/usePermission';
+import { permissions } from '@/hooks/permissions';
 
 export default function PostsPage() {
+    const canCreate = usePermission([
+        permissions.users.create,
+        permissions.roles.create,
+        permissions.rolesClaims.create
+    ]);
     const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState([]);
     const [postJson, setPostJson] = useState(null);
@@ -32,6 +39,15 @@ export default function PostsPage() {
     const [selectedBlogIds, setSelectedBlogIds] = useState([]);
     const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
     const [categorys, setCategorys] = useState([]);
+
+    useEffect(() => {
+        if (!canCreate) {
+            window.location.href = "/unauthorized";
+        }
+    }, [canCreate]);
+
+    if (!canCreate) return (<></>);
+
     const editor = createEditor({
         content: '',
         onUpdate: ({ editor }) => {
@@ -41,8 +57,8 @@ export default function PostsPage() {
     useEffect(() => {
         const fetchPostData = async () => {
             try {
-                const response1 = await blogAPI.get(`api/v1/Blog?BlogId=0`);
-                const response2 = await blogAPI.get(`api/v1/Category?CategoryId=0&BlogId=0`)
+                const response1 = await dataTestAPI.get(`api/v1/Blog?BlogId=0`);
+                const response2 = await dataTestAPI.get(`api/v1/Category?CategoryId=0&BlogId=0`)
                 setBlogs(response1.data.data.items);
                 setCategorys(response2.data.data.items)
             } catch (error) {
@@ -166,7 +182,7 @@ export default function PostsPage() {
                 relatedBlogIds: selectedBlogIds.map(blog => blog.id),
                 categoryIds: selectedCategoryIds
             };
-            const response = await blogAPI.post(`api/v1/Blog`, blog);
+            const response = await dataTestAPI.post(`api/v1/Blog`, blog);
             if (response.status === 200) {
                 alert("Thêm bài viết thành công!");
                 window.location.href = "/admin/posts";

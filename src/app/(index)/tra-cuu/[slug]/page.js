@@ -1,8 +1,8 @@
 
-import BlogPage from "@/component/pages/news-events/blog/BlogPage";
+import LabPatientSearchPage from "@/component/pages/test-result-lookup/LabPatientSearchPage";
 
 
 export default async function Page({ params }) {
 
-  return <BlogPage params={params} />;
+  return <LabPatientSearchPage params={params} />;
 }
