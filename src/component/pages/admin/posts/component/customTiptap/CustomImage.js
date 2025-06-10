@@ -3,7 +3,7 @@ import { Image } from "@tiptap/extension-image";
 const CustomImage = Image.extend({
     addAttributes() {
         return {
-            ...Image.config.addAttributes(),
+            ...this.parent(), // dùng this.parent thay vì Image.config
             title: {
                 default: null,
             },

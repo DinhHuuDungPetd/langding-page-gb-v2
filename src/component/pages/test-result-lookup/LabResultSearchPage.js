@@ -18,7 +18,6 @@ export default function LabResultSearchPage({ params }) {
             });
             if (response.status == 200) {
                 setToken(response.data.data.token);
-                console.log("Token:", response.data.data.token);
             }
         } catch (error) {
             console.error('Error fetching users:', error);

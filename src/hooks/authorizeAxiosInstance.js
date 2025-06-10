@@ -24,7 +24,10 @@ function createAxiosInstance(baseURL) {
     try {
       const token = localStorage.getItem("accessToken");
       const refreshToken = localStorage.getItem("refreshToken");
-
+      if (refreshToken == null) {
+        console.error("Không tìm thấy refresh token trong localStorage.");
+        return null;
+      }
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL_LOGIN}/api/v1/RefreshToken/refreshToken`,
         { token, refreshToken },
@@ -38,9 +41,7 @@ function createAxiosInstance(baseURL) {
       const { token: newAccessToken, refreshToken: newRefreshToken } = res.data.data;
 
       localStorage.setItem("accessToken", newAccessToken);
-      localStorage.setItem("refreshToken", newRefreshToken);
-
-      console.log("Refresh token thành công:", { newAccessToken, newRefreshToken });
+      localStorage.setItem("refreshToken", newRefreshToken)
 
       return newAccessToken;
     } catch (err) {
@@ -75,6 +76,13 @@ function createAxiosInstance(baseURL) {
               if (newToken) {
                 accessToken = newToken;
                 onRefreshed(newToken);
+              }
+              else {
+                console.error("Không thể lấy token mới, yêu cầu đăng nhập lại.");
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
+                setTimeout(() => (window.location.href = "/login"), 1000);
+                return Promise.reject(new Error("Phiên đăng nhập hết hạn!"));
               }
             } else if (timeLeft < 60000 && isRefreshing) {
               // Đợi token mới nếu đang trong quá trình refresh

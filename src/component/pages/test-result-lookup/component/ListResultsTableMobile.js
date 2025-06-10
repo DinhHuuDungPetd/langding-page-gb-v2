@@ -14,7 +14,6 @@ export default function ListResultsTableMobile({ Token, sid }) {
             if (response.status == 200) {
                 setResult(response.data.data);
             }
-            console.log("result", response.data.data);
         } catch (error) {
             console.error('Error fetching users:', error);
         }

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { loginAPI } from "@/hooks/authorizeAxiosInstance";
 
@@ -11,7 +11,12 @@ export default function LoginPage() {
     const toggleType = () => {
         setShowPassword((prev) => !prev);
     };
-
+    useEffect(() => {
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+            setTimeout(() => (window.location.href = "/"), 1000);
+        }
+    }, []);
     const handleLogin = async (e) => {
         e.preventDefault(); // Ngăn reload trang
         localStorage.removeItem("accessToken");

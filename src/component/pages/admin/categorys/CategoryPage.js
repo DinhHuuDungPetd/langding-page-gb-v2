@@ -1,20 +1,16 @@
 "use client"
 import AddModal from "@/component/pages/admin/categorys/component/AddModal";
 import TableCategorys from "@/component/pages/admin/categorys/component/TableCategorys"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import FullScreenLoader from "@/component/FullScreenLoader";
 import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 import TablePriorityCategory from "@/component/pages/admin/categorys/component/TablePriorityCategory"
 import { usePermission } from '@/hooks/usePermission';
 import { permissions } from '@/hooks/permissions';
-
+const PAGE_SIZE = 4;
 export default function CategorysPage() {
-    const canView = usePermission([
-        permissions.users.view,
-        permissions.roles.view,
-        permissions.rolesClaims.view
-    ]);
-    const PAGE_SIZE = 4;
+    const [isClient, setIsClient] = useState(false);
     const [loading, setLoading] = useState(false);
     const [categorys, setCategorys] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -23,15 +19,26 @@ export default function CategorysPage() {
     const [selectedPrioritys, setSelectedPrioritys] = useState([]);
     const [sort, setSort] = useState(true);
 
+    const router = useRouter();
+
+    const canView = usePermission([
+        permissions.users.view,
+        permissions.roles.view,
+        permissions.rolesClaims.view
+    ]);
+    // Đánh dấu là client-side
     useEffect(() => {
-        if (!canView) {
-            window.location.href = "/unauthorized";
+        setIsClient(true);
+    }, []);
+
+    // Chuyển hướng nếu không có quyền
+    useEffect(() => {
+        if (isClient && !canView) {
+            router.push("/unauthorized");
         }
-    }, [canView]);
+    }, [canView, isClient, router]);
 
-    if (!canView) return (<></>);
-
-    const getCategorys = async () => {
+    const getCategorys = useCallback(async () => {
         try {
             const response = await dataTestAPI.get(
                 `api/v1/Category?PageNumber=${currentPage}&PageSize=${PAGE_SIZE}`
@@ -44,7 +51,7 @@ export default function CategorysPage() {
         } catch (err) {
             console.error("Error fetching blog:", err);
         }
-    };
+    });
 
     useEffect(() => {
         getCategorys();
@@ -110,6 +117,8 @@ export default function CategorysPage() {
         }
     };
 
+    // Không render nếu chưa sẵn sàng hoặc không có quyền
+    if (!isClient || !canView) return null;
 
     return (
         <div>

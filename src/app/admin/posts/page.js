@@ -1,10 +1,8 @@
 
-import BlogPage from "@/component/pages/admin/posts/PostsPage";
+import PostsPage from "@/component/pages/admin/posts/PostsPage";
 
 export default function Home() {
     return (
-        <>
-            <BlogPage />
-        </>
+        <PostsPage />
     );
 }

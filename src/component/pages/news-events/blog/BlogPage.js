@@ -80,23 +80,27 @@ export default function BlogPage({ params }) {
             </div>
             <div className="container mx-auto">
                 <div className="flex flex-col lg:flex-row gap-8">
-                    <div className="w-full lg:w-2/3 ">
-                        {blog ? <Blog blog={blog} /> : 'Loading...'}
-                        {blog ?
-                            <RelatedPosts
-                                blog={blog?.blogRelated}
-                                handleClickPage={handleClickPage}
-                                getPaginationItems={getPaginationItems}
-                                currentPage={currentPage}
-                                setCurrentPage={setCurrentPage}
-                                totalPages={totalPages}
-                            />
-                            : 'Loading...'
-                        }
-
-
+                    <div className="w-full lg:w-2/3">
+                        {blog ? (
+                            <>
+                                <Blog blog={blog} />
+                                {blog.blogRelated && blog.blogRelated.length > 0 && blog.blogRelated?.blogId ? (
+                                    <RelatedPosts
+                                        blog={blog.blogRelated}
+                                        handleClickPage={handleClickPage}
+                                        getPaginationItems={getPaginationItems}
+                                        currentPage={currentPage}
+                                        setCurrentPage={setCurrentPage}
+                                        totalPages={totalPages}
+                                    />
+                                ) : (
+                                    <p className='mx-auto text-center'>Không có bài viết liên quan.</p>
+                                )}
+                            </>
+                        ) : (
+                            <p className='mx-auto text-center'>Đang tải bài viết...</p>
+                        )}
                     </div>
-
                     <div className="w-full lg:w-[35%] my-5">
                         <div className='lg:w-[90%] md:w-[60%] w-[80%] mx-auto mb-5 overflow-hidden'>
                             <Image

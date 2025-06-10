@@ -96,7 +96,7 @@ export default function TablePriority({ blogs, selectedPrioritys, setSelectedPri
                                 </td>
                                 <td className="px-4 py-3">
                                     <Image
-                                        src={item.imageTitle.url}
+                                        src={item?.imageTitle?.url}
                                         alt="Ảnh bài viết"
                                         width={200}
                                         height={60}

@@ -65,7 +65,7 @@ export default function LabPatientSearchPage({ params }) {
     const toggleExpand = (index) => {
         setExpandedRow(prev => (prev === index ? null : index));
     };
-    const sortedNews = [...users].sort((a, b) => a?.time?.localeCompare(b?.time));
+    const sortedNews = Array.isArray(users) ? [...users].sort((a, b) => a?.time?.localeCompare(b?.time)) : [];
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = sortedNews.slice(indexOfFirstItem, indexOfLastItem);

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import React from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import UpImage from "@/component/pages/admin/posts/component/UpImage";
 import TableRelatedPosts from "@/component/pages/admin/posts/component/TableRelatedPosts"
 import EditContent from "@/component/pages/admin/posts/component/EditContent"
@@ -16,11 +16,7 @@ import { usePermission } from '@/hooks/usePermission';
 import { permissions } from '@/hooks/permissions';
 
 export default function PostsPage() {
-    const canCreate = usePermission([
-        permissions.users.create,
-        permissions.roles.create,
-        permissions.rolesClaims.create
-    ]);
+    const [isClient, setIsClient] = useState(false);
     const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState([]);
     const [postJson, setPostJson] = useState(null);
@@ -39,14 +35,24 @@ export default function PostsPage() {
     const [selectedBlogIds, setSelectedBlogIds] = useState([]);
     const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
     const [categorys, setCategorys] = useState([]);
+    const router = useRouter();
+    const canCreate = usePermission([
+        permissions.users.create,
+        permissions.roles.create,
+        permissions.rolesClaims.create
+    ]);
 
+    // Đánh dấu là client-side
     useEffect(() => {
-        if (!canCreate) {
-            window.location.href = "/unauthorized";
-        }
-    }, [canCreate]);
+        setIsClient(true);
+    }, []);
 
-    if (!canCreate) return (<></>);
+    // Chuyển hướng nếu không có quyền
+    useEffect(() => {
+        if (isClient && !canCreate) {
+            router.push("/unauthorized");
+        }
+    }, [canCreate, isClient, router]);
 
     const editor = createEditor({
         content: '',
@@ -54,18 +60,19 @@ export default function PostsPage() {
             setPostJson(editor.getJSON());
         },
     });
-    useEffect(() => {
-        const fetchPostData = async () => {
-            try {
-                const response1 = await dataTestAPI.get(`api/v1/Blog?BlogId=0`);
-                const response2 = await dataTestAPI.get(`api/v1/Category?CategoryId=0&BlogId=0`)
-                setBlogs(response1.data.data.items);
-                setCategorys(response2.data.data.items)
-            } catch (error) {
-                console.error("Error fetching post data:", error);
-            }
-        };
 
+    const fetchPostData = useCallback(async () => {
+        try {
+            const response1 = await dataTestAPI.get(`api/v1/Blog?BlogId=0`);
+            const response2 = await dataTestAPI.get(`api/v1/Category?CategoryId=0&BlogId=0`)
+            setBlogs(response1.data.data.items);
+            setCategorys(response2.data.data.items)
+        } catch (error) {
+            console.error("Error fetching post data:", error);
+        }
+    });
+
+    useEffect(() => {
         fetchPostData();
         setLoading(false);
     }, []);
@@ -198,7 +205,7 @@ export default function PostsPage() {
         }
     };
 
-
+    if (!isClient || !canCreate) return null;
     return (
         <div className={styles.container}>
             {loading && <FullScreenLoader />}
@@ -253,13 +260,13 @@ export default function PostsPage() {
             <div className="flex gap-6">
                 <div className="mb-5 w-full">
                     <label className="block text-primary font-medium mb-1">
-                        Ảnh tiêu đề:<span className="text-red-500">*</span>
+                        Ảnh nội dung 1:<span className="text-red-500">*</span>
                     </label>
                     <UpImage previewImage={previewSideBanner} setPreviewImage={setPreviewSideBanner} titleText={titleTextSideBanner} setTitleText={setTitleTextSideBanner} setUpFile={setUpFileSideBanner} inputId={1} />
                 </div>
                 <div className="mb-5 w-full">
                     <label className="block text-primary font-medium mb-1">
-                        Ảnh tiêu đề:<span className="text-red-500">*</span>
+                        Ảnh nội dung 2:<span className="text-red-500">*</span>
                     </label>
                     <UpImage previewImage={previewPromoBanner} setPreviewImage={setPreviewPromoBanner} titleText={titleTextPromoBanner} setTitleText={setTitleTextPromoBanner} setUpFile={setUpFilePromoBanner} inputId={2} />
                 </div>
@@ -287,9 +294,7 @@ export const uploadToCloudinary = async (file) => {
             method: "POST",
             body: formData,
         });
-        console.log("res upload image", res)
         const data = await res.json();
-        console.log("res upload data", data)
         if (!res.ok) throw new Error(data.error?.message || "Upload thất bại");
 
         return data.secure_url;

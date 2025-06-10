@@ -83,7 +83,7 @@ export default function PreviewContent({ postJson }) {
                 return (
                     <HeadingTag
                         key={index}
-                        id={contentArray[0].text}
+                        id={contentArray[0]?.text}
                         className={headingClassMap[level] || ""}
                         style={alignStyle}
                     >

@@ -145,8 +145,8 @@ export default function TableRelatedPosts({
                                 <td className="px-4 py-3">
                                     {item.imageTitle.url && item.imageTitle.url !== "string" ? (
                                         <Image
-                                            src={item.imageTitle.url}
-                                            alt={item.imageTitle.title || "Ảnh bài viết"}
+                                            src={item?.imageTitle?.url}
+                                            alt={item?.imageTitle?.title || "Ảnh bài viết"}
                                             width={200}
                                             height={60}
                                             className="rounded-md object-cover"
