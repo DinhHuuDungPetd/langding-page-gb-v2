@@ -1,12 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import UpImage from "@/component/pages/admin/categorys/component/UpImage";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 import FullScreenLoader from "@/component/FullScreenLoader";
+import { usePermission } from '@/hooks/usePermission';
+import { permissions } from '@/hooks/permissions';
 
 export default function SearchModal({ getCategorys }) {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const canCreate = usePermission([
+        permissions.users.create,
+        permissions.roles.create,
+        permissions.rolesClaims.create
+    ]);
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [upFileSideBanner, setUpFileSideBanner] = useState(null);
@@ -17,6 +23,13 @@ export default function SearchModal({ getCategorys }) {
     const [previewPromoBanner, setPreviewPromoBanner] = useState("");
     const [name, setName] = useState("");
 
+    useEffect(() => {
+        if (!canCreate) {
+            window.location.href = "/unauthorized";
+        }
+    }, [canCreate]);
+
+    if (!canCreate) return (<></>);
 
     const handleSave = async () => {
         if (!name.trim()) {
@@ -57,7 +70,7 @@ export default function SearchModal({ getCategorys }) {
                 status: 1
             };
 
-            const response = await blogAPI.post(`api/v1/Category`, categorys);
+            const response = await dataTestAPI.post(`api/v1/Category`, categorys);
             if (response.status === 200) {
                 alert("Lưu danh mục  thành công");
                 await getCategorys();

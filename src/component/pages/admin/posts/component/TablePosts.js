@@ -4,14 +4,14 @@ import { MdFirstPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { MdLastPage } from "react-icons/md";
 import Link from "next/link";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 
-export default function TablePosts({ PAGE_SIZE,setLoading, blogs, fetchBlog, getPaginationItems, handleClickPage, currentPage, setCurrentPage, totalPages }) {
+export default function TablePosts({ PAGE_SIZE, setLoading, blogs, fetchBlog, getPaginationItems, handleClickPage, currentPage, setCurrentPage, totalPages }) {
 
     const handleUpdateStatus = async (id, isChecked) => {
         try {
             setLoading(true);
-            const response = await blogAPI.post(`api/v1/Blog`, {
+            const response = await dataTestAPI.post(`api/v1/Blog`, {
                 BlogId: id,
                 Status: isChecked ? 1 : 2
             });
@@ -32,7 +32,7 @@ export default function TablePosts({ PAGE_SIZE,setLoading, blogs, fetchBlog, get
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
-        return `Thứ Sáu, ${day} tháng ${month}, ${year}`;
+        return `${day} tháng ${month}, ${year}`;
     };
     return (
         <>
@@ -58,7 +58,7 @@ export default function TablePosts({ PAGE_SIZE,setLoading, blogs, fetchBlog, get
                                 <td className="px-4 py-3 font-medium text-md w-1/4 break-words whitespace-normal">{item.blogDescription}</td>
                                 <td className="px-4 py-3">
                                     <Image
-                                        src={item.imageTitle.url}
+                                        src={item?.imageTitle?.url}
                                         alt="Ảnh bài viết"
                                         width={200}
                                         height={60}

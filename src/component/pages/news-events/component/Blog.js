@@ -82,7 +82,7 @@ export default function Blog({ blog }) {
                 return (
                     <HeadingTag
                         key={index}
-                        id={contentArray[0].text}
+                        id={contentArray[0]?.text}
                         className={headingClassMap[level] || ""}
                         style={alignStyle}
                     >

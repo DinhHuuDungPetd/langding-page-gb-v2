@@ -1,0 +1,170 @@
+"use client";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { loginAPI } from "@/hooks/authorizeAxiosInstance";
+import FullScreenLoader from "@/component/FullScreenLoader";
+
+export default function SearchModal() {
+    const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        password: "",
+        newPassword: "",
+        confirmNewPassword: ""
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        setErrors(prev => ({ ...prev, [name]: "" }));
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+        if (!formData.password.trim()) newErrors.password = "Vui lòng nhập mật khẩu cũ.";
+        if (!formData.newPassword.trim()) newErrors.newPassword = "Vui lòng nhập mật khẩu mới.";
+        if (!formData.confirmNewPassword.trim()) newErrors.confirmNewPassword = "Vui lòng xác nhận mật khẩu mới.";
+        if (formData.newPassword && formData.confirmNewPassword && formData.newPassword !== formData.confirmNewPassword) {
+            newErrors.confirmNewPassword = "Mật khẩu xác nhận không khớp.";
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSave = async () => {
+        if (!validateForm()) return;
+
+        setLoading(true);
+        try {
+            const payload = {
+                password: formData.password,
+                newPassword: formData.newPassword,
+                confirmNewPassword: formData.confirmNewPassword
+            };
+
+            const response = await loginAPI.post("api/v1/Accounts/change-password", payload);
+
+            if (response.status === 200) {
+                alert("Đổi mật khẩu thành công!");
+                setIsOpen(false);
+                setFormData({
+                    password: "",
+                    newPassword: "",
+                    confirmNewPassword: ""
+                });
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
+                setTimeout(() => (window.location.href = `/tra-cuu`), 1000);
+            }
+        } catch (error) {
+            console.error("Lỗi khi đổi mật khẩu:", error);
+
+            // Xử lý lỗi trả về từ server
+            if (error.response?.status === 400 && error.response.data?.errors) {
+                const errorMessages = error.response.data.errors
+                    .map(err => `• ${err.message}`)
+                    .join('\n');
+
+                alert(`Lỗi xác thực:\n${errorMessages}`);
+            } else {
+                alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    return (
+        <>
+            <button
+                onClick={() => setIsOpen(true)}
+                className="border border-primary text-primary hover:bg-primary hover:text-white font-medium py-2 px-4 rounded transition-all duration-200"
+            >
+                <span className="text-md font-medium">Đổi mật khẩu</span>
+            </button>
+
+            <AnimatePresence>
+                {loading && <FullScreenLoader />}
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center"
+                        onClick={() => setIsOpen(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="bg-white rounded-2xl w-full max-w-xl p-6 shadow-lg"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <h2 className="text-xl font-bold text-gray-700 mb-4">Đổi mật khẩu:</h2>
+                            <div className="space-y-4 max-h-[80vh] overflow-y-auto">
+
+                                {/* Mật khẩu cũ */}
+                                <div>
+                                    <label className="text-primary font-semibold block mb-1">
+                                        Mật khẩu cũ: <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        className="w-full bg-gray-50 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                    />
+                                    {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+                                </div>
+
+                                {/* Mật khẩu mới */}
+                                <div>
+                                    <label className="text-primary font-semibold block mb-1">
+                                        Mật khẩu mới: <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="newPassword"
+                                        value={formData.newPassword}
+                                        onChange={handleChange}
+                                        className="w-full bg-gray-50 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                    />
+                                    {errors.newPassword && <p className="text-red-500 text-sm mt-1">{errors.newPassword}</p>}
+                                </div>
+
+                                {/* Xác nhận mật khẩu */}
+                                <div>
+                                    <label className="text-primary font-semibold block mb-1">
+                                        Xác nhận mật khẩu: <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="confirmNewPassword"
+                                        value={formData.confirmNewPassword}
+                                        onChange={handleChange}
+                                        className="w-full bg-gray-50 border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                                    />
+                                    {errors.confirmNewPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmNewPassword}</p>}
+                                </div>
+
+                                <div className="flex justify-end">
+                                    <button
+                                        onClick={handleSave}
+                                        className="px-4 py-2 bg-primary text-white rounded hover:bg-green-700 transition duration-200 active:scale-95"
+                                    >
+                                        Lưu thông tin
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
+    );
+}

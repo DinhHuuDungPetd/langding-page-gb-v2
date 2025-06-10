@@ -5,7 +5,7 @@ import NewCard from "@/component/pages/news-events/component/NewCard";
 import BookingForm from "@/component/pages/news-events/component/BookingForm";
 import PopularNews from "@/component/pages/news-events/component/PopularNews";
 import SearchBlog from "@/component/pages/news-events/component/SearchBlog";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 import { useSearchParams } from 'next/navigation';
 export default function NewsEvents() {
     const PAGE_SIZE = 7;
@@ -26,14 +26,14 @@ export default function NewsEvents() {
     }, [currentPage, searchQuery]);
 
     const getCategoryAll = async () => {
-        const response = await blogAPI.get("api/v1/Category?CategoryStatus=1&PageNumber=1&PageSize=10");
+        const response = await dataTestAPI.get("api/v1/Category?CategoryStatus=1&PageNumber=1&PageSize=10");
         if (response.status === 200) {
             setCategorys(response.data.data.items)
         }
     }
     const fetchBlog = async () => {
         try {
-            const response = await blogAPI.get(
+            const response = await dataTestAPI.get(
                 `api/v1/Blog?BlogTitle=${searchQuery}&PageNumber=${currentPage}&PageSize=${PAGE_SIZE}`
             );
             if (response.status === 200) {

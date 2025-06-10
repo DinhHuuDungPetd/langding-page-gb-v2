@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from "next/link";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 
 export default function NewBlogs({ category }) {
     const [featuredNews, setFeaturedNews] = useState(null);
@@ -20,7 +20,7 @@ export default function NewBlogs({ category }) {
 
     const getCategoryBlog = async () => {
         try {
-            const response = await blogAPI.get(
+            const response = await dataTestAPI.get(
                 `api/v1/Blog?CategoryId=${category.categoryId}&BlogStatus=1&PageNumber=1&PageSize=10`
             );
 

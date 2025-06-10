@@ -21,9 +21,9 @@ export default function RelatedPosts({ blog, getPaginationItems, handleClickPage
                         >
                             <div className="relative w-full aspect-[16/10] rounded-lg overflow-hidden">
                                 <Image
-                                    src={item.imageTitle.url}
-                                    alt={item.imageTitle.title || "Related post"}
-                                    title={item.imageTitle.title || ""}
+                                    src={item?.imageTitle?.url}
+                                    alt={item?.imageTitle?.title || "Related post"}
+                                    title={item?.imageTitle?.title || ""}
                                     fill
                                     className="object-cover rounded-lg transition-transform duration-500 ease-in-out hover:scale-110"
                                 />

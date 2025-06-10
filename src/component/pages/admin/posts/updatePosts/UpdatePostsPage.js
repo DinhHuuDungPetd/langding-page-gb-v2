@@ -1,7 +1,6 @@
 "use client";
-
-import { useEffect, useState } from "react";
-import React from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import UpImage from "@/component/pages/admin/posts/component/UpImage";
 import TableRelatedPosts from "@/component/pages/admin/posts/component/TableRelatedPosts"
 import EditContent from "@/component/pages/admin/posts/component/EditContent"
@@ -11,11 +10,13 @@ import { imageFileMap } from "@/component/pages/admin/posts/component/customTipt
 import { createEditor } from '@/component/pages/admin/posts/component/editorConfig';
 import CustomSelect from '@/component/CustomSelect'
 import FullScreenLoader from "@/component/FullScreenLoader";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
-
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
+import { usePermission } from '@/hooks/usePermission';
+import { permissions } from '@/hooks/permissions';
 export default function PostsPage({ params }) {
     const { slug } = params;
     const id = parseInt(slug, 10);
+    const [isClient, setIsClient] = useState(false);
     const [loading, setLoading] = useState(true);
     const [blogs, setBlogs] = useState([]);
     const [postJson, setPostJson] = useState(null);
@@ -33,46 +34,66 @@ export default function PostsPage({ params }) {
     const [selectedBlogIds, setSelectedBlogIds] = useState([]);
     const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
     const [categorys, setCategorys] = useState([]);
+
+    const router = useRouter();
+
+    const canEdit = usePermission([
+        permissions.users.edit,
+        permissions.roles.edit,
+        permissions.rolesClaims.edit
+    ]);
+
+    // Đánh dấu là client-side
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    // Chuyển hướng nếu không có quyền
+    useEffect(() => {
+        if (isClient && !canEdit) {
+            router.push("/unauthorized");
+        }
+    }, [canEdit, isClient, router]);
+
+
     const editor = createEditor({
         content: '',
         onUpdate: ({ editor }) => {
             setPostJson(editor.getJSON());
         },
     });
+    const fetchPostData = useCallback(async () => {
+        try {
+            const response = await dataTestAPI.get(`api/v1/Blog?BlogId=${id}`);
+            const response2 = await dataTestAPI.get(`api/v1/Category?CategoryId=0&BlogId=0`)
+            const response3 = await dataTestAPI.get(`api/v1/Blog?BlogId=0`);
+            const response4 = await dataTestAPI.get(`api/v1/Category?BlogId=${id}`)
+            setCategorys(response2.data.data.items)
+            setBlogs(response3.data.data.items);
+            const relatedCategorys = response4.data.data.items || [];
+            setSelectedCategoryIds(relatedCategorys.map(category => category.categoryId))
+            if (editor) {
+                editor.commands.setContent(response.data.data.items[0].blogPostJson.content);
+                setPostJson(response.data.data.items[0].blogPostJson);
+                setTitle(response.data.data.items[0].blogTitle);
+                setDescription(response.data.data.items[0].blogDescription);
 
-    useEffect(() => {
-        const fetchPostData = async () => {
-            try {
-                const response = await blogAPI.get(`api/v1/Blog?BlogId=${id}`);
-                const response2 = await blogAPI.get(`api/v1/Category?CategoryId=0&BlogId=0`)
-                const response3 = await blogAPI.get(`api/v1/Blog?BlogId=0`);
-                const response4 = await blogAPI.get(`api/v1/Category?BlogId=${id}`)
-                setCategorys(response2.data.data.items)
-                setBlogs(response3.data.data.items);
-                const relatedCategorys = response4.data.data.items || [];
-                setSelectedCategoryIds(relatedCategorys.map(category => category.categoryId))
-                if (editor) {
-                    editor.commands.setContent(response.data.data.items[0].blogPostJson.content);
-                    setPostJson(response.data.data.items[0].blogPostJson);
-                    setTitle(response.data.data.items[0].blogTitle);
-                    setDescription(response.data.data.items[0].blogDescription);
-
-                    const relatedBlogs = response.data.data.items[0].blogRelated || [];
-                    setSelectedBlogIds(relatedBlogs.map(blog => ({ id: blog.blogId })));
+                const relatedBlogs = response.data.data.items[0].blogRelated || [];
+                setSelectedBlogIds(relatedBlogs.map(blog => ({ id: blog.blogId })));
 
 
-                    setPreviewImage(response.data.data.items[0].imageTitle.url);
-                    setTitleText(response.data.data.items[0].imageTitle.title);
-                    setPreviewSideBanner(response.data.data.items[0].sideBanner.url);
-                    setPreviewPromoBanner(response.data.data.items[0].promoBanner.url);
-                    setTitleTextSideBanner(response.data.data.items[0].sideBanner.title);
-                    setTitleTextPromoBanner(response.data.data.items[0].promoBanner.title);
-                }
-            } catch (error) {
-                console.error("Error fetching post data:", error);
+                setPreviewImage(response.data.data.items[0].imageTitle.url);
+                setTitleText(response.data.data.items[0].imageTitle.title);
+                setPreviewSideBanner(response.data.data.items[0].sideBanner.url);
+                setPreviewPromoBanner(response.data.data.items[0].promoBanner.url);
+                setTitleTextSideBanner(response.data.data.items[0].sideBanner.title);
+                setTitleTextPromoBanner(response.data.data.items[0].promoBanner.title);
             }
-        };
-
+        } catch (error) {
+            console.error("Error fetching post data:", error);
+        }
+    });
+    useEffect(() => {
         fetchPostData();
         setLoading(false);
     }, [id, editor]);
@@ -189,7 +210,7 @@ export default function PostsPage({ params }) {
         };
 
         try {
-            const response = await blogAPI.post(`api/v1/Blog`, blog);
+            const response = await dataTestAPI.post(`api/v1/Blog`, blog);
             if (response.status === 200) {
                 alert("Cập nhật bài viết thành công!");
                 window.location.href = "/admin/posts";
@@ -204,7 +225,7 @@ export default function PostsPage({ params }) {
             setLoading(false);
         }
     };
-
+    if (!isClient || !canEdit) return null;
     return (
         <div className={styles.container}>
             {loading && <FullScreenLoader />}
@@ -299,9 +320,7 @@ export const uploadToCloudinary = async (file) => {
             method: "POST",
             body: formData,
         });
-        console.log("res upload image", res)
         const data = await res.json();
-        console.log("res upload data", data)
         if (!res.ok) throw new Error(data.error?.message || "Upload thất bại");
 
         return data.secure_url;

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaCalendarAlt } from "react-icons/fa";
-import { blogAPI } from "@/hooks/authorizeAxiosInstance";
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 
 export default function PopularNews() {
     const [blog, setBlog] = useState([]);
@@ -11,7 +11,7 @@ export default function PopularNews() {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const response = await blogAPI.get(
+                const response = await dataTestAPI.get(
                     `api/v1/Blog?BlogStatus=1`
                 );
                 if (response.status === 200) {
@@ -34,7 +34,7 @@ export default function PopularNews() {
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
-        return `Thứ Sáu, ${day} tháng ${month}, ${year}`;
+        return `${day} tháng ${month}, ${year}`;
     };
 
     return (

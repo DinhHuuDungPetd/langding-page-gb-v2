@@ -8,7 +8,9 @@ import { FiSettings } from 'react-icons/fi'
 import { HiOutlineMenu } from 'react-icons/hi'
 import { MdLogout } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
+
 export default function AdminLayout({ children }) {
+
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   return (

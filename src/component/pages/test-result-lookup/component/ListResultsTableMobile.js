@@ -1,51 +1,54 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 
-export default function ListResultsTableMobile({ nhom_xet_nghiem }) {
+export default function ListResultsTableMobile({ Token, sid }) {
+    const [result, setResult] = useState([]);
+    const getResult = async () => {
+        try {
+            const response = await dataTestAPI.get(`api/v1/Result?SID=${sid}`, {
+                headers: {
+                    Authorization: `Bearer ${Token}`
+                }
+            });
+            if (response.status == 200) {
+                setResult(response.data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
+    useEffect(() => {
+        getResult();
+    }, []);
+
     return (
-        <div className="mt-3 border-t pt-2 max-h-[500px] overflow-auto">
+        <div className="mt-3 border-t pt-2 max-h-[700px] overflow-auto">
             <div className="font-semibold mb-2 text-lg">Xét nghiệm</div>
-            {nhom_xet_nghiem?.length > 0 ? (
-                nhom_xet_nghiem.map((nhom, i) => (
+            {result?.length > 0 ? (
+                result.map((item, i) => (
                     <div key={i} className="mb-4">
-                        <div className="text-base font-bold text-blue-800 underline mb-2">{nhom.name || "-"}</div>
+                        <div className="text-base font-bold text-blue-800 underline mb-2">{item.categoryName || "-"}</div>
 
-                        {nhom.xet_nghiem?.map((xn1, j) => {
-                            const highlightClass = ["Tăng", "Dương tính"].includes(xn1.ghi_chu)
-                                ? "text-red-600"
-                                : ["Nhỏ", "Giảm"].includes(xn1.ghi_chu)
-                                    ? "text-blue-600"
-                                    : "";
+                        {item.result?.map((xn, j) => {
+                            const color =
+                                xn.color === 1
+                                    ? "text-blue-600 font-bold"
+                                    : xn.color === 2
+                                        ? "text-red-500 font-bold"
+                                        : "";
+                            const bold = xn.bold === 1 ? "text-primary font-bold" : "";
 
                             return (
-                                <div key={`xn1-${i}-${j}`} className="bg-white border rounded-lg shadow-sm p-3 mb-3">
-                                    <div className="font-semibold text-gray-800">{xn1.ten_xet_nghiem || "-"}</div>
-                                    <div className="text-sm text-gray-600 mt-1">
-                                        <div><strong>Kết quả:</strong> <span className={highlightClass}>{xn1.ket_qua || "-"}</span></div>
-                                        <div><strong>Đơn vị:</strong> {xn1.don_vi || "-"}</div>
-                                        <div><strong>Khoảng tham chiếu:</strong> {xn1.khoang_tham_chieu || "-"}</div>
-                                        <div><strong>Ghi chú:</strong> {xn1.ghi_chu || "-"}</div>
-                                        <div><strong>Máy & Phương pháp:</strong> {`${xn1.may_xn || ""} / ${xn1.phuong_phap_xn || ""}`}</div>
+                                <div key={`${i}-${j}`} className="bg-white border rounded-lg shadow-sm p-3 mb-3">
+                                    <div className={`font-semibold ${bold}`}>{xn.testName || "-"}</div>
+                                    <div className="text-sm text-gray-700 mt-1">
+                                        <div><strong>Kết quả:</strong> <span className={color}>{xn.result || "-"}</span></div>
+                                        <div><strong>Đơn vị:</strong> {xn.unit?.trim() || "-"}</div>
+                                        <div><strong>Khoảng tham chiếu:</strong> {xn.normalRange || "-"}</div>
+                                        <div><strong>Ghi chú:</strong> {xn.comment || "-"}</div>
                                     </div>
-
-                                    {xn1.loai_xet_nghiem?.map((xn2, k) => {
-                                        const highlightClass = ["Tăng", "Dương tính"].includes(xn2.ghi_chu)
-                                            ? "text-red-600"
-                                            : ["Nhỏ", "Giảm"].includes(xn2.ghi_chu)
-                                                ? "text-blue-600"
-                                                : "";
-
-                                        return (
-                                            <div key={`xn2-${i}-${j}-${k}`} className="mt-3 border-t pt-2 text-sm text-gray-700">
-                                                <div className="font-medium">{xn2.ten_xet_nghiem || "-"}</div>
-                                                <div><strong>Kết quả:</strong> <span className={highlightClass}>{xn2.ket_qua || "-"}</span></div>
-                                                <div><strong>Đơn vị:</strong> {xn2.don_vi || "-"}</div>
-                                                <div><strong>Khoảng tham chiếu:</strong> {xn2.khoang_tham_chieu || "-"}</div>
-                                                <div><strong>Ghi chú:</strong> {xn2.ghi_chu || "-"}</div>
-                                                <div><strong>Máy & Phương pháp:</strong> {`${xn2.may_xn || ""} / ${xn2.phuong_phap_xn || ""}`}</div>
-                                            </div>
-                                        );
-                                    })}
                                 </div>
                             );
                         })}
