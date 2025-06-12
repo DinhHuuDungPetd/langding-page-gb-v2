@@ -1,4 +1,3 @@
-import MediaSlider from "@/component/pages/home/component/MediaSlider";
 import NewsSlider from "@/component/pages/home/component/NewsSlider";
 
 export default function NewsComponent (){

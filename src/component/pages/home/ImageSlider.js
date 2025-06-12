@@ -20,7 +20,7 @@ const images = [
         priority: true
     },
     {
-        src: "https://res.cloudinary.com/dgfwxibj4/image/upload/v1747300639/slider/qfgwtphzkpumyzboihbo.png",
+        src: "https://res.cloudinary.com/dgfwxibj4/image/upload/v1749718719/slider/mkklh6sjdltvb4qhspj6.png",
         alt: "Green Lab - Đội ngũ chuyên gia hàng đầu",
         title: "Green Lab - Đội ngũ chuyên gia hàng đầu",
         priority: true

@@ -1,15 +1,16 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiSearch, FiX } from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
 
-export default function SearchModal({ searchName, setSearchName }) {
+export default function SearchModal({ searchName, setSearchName, onSearch }) {
     const [isOpen, setIsOpen] = useState(false);
 
-    const handleSearch = () => {
-        setIsOpen(false);
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter" && searchName.length >= 2) {
+            onSearch(); // Gọi hàm tìm kiếm khi nhấn Enter
+        }
     };
-
 
     return (
         <>
@@ -46,7 +47,7 @@ export default function SearchModal({ searchName, setSearchName }) {
                                     placeholder="Nhập từ khoá..."
                                     value={searchName}
                                     onChange={(e) => setSearchName(e.target.value)}
-                                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                                    onKeyDown={handleKeyDown}
                                     className="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-central"
                                 />
                             </div>

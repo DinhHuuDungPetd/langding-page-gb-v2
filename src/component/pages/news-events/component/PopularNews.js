@@ -52,7 +52,7 @@ export default function PopularNews() {
                         >
                             <div className="relative w-34 h-24 rounded-lg overflow-hidden shrink-0 bg-gray-200">
                                 <Image
-                                    src={item.imageTitle?.url || "/default.jpg"}
+                                    src={item.imageTitle?.url || "https://placehold.co/600x600"}
                                     alt={item.imageTitle?.title || "image"}
                                     title={item.imageTitle?.title || ""}
                                     fill

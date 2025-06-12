@@ -54,7 +54,7 @@ const ContactPage = memo(() => {
             variants={containerVariants}
         >
             <motion.div
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747018636/backgroundMobile/bw4hk7or82wnbqlpxbsj.jpg)] md:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/modzoiaox5xwvavuyyai.webp)] bg-blend-multiply"
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747018636/backgroundMobile/bw4hk7or82wnbqlpxbsj.jpg)] md:bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1749698644/backgroundPC/pobjazakxtaxhhytqte2.webp)] bg-blend-multiply"
                 variants={itemVariants}
             >
                 <div className="absolute bottom-4 left-5 md:left-10 lg:left-20 text-white text-md medium-italic z-9">

@@ -2,7 +2,6 @@
 import Image from "next/image"
 import ItemLi from "@/component/layout/header/ItemLi";
 import TimelineProgressBar from "@/component/layout/header/TimelineProgressBar";
-import MobileToggleMenu from "@/component/layout/header/MobileToggleMenu";
 import SearchModal from "@/component/layout/header/SearchModal";
 import Link from "next/link";
 import { Suspense, useState } from "react";

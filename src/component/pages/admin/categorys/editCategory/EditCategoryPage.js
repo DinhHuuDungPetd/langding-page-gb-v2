@@ -81,12 +81,14 @@ export default function CategorysPage({ params }) {
     useEffect(() => {
         getCategorysById();
         getCategoryBlogs();
-        getBlogs(searchName)
     }, []);
 
     useEffect(() => {
-        getBlogs(searchName)
+        if (!searchName) {
+            getBlogs(searchName);
+        }
     }, [searchName]);
+
 
     const handleSave = async () => {
         if (!name.trim()) {
@@ -207,7 +209,11 @@ export default function CategorysPage({ params }) {
                     >
                         Sắp sếp ưu tiên
                     </button>
-                    <SearchModal searchName={searchName} setSearchName={setSearchName} />
+                    <SearchModal
+                        searchName={searchName}
+                        setSearchName={setSearchName}
+                        onSearch={() => getBlogs(searchName)}
+                    />
                 </div>
 
                 {sort ?

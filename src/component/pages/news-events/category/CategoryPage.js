@@ -11,7 +11,7 @@ import { MdFirstPage, MdLastPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
 export default function CategoryPage({ params }) {
-    const PAGE_SIZE = 2;
+    const PAGE_SIZE = 7;
     const { categorySlug } = params;
     const id = categorySlug;
 
@@ -49,9 +49,13 @@ export default function CategoryPage({ params }) {
     }, [totalCount]);
 
     const getCategoryAll = async () => {
-        const response = await dataTestAPI.get("api/v1/Category?CategoryId=1&CategoryStatus=1&PageNumber=1&PageSize=1");
-        if (response.status === 200) {
-            setCategory(response.data.data.items[0]);
+        try {
+            const response = await dataTestAPI.get("api/v1/Category?CategoryId=1&CategoryStatus=1&PageNumber=1&PageSize=1");
+            if (response.status === 200) {
+                setCategory(response.data.data.items[0]);
+            }
+        } catch (error) {
+            console.error("Error fetching categories:", error);
         }
     };
 
@@ -126,7 +130,7 @@ export default function CategoryPage({ params }) {
                         <Link href={`/tin-tuc-su-kien/news/${featuredNews.blogId}`} className="flex flex-col lg:flex-row gap-6 items-start w-full max-w-5xl mx-auto py-6">
                             <div className="w-[70%] lg:w-[50%] rounded-md overflow-hidden">
                                 <Image
-                                    src={featuredNews.imageTitle?.url || "/default.jpg"}
+                                    src={featuredNews.imageTitle?.url || "/https://placehold.co/600x400"}
                                     alt={featuredNews.imageTitle?.title || "hot news"}
                                     width={600}
                                     height={400}
@@ -226,9 +230,9 @@ export default function CategoryPage({ params }) {
                                         className="lg:w-[90%] md:w-[60%] w-[80%] mx-auto mb-5 overflow-hidden"
                                     >
                                         <Image
-                                            src={banner.url}
-                                            alt={banner.title || "banner"}
-                                            title={banner.title || ""}
+                                            src={banner?.url || "https://placehold.co/600x400"}
+                                            alt={banner?.title || "banner"}
+                                            title={banner?.title || ""}
                                             width={600}
                                             height={400}
                                             className="w-full h-auto object-cover transition-transform duration-500 ease-in-out hover:scale-110"

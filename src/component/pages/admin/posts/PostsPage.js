@@ -9,44 +9,42 @@ import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 import { usePermission } from "@/hooks/usePermission";
 import { permissions } from "@/hooks/permissions";
 
-const PAGE_SIZE = 10; // Định nghĩa hằng số ở đầu file
+const PAGE_SIZE = 10;
 
 export default function PostsPage() {
     const [isClient, setIsClient] = useState(false);
     const [loading, setLoading] = useState(false);
     const [blogs, setBlogs] = useState([]);
     const [searchName, setSearchName] = useState("");
+    const [searchDebounce, setSearchDebounce] = useState("");
+
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
     const router = useRouter();
 
-    // Kiểm tra quyền truy cập
     const canView = usePermission([
         permissions.users.view,
         permissions.roles.view,
         permissions.rolesClaims.view,
     ]);
 
-    // Đánh dấu là client-side
     useEffect(() => {
         setIsClient(true);
     }, []);
 
-    // Chuyển hướng nếu không có quyền
     useEffect(() => {
         if (isClient && !canView) {
             router.push("/unauthorized");
         }
     }, [canView, isClient, router]);
 
-    // Hàm fetch blog với useCallback để tránh tạo lại hàm không cần thiết
     const fetchBlog = useCallback(async () => {
         setLoading(true);
         try {
             const response = await dataTestAPI.get(
                 `/api/v1/Blog?BlogTitle=${encodeURIComponent(
-                    searchName
+                    searchDebounce
                 )}&PageNumber=${currentPage}&PageSize=${PAGE_SIZE}`
             );
             if (response.status === 200) {
@@ -59,23 +57,26 @@ export default function PostsPage() {
         } finally {
             setLoading(false);
         }
-    }, [currentPage, searchName]);
+    }, [currentPage, searchDebounce]);
 
-    // Fetch blog khi currentPage hoặc searchName thay đổi
     useEffect(() => {
         if (isClient && canView) {
             fetchBlog();
         }
     }, [fetchBlog, isClient, canView]);
 
-    // Xử lý khi click vào trang
+    useEffect(() => {
+        if (!searchName) {
+            setSearchDebounce("");
+        }
+    }, [searchName]);
+
     const handleClickPage = (page) => {
         if (page !== currentPage && page >= 1 && page <= totalPages) {
             setCurrentPage(page);
         }
     };
 
-    // Tạo danh sách trang cho phân trang
     const getPaginationItems = useCallback(() => {
         let startPage, endPage;
         if (totalPages <= 3) {
@@ -97,7 +98,6 @@ export default function PostsPage() {
         );
     }, [currentPage, totalPages]);
 
-    // Không render nếu chưa sẵn sàng hoặc không có quyền
     if (!isClient || !canView) return null;
 
     return (
@@ -114,7 +114,15 @@ export default function PostsPage() {
                 </Link>
             </div>
             <div className="mb-6">
-                <SearchModal searchName={searchName} setSearchName={setSearchName} />
+                <SearchModal
+                    searchName={searchName}
+                    setSearchName={setSearchName}
+                    onSearch={() => {
+                        setCurrentPage(1);
+                        setSearchDebounce(searchName);
+                    }}
+                />
+
             </div>
             <TablePosts
                 setLoading={setLoading}

@@ -47,13 +47,30 @@ export default function LabPatientSearchPage({ params }) {
 
     }
     useEffect(() => {
-        getPatient();
+        const { search, fromDate, toDate } = formData;
 
-    }, [formData]);
+        if (search.trim() === "") {
+            const timeout = setTimeout(() => {
+                getPatient();
+            }, 500);
+
+            return () => clearTimeout(timeout);
+        }
+
+        if (search.trim() || fromDate.trim()) {
+            const timeout = setTimeout(() => {
+                getPatient();
+            }, 1000);
+
+            return () => clearTimeout(timeout);
+        }
+    }, [formData.search, formData.fromDate, formData.toDate]);
+
 
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken");
         setToken(accessToken);
+        getPatient();
         const decoded = jwtDecode(accessToken);
         const username = decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
         if (username !== DoctorID) {
@@ -62,9 +79,6 @@ export default function LabPatientSearchPage({ params }) {
         }
     }, []);
 
-    const toggleExpand = (index) => {
-        setExpandedRow(prev => (prev === index ? null : index));
-    };
     const sortedNews = Array.isArray(users) ? [...users].sort((a, b) => a?.time?.localeCompare(b?.time)) : [];
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -143,7 +157,7 @@ export default function LabPatientSearchPage({ params }) {
             <div className="max-w-2/3 mx-auto mb-6">
                 <div className="flex flex-col gap-2">
                     <label className="text-primary font-semibold">
-                        Tìm kiếm:
+                        Tìm kiếm theo tên hoặc mã khách hàng:
                     </label>
                     <input
                         type="text"
@@ -156,9 +170,9 @@ export default function LabPatientSearchPage({ params }) {
             </div>
 
             <div className='max-w-2/3 mx-auto'>
-                <TableUsers Token={token} itemsPerPage={itemsPerPage} currentPage={currentPage} expandedRow={expandedRow} toggleExpand={toggleExpand} users={currentItems} />
+                <TableUsers Token={token} itemsPerPage={itemsPerPage} currentPage={currentPage} expandedRow={expandedRow} users={currentItems} />
             </div>
-            <ListUsersMobile Token={token} itemsPerPage={itemsPerPage} currentPage={currentPage} expandedRow={expandedRow} toggleExpand={toggleExpand} users={currentItems} />
+            <ListUsersMobile Token={token} itemsPerPage={itemsPerPage} currentPage={currentPage} expandedRow={expandedRow} users={currentItems} />
             {expandedRow === null && (
                 <div className="flex flex-col items-center justify-center py-8 px-4">
                     <div className="flex gap-2">

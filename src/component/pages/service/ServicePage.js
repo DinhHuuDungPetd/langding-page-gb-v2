@@ -41,7 +41,7 @@ export default function ServicePage() {
                 />
             </Head>
             <motion.div
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747017212/backgroundMobile/o4wmtltzspcfhnq233co.jpg)] md:bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747016415/backgroundMobile/ijn1tfp5aavhibez02hi.jpg)]  bg-blend-multiply"
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747017212/backgroundMobile/o4wmtltzspcfhnq233co.jpg)] md:bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1749698635/backgroundPC/jj2zrclcmzf4jolgalna.webp)]  bg-blend-multiply"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}

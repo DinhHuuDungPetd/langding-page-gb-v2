@@ -145,7 +145,7 @@ export default function TablePosts({
                                 <td className="px-4 py-3">
                                     {item.imageTitle.url && item.imageTitle.url !== "string" ? (
                                         <Image
-                                            src={item?.imageTitle?.url}
+                                            src={item?.imageTitle?.url || "https://placehold.co/200x60"}
                                             alt={item?.imageTitle?.title || "Ảnh bài viết"}
                                             width={200}
                                             height={60}

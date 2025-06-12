@@ -81,7 +81,7 @@ const IntroductionPage = memo(() => {
             variants={containerVariants}
         >
             <motion.div
-                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747016194/backgroundMobile/ykqtdkarozwrx623p0wn.jpg)] sm:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825600/greenlab/aan50gixyarmomdlnyqb.webp)] bg-no-repeat bg-cover bg-blend-multiply"
+                className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747016194/backgroundMobile/ykqtdkarozwrx623p0wn.jpg)] sm:bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1749698633/backgroundPC/ldac21pwjpin4n7tbove.webp)] bg-no-repeat bg-cover bg-blend-multiply"
                 variants={itemVariants}
             >
                 <div className="absolute bottom-4 left-5 md:left-10 lg:left-20  text-white text-md medium-italic z-9">

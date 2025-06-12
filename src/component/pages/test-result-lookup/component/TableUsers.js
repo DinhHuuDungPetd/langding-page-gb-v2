@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from 'react';
-import TestResultsTable from './TestResultsTable';
+import React from 'react';
 export default function TableUsers({ Token, itemsPerPage, currentPage, expandedRow, toggleExpand, users }) {
 
     const formatDate = (isoDate) => {
@@ -10,6 +9,7 @@ export default function TableUsers({ Token, itemsPerPage, currentPage, expandedR
         const year = date.getFullYear();
         return `${day} tháng ${month}, ${year}`;
     };
+
     return (
         <table className="min-w-full text-sm text-left border border-gray-200 shadow-md rounded-lg overflow-hidden hidden sm:table ">
             <thead className="bg-primary text-white font-medium ">
@@ -35,36 +35,16 @@ export default function TableUsers({ Token, itemsPerPage, currentPage, expandedR
                                 <td className="p-2 text-center">{item.phone || "-"}</td>
                                 <td className="p-2 text-center">{formatDate(item.dateIn || "-")}</td>
                                 <td className="p-2 text-center">
-                                    <button className="text-blue-500" onClick={() => toggleExpand(actualIndex)}>
-                                        {expandedRow === actualIndex ? "Ẩn" : "Chi tiết"}
-                                    </button>
+                                    <a
+                                        href={`/tra-cuu/${String(item.id).padStart(5, "0")}/${item.sid}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-500 underline"
+                                    >
+                                        Chi tiết
+                                    </a>
                                 </td>
                             </tr>
-                            {expandedRow === actualIndex ?
-                                <tr>
-                                    <td className="p-2">-</td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Giới tính:</span> {item.sex || "-"}</div></td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Năm sinh:</span> {item.age || "-"}</div></td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Trạng thái:</span> {item.status || "-"}</div></td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>SEQ:</span> {item.seq || "-"}</div></td>
-                                    <td className="p-2 text-center">-</td>
-                                </tr>
-                                : ""}
-
-                            {expandedRow === actualIndex && (
-                                <tr className="border-t bg-mint">
-                                    <td colSpan={6}>
-                                        <div className="w-full flex justify-center">
-                                            <div className="w-full max-w-screen-lg">
-
-                                                <div className="my-5 mx-6">
-                                                    <TestResultsTable Token={Token} sid={item.sid} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            )}
                         </React.Fragment>
                     );
                 })}
