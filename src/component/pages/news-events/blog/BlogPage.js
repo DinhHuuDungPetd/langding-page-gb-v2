@@ -84,7 +84,7 @@ export default function BlogPage({ params }) {
                         {blog ? (
                             <>
                                 <Blog blog={blog} />
-                                {blog.blogRelated && blog.blogRelated.length > 0 && blog.blogRelated?.blogId ? (
+                                {blog.blogRelated && blog.blogRelated.length > 0 && blog.blogRelated[0].blogId ? (
                                     <RelatedPosts
                                         blog={blog.blogRelated}
                                         handleClickPage={handleClickPage}
@@ -104,7 +104,7 @@ export default function BlogPage({ params }) {
                     <div className="w-full lg:w-[35%] my-5">
                         <div className='lg:w-[90%] md:w-[60%] w-[80%] mx-auto mb-5 overflow-hidden'>
                             <Image
-                                src={blog?.sideBanner?.url || "/default.jpg"}
+                                src={blog?.sideBanner?.url || "/https://placehold.co/600x400"}
                                 alt={blog?.sideBanner?.title || "hot news"}
                                 title={blog?.sideBanner?.title || ""}
                                 width={600}
@@ -114,7 +114,7 @@ export default function BlogPage({ params }) {
                         </div>
                         <div className='lg:w-[90%] md:w-[60%] w-[80%] mx-auto mb-5 overflow-hidden'>
                             <Image
-                                src={blog?.promoBanner?.url || "/default.jpg"}
+                                src={blog?.promoBanner?.url || "/https://placehold.co/600x400"}
                                 alt={blog?.promoBanner?.title || "hot news"}
                                 title={blog?.promoBanner?.title || ""}
                                 width={600}

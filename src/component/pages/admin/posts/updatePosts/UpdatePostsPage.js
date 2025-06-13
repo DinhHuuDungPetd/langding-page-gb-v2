@@ -43,15 +43,13 @@ export default function PostsPage({ params }) {
         permissions.rolesClaims.edit
     ]);
 
-    // Đánh dấu là client-side
     useEffect(() => {
         setIsClient(true);
     }, []);
 
-    // Chuyển hướng nếu không có quyền
     useEffect(() => {
         if (isClient && !canEdit) {
-            router.push("/unauthorized");
+            router.push("/page403");
         }
     }, [canEdit, isClient, router]);
 
@@ -69,7 +67,8 @@ export default function PostsPage({ params }) {
             const response3 = await dataTestAPI.get(`api/v1/Blog?BlogId=0`);
             const response4 = await dataTestAPI.get(`api/v1/Category?BlogId=${id}`)
             setCategorys(response2.data.data.items)
-            setBlogs(response3.data.data.items);
+            const filteredBlogs = response3.data.data.items.filter(blog => blog.blogId !== id);
+            setBlogs(filteredBlogs);
             const relatedCategorys = response4.data.data.items || [];
             setSelectedCategoryIds(relatedCategorys.map(category => category.categoryId))
             if (editor) {

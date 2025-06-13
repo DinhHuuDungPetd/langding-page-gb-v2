@@ -22,7 +22,7 @@ export default function Admin() {
     // Chuyển hướng nếu không có quyền
     useEffect(() => {
         if (isClient && !canView) {
-            router.push("/unauthorized");
+            router.push("/page403");
         }
     }, [canView, isClient, router]);
 

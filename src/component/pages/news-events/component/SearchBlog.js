@@ -24,7 +24,7 @@ export default function SearchBlog({ category, blogs, getPaginationItems, handle
                             <div className="flex flex-col lg:flex-row items-center">
                                 <div className="relative w-30 lg:w-48 h-24 lg:h-32 rounded-lg overflow-hidden shrink-0">
                                     <Image
-                                        src={item.imageTitle?.url || "/default.jpg"}
+                                        src={item.imageTitle?.url || "https://placehold.co/600x600"}
                                         alt={item.imageTitle?.title || "Blog Image"}
                                         title={item.imageTitle?.title || ""}
                                         fill

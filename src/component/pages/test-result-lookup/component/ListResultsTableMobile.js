@@ -1,30 +1,10 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
+import React from 'react';
 
-export default function ListResultsTableMobile({ Token, sid }) {
-    const [result, setResult] = useState([]);
-    const getResult = async () => {
-        try {
-            const response = await dataTestAPI.get(`api/v1/Result?SID=${sid}`, {
-                headers: {
-                    Authorization: `Bearer ${Token}`
-                }
-            });
-            if (response.status == 200) {
-                setResult(response.data.data);
-            }
-        } catch (error) {
-            console.error('Error fetching users:', error);
-        }
-    };
-
-    useEffect(() => {
-        getResult();
-    }, []);
+export default function ListResultsTableMobile({ result }) {
 
     return (
-        <div className="mt-3 border-t pt-2 max-h-[700px] overflow-auto">
+        <div className="mt-3 border-t pt-2  overflow-auto">
             <div className="font-semibold mb-2 text-lg">Xét nghiệm</div>
             {result?.length > 0 ? (
                 result.map((item, i) => (

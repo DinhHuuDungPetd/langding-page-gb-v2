@@ -26,11 +26,18 @@ export default function NewsEvents() {
     }, [currentPage, searchQuery]);
 
     const getCategoryAll = async () => {
-        const response = await dataTestAPI.get("api/v1/Category?CategoryStatus=1&PageNumber=1&PageSize=10");
-        if (response.status === 200) {
-            setCategorys(response.data.data.items)
+        try {
+            const response = await dataTestAPI.get("api/v1/Category?CategoryStatus=1&PageNumber=1&PageSize=10");
+            if (response.status === 200) {
+                setCategorys(response.data.data.items);
+            } else {
+                console.error("Unexpected response status:", response.status);
+            }
+        } catch (error) {
+            console.error("Error fetching categories:", error);
         }
-    }
+    };
+
     const fetchBlog = async () => {
         try {
             const response = await dataTestAPI.get(
@@ -78,7 +85,7 @@ export default function NewsEvents() {
 
     return (
         <div>
-            <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747017912/backgroundMobile/skwnwgkb13t5kaqlfl3z.jpg)] md:bg-[url(https://res.cloudinary.com/ddnasugap/image/upload/q_auto,f_auto/v1745825601/greenlab/kwicnww6fxa63f9fplra.webp)]  bg-blend-multiply">
+            <div className="relative w-full h-[200px] bg-[rgba(57,139,64,0.81)] bg-no-repeat bg-cover bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1747017912/backgroundMobile/skwnwgkb13t5kaqlfl3z.jpg)] md:bg-[url(https://res.cloudinary.com/dgfwxibj4/image/upload/v1749698639/backgroundPC/uubndn2ctjzzbkfwf7ce.webp)]  bg-blend-multiply">
                 <div className="absolute bottom-4 left-5 md:left-10 lg:left-20 text-white text-md medium-italic z-9">
                     Trang chủ &gt; <span className="font-normal">Tin tức - Sự kiện</span>
                 </div>

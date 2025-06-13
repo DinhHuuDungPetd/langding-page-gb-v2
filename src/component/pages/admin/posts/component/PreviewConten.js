@@ -157,7 +157,7 @@ export default function PreviewContent({ postJson }) {
                 return (
                     <div key={index} className="my-6">
                         <Image
-                            src={section.attrs?.src}
+                            src={section.attrs?.src || "https://placehold.co/1000x600"}
                             alt={section.attrs?.alt || "Green Lab image"}
                             title={section.attrs?.title || "Green Lab image"}
                             width={1000}

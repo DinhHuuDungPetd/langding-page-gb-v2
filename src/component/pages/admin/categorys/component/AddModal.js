@@ -7,7 +7,7 @@ import FullScreenLoader from "@/component/FullScreenLoader";
 import { usePermission } from '@/hooks/usePermission';
 import { permissions } from '@/hooks/permissions';
 
-export default function SearchModal({ getCategorys }) {
+export default function AddModal({ getCategorys }) {
     const canCreate = usePermission([
         permissions.users.create,
         permissions.roles.create,
@@ -25,7 +25,7 @@ export default function SearchModal({ getCategorys }) {
 
     useEffect(() => {
         if (!canCreate) {
-            window.location.href = "/unauthorized";
+            window.location.href = "/page403";
         }
     }, [canCreate]);
 

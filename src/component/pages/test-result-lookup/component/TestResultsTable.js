@@ -2,26 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 
-export default function TestResultsTable({ Token, sid }) {
-    const [result, setResult] = useState([]);
-    const getResult = async () => {
-        try {
-            const response = await dataTestAPI.get(`api/v1/Result?SID=${sid}`, {
-                headers: {
-                    Authorization: `Bearer ${Token}`
-                }
-            });
-            if (response.status == 200) {
-                setResult(response.data.data);
-            }
-        } catch (error) {
-            console.error('Error fetching users:', error);
-        }
-    };
+export default function TestResultsTable({ result }) {
 
-    useEffect(() => {
-        getResult();
-    }, []);
 
     return (
         <div className="overflow-x-auto">

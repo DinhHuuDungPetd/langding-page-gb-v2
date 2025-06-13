@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import ListResultsTableMobile from './ListResultsTableMobile';
-export default function ListUsersMobile({ Token, itemsPerPage, currentPage, expandedRow, toggleExpand, users }) {
+export default function ListUsersMobile({ Token, expandedRow, toggleExpand, users }) {
 
 
     return (

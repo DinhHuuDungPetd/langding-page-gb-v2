@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { loginAPI } from "@/hooks/authorizeAxiosInstance";
 import FullScreenLoader from "@/component/FullScreenLoader";
 
-export default function SearchModal() {
+export default function ChangePassword() {
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -61,7 +61,6 @@ export default function SearchModal() {
         } catch (error) {
             console.error("Lỗi khi đổi mật khẩu:", error);
 
-            // Xử lý lỗi trả về từ server
             if (error.response?.status === 400 && error.response.data?.errors) {
                 const errorMessages = error.response.data.errors
                     .map(err => `• ${err.message}`)
