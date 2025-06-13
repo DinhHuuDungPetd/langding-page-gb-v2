@@ -122,18 +122,18 @@ const BookingForm = () => {
         };
 
         try {
-            // const request = await dataTestAPI.post("/api/v1/Booking", orderData);
-            // if (request.status === 200) {
-            //     alert("Đặt lịch thành công!");
-            //     setFormData({
-            //         name: "",
-            //         phone: "",
-            //         address: "",
-            //         date: "",
-            //         timeSlot: "",
-            //         note: ""
-            //     });
-            // }
+            const request = await dataTestAPI.post("/api/v1/Booking", orderData);
+            if (request.status === 200) {
+                alert("Đặt lịch thành công!");
+                setFormData({
+                    name: "",
+                    phone: "",
+                    address: "",
+                    date: "",
+                    timeSlot: "",
+                    note: ""
+                });
+            }
         } catch (error) {
             console.error("Lỗi khi gửi yêu cầu:", error);
             alert("Đặt lịch thất bại. Vui lòng thử lại sau.");

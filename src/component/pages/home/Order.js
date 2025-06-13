@@ -71,21 +71,21 @@ export default function OrderComponent() {
                 ScheduleTime: formData.timeSlot,
                 Comment: formData.note
             }
-            // const request = await dataTestAPI.post("/api/v1/Booking", orderData);
-            // if (request.status == 200) {
-            //     alert("Đặt lịch thành công!");
-            //     setFormData({
-            //         name: "",
-            //         phone: "",
-            //         address: "",
-            //         date: "",
-            //         timeSlot: "",
-            //         note: ""
-            //     });
-            // }
-            // else {
-            //     alert("Đặt lịch thất bại. Vui lòng thử lại.");
-            // }
+            const request = await dataTestAPI.post("/api/v1/Booking", orderData);
+            if (request.status == 200) {
+                alert("Đặt lịch thành công!");
+                setFormData({
+                    name: "",
+                    phone: "",
+                    address: "",
+                    date: "",
+                    timeSlot: "",
+                    note: ""
+                });
+            }
+            else {
+                alert("Đặt lịch thất bại. Vui lòng thử lại.");
+            }
 
         } catch (error) {
             alert("Đặt lịch thất bại. Vui lòng thử lại.");
