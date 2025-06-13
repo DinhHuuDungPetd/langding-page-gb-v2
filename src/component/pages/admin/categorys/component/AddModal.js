@@ -25,7 +25,7 @@ export default function AddModal({ getCategorys }) {
 
     useEffect(() => {
         if (!canCreate) {
-            window.location.href = "/unauthorized";
+            window.location.href = "/page403";
         }
     }, [canCreate]);
 

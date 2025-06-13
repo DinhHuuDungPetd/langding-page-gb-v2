@@ -49,7 +49,7 @@ export default function PostsPage({ params }) {
 
     useEffect(() => {
         if (isClient && !canEdit) {
-            router.push("/unauthorized");
+            router.push("/page403");
         }
     }, [canEdit, isClient, router]);
 

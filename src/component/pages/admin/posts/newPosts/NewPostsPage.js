@@ -50,7 +50,7 @@ export default function PostsPage() {
     // Chuyển hướng nếu không có quyền
     useEffect(() => {
         if (isClient && !canCreate) {
-            router.push("/unauthorized");
+            router.push("/page403");
         }
     }, [canCreate, isClient, router]);
 

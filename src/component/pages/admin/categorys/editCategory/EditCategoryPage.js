@@ -43,7 +43,7 @@ export default function CategorysPage({ params }) {
     // Chuyển hướng nếu không có quyền
     useEffect(() => {
         if (isClient && !canEdit) {
-            router.push("/unauthorized");
+            router.push("/page403");
         }
     }, [canEdit, isClient, router]);
 
