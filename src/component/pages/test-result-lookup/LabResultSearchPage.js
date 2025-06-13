@@ -2,15 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import ListResultsTableMobile from './component/ListResultsTableMobile';
 import TestResultsTable from './component/TestResultsTable';
-import { loginAPI } from "@/hooks/authorizeAxiosInstance";
 import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
 import { encrypt } from "@/utils/encrypt";
 import axios from 'axios';
 
 export default function LabResultSearchPage() {
+    const loginAPI = process.env.NEXT_PUBLIC_BASE_URL_LOGIN;
     const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
     const [users, setUsers] = useState([]);
-    const [token, setToken] = useState(null);
     const [result, setResult] = useState([]);
 
     const getPatient = async (DoctorID, SID) => {
@@ -35,7 +34,7 @@ export default function LabResultSearchPage() {
     const getPatientByCustomer = async (sid) => {
         try {
 
-            const response = await loginAPI.post(`api/v1/Auth/loginForCustomer`, {
+            const response = await axios.post(`${loginAPI}/api/v1/Auth/loginForCustomer`, {
                 username: sid
             }, {
                 headers: {
@@ -74,17 +73,17 @@ export default function LabResultSearchPage() {
             const parts = new URL(fullUrl).pathname.split("/");
 
             if (parts.length >= 4) {
-                const token = localStorage.getItem("accessToken");
-                if (!token) {
-                    alert("Bạn chưa đăng nhập hoặc phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.");
-                    window.location.href = `/tra-cuu`;
-                    return;
-                }
-                setToken(token);
+
                 console.log
                 if (parts[2] === "kq") {
                     getPatientByCustomer(parts[3]);
                 } else {
+                    const token = localStorage.getItem("accessToken");
+                    if (!token) {
+                        alert("Bạn chưa đăng nhập hoặc phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.");
+                        window.location.href = `/tra-cuu`;
+                        return;
+                    }
                     getPatient(parts[2], parts[3]);
                 }
             }
@@ -101,11 +100,11 @@ export default function LabResultSearchPage() {
 
     return (
         <div className="overflow-x-auto p-4">
-            {token ? (
+            {result ? (
                 <>
                     <table className="min-w-full text-sm text-left border border-gray-200 shadow-md rounded-lg overflow-hidden hidden sm:table ">
                         <thead className="bg-primary text-white font-medium ">
-                            {users.sid && (
+                            {users?.sid && (
                                 <tr>
                                     <th className="p-2">STT</th>
                                     <th className="p-2 text-center">Mã</th>
@@ -120,19 +119,19 @@ export default function LabResultSearchPage() {
                             {users?.sid && (
                                 <tr className={`border-t hover:bg-gray-50`}>
                                     <td className="p-2">1</td>
-                                    <td className="p-2 text-center">{users.sid || "-"}</td>
-                                    <td className="p-2 text-center">{users.patientName || "-"}</td>
-                                    <td className="p-2 text-center">{users.phone || "-"}</td>
-                                    <td className="p-2 text-center">{formatDate(users.dateIn || "-")}</td>
+                                    <td className="p-2 text-center">{users?.sid || "-"}</td>
+                                    <td className="p-2 text-center">{users?.patientName || "-"}</td>
+                                    <td className="p-2 text-center">{users?.phone || "-"}</td>
+                                    <td className="p-2 text-center">{formatDate(users?.dateIn || "-")}</td>
                                 </tr>
                             )}
                             {users?.sid && (
                                 <tr>
                                     <td className="p-2">-</td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Giới tính:</span> {users.sex || "-"}</div></td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Năm sinh:</span> {users.age || "-"}</div></td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Trạng thái:</span> {users.status || "-"}</div></td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>SEQ:</span> {users.seq || "-"}</div></td>
+                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Giới tính:</span> {users?.sex || "-"}</div></td>
+                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Năm sinh:</span> {users?.age || "-"}</div></td>
+                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Trạng thái:</span> {users?.status || "-"}</div></td>
+                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>SEQ:</span> {users?.seq || "-"}</div></td>
                                 </tr>
                             )}
                             <tr className="border-t bg-mint">
@@ -154,12 +153,12 @@ export default function LabResultSearchPage() {
                         <div className="mt-2 space-y-1 text-sm">
                             {users?.sid && (
                                 <div>
-                                    <div><strong>Tên:</strong> {users.patientName}</div>
-                                    <div><strong>SĐT:</strong> {users.phone}</div>
-                                    <div><span className='font-bold'>Giới tính:</span> {users.sex || "-"}</div>
-                                    <div><span className='font-bold'>Năm sinh:</span> {users.age || "-"}</div>
-                                    <div><span className='font-bold'>Trạng thái:</span> {users.status || "-"}</div>
-                                    <div><span className='font-bold'>SEQ:</span> {users.seq || "-"}</div>
+                                    <div><strong>Tên:</strong> {users?.patientName}</div>
+                                    <div><strong>SĐT:</strong> {users?.phone}</div>
+                                    <div><span className='font-bold'>Giới tính:</span> {users?.sex || "-"}</div>
+                                    <div><span className='font-bold'>Năm sinh:</span> {users?.age || "-"}</div>
+                                    <div><span className='font-bold'>Trạng thái:</span> {users?.status || "-"}</div>
+                                    <div><span className='font-bold'>SEQ:</span> {users?.seq || "-"}</div>
                                 </div>
                             )}
                             {result?.length > 0 &&

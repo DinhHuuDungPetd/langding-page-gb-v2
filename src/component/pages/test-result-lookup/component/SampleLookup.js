@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { loginAPI } from "@/hooks/authorizeAxiosInstance";
+import axios from "axios";
 export default function SampleLookup() {
 
+    const loginAPI = process.env.NEXT_PUBLIC_BASE_URL_LOGIN;
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -15,7 +16,7 @@ export default function SampleLookup() {
                 username: username,
                 password: password,
             };
-            const response = await loginAPI.post("api/v1/Auth/login", userRq);
+            const response = await axios.post(`${loginAPI}/api/v1/Auth/login`, userRq);
             if (response.status === 200) {
                 const doctorToken = response.data.data.token;
                 const refreshToken = response.data.data.refreshToken;
