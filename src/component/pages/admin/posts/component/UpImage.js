@@ -4,15 +4,15 @@ import Image from "next/image";
 export default function UpImage({ previewImage, setPreviewImage, titleText, setTitleText, setUpFile, inputId }) {
 
     const handleFileUpload = async (file) => {
-    setPreviewImage(URL.createObjectURL(file));
+        setPreviewImage(URL.createObjectURL(file));
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const base64String = e.target.result.split(',')[1]; // Bỏ phần "data:image/png;base64,"
-        setUpFile(base64String);
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const base64String = e.target.result.split(',')[1]; // Bỏ phần "data:image/png;base64,"
+            setUpFile(base64String);
+        };
+        reader.readAsDataURL(file); // ⚠️ dùng readAsDataURL để ra base64
     };
-    reader.readAsDataURL(file); // ⚠️ dùng readAsDataURL để ra base64
-};
 
 
     const handleFileChange = (event) => {

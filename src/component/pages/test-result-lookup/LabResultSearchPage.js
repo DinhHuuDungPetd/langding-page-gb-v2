@@ -46,11 +46,14 @@ export default function LabResultSearchPage() {
 
                 const encrypted = encrypt(sid, secretKey, true);
 
-                const response2 = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL_DATA}/api/v1/Result/GetResultBySMS?Text=${encrypted}`, {
-                    headers: {
-                        Authorization: `Bearer ${response.data.data.token}`
+                const response2 = await axios.get(
+                    `${process.env.NEXT_PUBLIC_BASE_URL_DATA}/api/v1/Result/GetResultBySMS?Text=${encodeURIComponent(encrypted)}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${response.data.data.token}`
+                        }
                     }
-                });
+                );
 
                 if (response2.status == 200) {
                     if (response2.data.isSucceeded === false) {
