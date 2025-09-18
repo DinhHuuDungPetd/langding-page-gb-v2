@@ -170,7 +170,7 @@ export default function LabPatientSearchPage({ params }) {
             </div>
 
             <div className='max-w-2/3 mx-auto'>
-                <TableUsers Token={token} itemsPerPage={itemsPerPage} currentPage={currentPage} expandedRow={expandedRow} users={currentItems} />
+                <TableUsers itemsPerPage={itemsPerPage} currentPage={currentPage} expandedRow={expandedRow} users={currentItems} />
             </div>
             <ListUsersMobile Token={token} itemsPerPage={itemsPerPage} currentPage={currentPage} expandedRow={expandedRow} users={currentItems} />
             {expandedRow === null && (

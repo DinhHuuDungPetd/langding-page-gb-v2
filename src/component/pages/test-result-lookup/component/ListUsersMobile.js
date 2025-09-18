@@ -1,7 +1,6 @@
 "use client";
-import React, { useState } from 'react';
-import ListResultsTableMobile from './ListResultsTableMobile';
-export default function ListUsersMobile({ Token, expandedRow, toggleExpand, users }) {
+import React from 'react';
+export default function ListUsersMobile({ expandedRow, users }) {
 
 
     return (
@@ -10,12 +9,14 @@ export default function ListUsersMobile({ Token, expandedRow, toggleExpand, user
                 <div key={index} className="border rounded-lg p-3 shadow">
                     <div className="flex justify-between items-end text-sm font-medium">
                         <div>Mã: {item.sid}</div>
-                        <button
-                            className="mt-2 text-blue-500 underline"
-                            onClick={() => toggleExpand(index)}
+                        <a
+                            href={`/tra-cuu/${String(item.id).padStart(5, "0")}/${item.sid}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 underline"
                         >
-                            {expandedRow === index ? "Ẩn" : "Chi tiết"}
-                        </button>
+                            Chi tiết
+                        </a>
                     </div>
 
 
@@ -27,8 +28,6 @@ export default function ListUsersMobile({ Token, expandedRow, toggleExpand, user
                             <div><span className='font-bold'>Năm sinh:</span> {item.age || "-"}</div>
                             <div><span className='font-bold'>Trạng thái:</span> {item.status || "-"}</div>
                             <div><span className='font-bold'>SEQ:</span> {item.seq || "-"}</div>
-                            <ListResultsTableMobile Token={Token} sid={item.sid} />
-
                         </div>
                     )}
                 </div>

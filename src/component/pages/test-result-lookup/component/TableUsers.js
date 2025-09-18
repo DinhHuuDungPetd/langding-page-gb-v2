@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-export default function TableUsers({ Token, itemsPerPage, currentPage, expandedRow, toggleExpand, users }) {
+export default function TableUsers({ itemsPerPage, currentPage, expandedRow, users }) {
 
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);

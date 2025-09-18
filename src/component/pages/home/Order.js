@@ -81,7 +81,7 @@ export default function OrderComponent() {
                     date: "",
                     timeSlot: "",
                     note: ""
-                });
+                })
             }
             else {
                 alert("Đặt lịch thất bại. Vui lòng thử lại.");
