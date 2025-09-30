@@ -12,7 +12,6 @@ const buttons = [
     { icon: <FaFacebook size={28} />, color: "bg-blue-600", label: "Facebook", href: "https://www.facebook.com/greenlab.real" },
     { icon: <SiZalo size={28} />, color: "bg-blue-500", label: "Zalo", href: "https://zalo.me/0912615997" },
 ];
-
 const ContactButton = memo(({ button, index, isVisible }) => (
     <motion.a
         href={button.href}
