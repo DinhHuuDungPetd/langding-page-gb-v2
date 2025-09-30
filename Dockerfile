@@ -13,7 +13,7 @@ COPY . .
 RUN npm run build
 
 # Expose FE port
-EXPOSE 3002
+EXPOSE 3000
 
 # Run Next.js production server
-CMD ["npm", "start", "--", "-p", "3002"]
+CMD ["npm", "start", "--", "-p", "3000"]
