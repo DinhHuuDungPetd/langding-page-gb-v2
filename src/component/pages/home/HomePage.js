@@ -1,68 +1,94 @@
 "use client";
-import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
+import dynamic from "next/dynamic";
+import { Suspense, memo } from "react";
+import { useInView } from "react-intersection-observer";
 import ImageSlider from "@/component/pages/home/ImageSlider";
-
-// Lazy load các component không cần thiết ngay lập tức
+import SectionSkeleton from "./component/SectionSkeleton";
+import ResourcePreloader from "@/components/ResourcePreloader";
+import FontLoader from "@/components/FontLoader";
+import LazyLibraryLoader from "@/components/LazyLibraryLoader";
+// Dynamic imports với skeleton fallback và preload
 const ServiceComponent = dynamic(() => import("@/component/pages/home/Service"), {
-    loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
+  loading: () => <SectionSkeleton />,
+  ssr: true
 });
 const ExpertComponent = dynamic(() => import("@/component/pages/home/Expert"), {
-    loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
+  loading: () => <SectionSkeleton />,
+  ssr: true
 });
 const CertificateComponent = dynamic(() => import("@/component/pages/home/Certificate"), {
-    loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
+  loading: () => <SectionSkeleton />,
+  ssr: true
 });
 const InfoComponent = dynamic(() => import("@/component/pages/home/Info"), {
-    loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
+  loading: () => <SectionSkeleton />,
+  ssr: true
 });
 const TechnologyComponent = dynamic(() => import("@/component/pages/home/Technology"), {
-    loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
-});
-const MediaComponent = dynamic(() => import("@/component/pages/home/Media"), {
-    loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
-});
-const NewsComponent = dynamic(() => import("@/component/pages/home/News"), {
-    loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
-});
-const PartnerComponent = dynamic(() => import("@/component/pages/home/Partner"), {
-    loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
-});
-const OrderComponent = dynamic(() => import("@/component/pages/home/Order"), {
-    loading: () => <div className="h-96 flex items-center justify-center">Loading...</div>
+  loading: () => <SectionSkeleton />,
+  ssr: true
 });
 
+// Các section cuối chỉ load khi scroll tới với preload
+const LazyMedia = dynamic(() => import("@/component/pages/home/Media"), {
+  loading: () => <SectionSkeleton />,
+  ssr: false
+});
+const LazyNews = dynamic(() => import("@/component/pages/home/News"), {
+  loading: () => <SectionSkeleton />,
+  ssr: false
+});
+const LazyPartner = dynamic(() => import("@/component/pages/home/Partner"), {
+  loading: () => <SectionSkeleton />,
+  ssr: false
+});
+const LazyOrder = dynamic(() => import("@/component/pages/home/Order"), {
+  loading: () => <SectionSkeleton />,
+  ssr: false
+});
+
+// Component helper để lazy load khi vào viewport
+const LazyLoadOnView = memo(({ children }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: "100px" // load trước khi scroll tới 100px
+  });
+
+  return <div ref={ref}>{inView ? children : <SectionSkeleton />}</div>;
+});
+
+LazyLoadOnView.displayName = 'LazyLoadOnView';
+
 export default function HomePage() {
-    return (
-        <main className="min-h-screen">
-            <ImageSlider />
-            <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
-                <ServiceComponent />
-            </Suspense>
-            <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
-                <ExpertComponent />
-            </Suspense>
-            <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
-                <CertificateComponent />
-            </Suspense>
-            <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
-                <InfoComponent />
-            </Suspense>
-            <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
-                <TechnologyComponent />
-            </Suspense>
-            <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
-                <MediaComponent />
-            </Suspense>
-            <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
-                <NewsComponent />
-            </Suspense>
-            <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
-                <PartnerComponent />
-            </Suspense>
-            <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
-                <OrderComponent />
-            </Suspense>
-        </main>
-    );
+  return (
+    <main className="min-h-screen">
+      <ResourcePreloader />
+      <FontLoader />
+      <LazyLibraryLoader />
+      <ImageSlider />
+
+      {/* Các section load ngay */}
+      <Suspense fallback={<SectionSkeleton />}>
+        <ServiceComponent />
+        <ExpertComponent />
+        <CertificateComponent />
+        <InfoComponent />
+        <TechnologyComponent />
+      </Suspense>
+
+      {/* Các section chỉ load khi scroll gần tới */}
+      <LazyLoadOnView>
+        <LazyMedia />
+      </LazyLoadOnView>
+      <LazyLoadOnView>
+        <LazyNews />
+      </LazyLoadOnView>
+      <LazyLoadOnView>
+        <LazyPartner />
+      </LazyLoadOnView>
+      <LazyLoadOnView>
+        <LazyOrder />
+      </LazyLoadOnView>
+    </main>
+  );
 }

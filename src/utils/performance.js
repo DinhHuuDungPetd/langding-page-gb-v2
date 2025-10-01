@@ -8,6 +8,24 @@ export function reportWebVitals(metric) {
     console.log(`Web Vital: ${name} (${label}) = ${value}`);
   }
 
+  // Store metrics in localStorage for analysis
+  if (typeof window !== 'undefined') {
+    const metrics = JSON.parse(localStorage.getItem('webVitals') || '[]');
+    metrics.push({
+      name,
+      value,
+      timestamp: Date.now(),
+      url: window.location.pathname
+    });
+    
+    // Keep only last 50 metrics
+    if (metrics.length > 50) {
+      metrics.splice(0, metrics.length - 50);
+    }
+    
+    localStorage.setItem('webVitals', JSON.stringify(metrics));
+  }
+
   // You can send to your analytics service here
   // Example with Google Analytics
   if (typeof window !== 'undefined' && window.gtag) {

@@ -1,18 +1,42 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, memo, useCallback } from 'react';
 
-const OptimizedImage = ({
+const OptimizedImage = memo(({
   src,
   alt,
   width,
   height,
   className = '',
   priority = false,
-  quality = 75
+  quality = 75,
+  sizes,
+  placeholder = 'blur',
+  blurDataURL
 }) => {
   const [isLoading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+  const handleLoadingComplete = useCallback(() => {
+    setLoading(false);
+  }, []);
+
+  const handleError = useCallback(() => {
+    setHasError(true);
+    setLoading(false);
+  }, []);
+
+  // Generate blur placeholder if not provided
+  const defaultBlurDataURL = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=';
+
+  if (hasError) {
+    return (
+      <div className={`relative overflow-hidden bg-gray-200 flex items-center justify-center ${className}`}>
+        <div className="text-gray-400 text-sm">Image failed to load</div>
+      </div>
+    );
+  }
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
@@ -24,37 +48,25 @@ const OptimizedImage = ({
         quality={quality}
         priority={priority}
         loading={priority ? 'eager' : 'lazy'}
+        sizes={sizes}
+        placeholder={placeholder}
+        blurDataURL={blurDataURL || defaultBlurDataURL}
         className={`
-          duration-700 ease-in-out
-          ${isLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0'}
+          duration-500 ease-in-out transition-all
+          ${isLoading ? 'scale-105 blur-sm opacity-70' : 'scale-100 blur-0 opacity-100'}
         `}
-        onLoadingComplete={() => setLoading(false)}
+        onLoadingComplete={handleLoadingComplete}
+        onError={handleError}
       />
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-200 animate-pulse">
-          <svg
-            className="w-10 h-10 text-gray-400"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            />
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            />
-          </svg>
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
+          <div className="w-8 h-8 border-2 border-gray-300 border-t-green-500 rounded-full animate-spin"></div>
         </div>
       )}
     </div>
   );
-};
+});
+
+OptimizedImage.displayName = 'OptimizedImage';
 
 export default OptimizedImage; 

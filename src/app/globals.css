@@ -36,15 +36,32 @@
   font-weight: 700;
   font-style: italic;
 }
+/* Critical fonts - load first */
 @font-face {
     font-family: 'FZ Poppins';
-    src: url('/fonts/FzPoppins-BoldItalic.woff2') format('woff2');
-    font-weight: 700;
-    font-style: italic;
+    src: url('/fonts/FzPoppins-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
     font-display: swap;
 }
 
-/* Font Italic */
+@font-face {
+    font-family: 'FZ Poppins';
+    src: url('/fonts/FzPoppins-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Secondary fonts - load after critical */
+@font-face {
+    font-family: 'FZ Poppins';
+    src: url('/fonts/FzPoppins-Medium.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 @font-face {
     font-family: 'FZ Poppins';
     src: url('/fonts/FzPoppins-Italic.woff2') format('woff2');
@@ -53,16 +70,6 @@
     font-display: swap;
 }
 
-/* Font Medium */
-@font-face {
-    font-family: 'FZ Poppins';
-    src: url('/fonts/FzPoppins-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* Font Medium Italic */
 @font-face {
     font-family: 'FZ Poppins';
     src: url('/fonts/FzPoppins-MediumItalic.woff2') format('woff2');
@@ -71,21 +78,19 @@
     font-display: swap;
 }
 
-/* Font SemiBold Italic */
+@font-face {
+    font-family: 'FZ Poppins';
+    src: url('/fonts/FzPoppins-BoldItalic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
 @font-face {
     font-family: 'FZ Poppins';
     src: url('/fonts/FzPoppins-SemiBoldItalic.woff2') format('woff2');
     font-weight: 600;
     font-style: italic;
-    font-display: swap;
-}
-
-/* Font Regular (Thêm để đảm bảo có weight 400 normal) */
-@font-face {
-    font-family: 'FZ Poppins';
-    src: url('/fonts/FzPoppins-Medium.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
     font-display: swap;
 }
 
