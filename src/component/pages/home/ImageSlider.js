@@ -1,9 +1,9 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import Image from "next/image";
+import OptimizedImage from "@/components/OptimizedImage";
 import styles from "@/component/pages/home/style/ImageSlider.module.css";
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { motion } from "framer-motion";
 
 const images = [
@@ -77,6 +77,23 @@ const fadeInUp = {
 };
 
 const ImageSlider = memo(() => {
+    // Memoize swiper config để tránh re-render không cần thiết
+    const swiperConfig = useMemo(() => ({
+        modules: [Autoplay, Pagination],
+        spaceBetween: 0,
+        slidesPerView: 1,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true
+        },
+        pagination: {
+            clickable: true,
+            bulletClass: `swiper-pagination-bullet ${styles['swiper-pagination-bullet']}`,
+            bulletActiveClass: `swiper-pagination-bullet-active-custom ${styles['swiper-pagination-bullet-active-custom']}`,
+        }
+    }), []);
+
     return (
         <motion.div
             className="relative w-full mx-auto"
@@ -87,40 +104,27 @@ const ImageSlider = memo(() => {
             variants={fadeInUp}
         >
             <Swiper
-                modules={[Autoplay, Pagination]}
-                spaceBetween={0}
-                slidesPerView={1}
-                autoplay={{
-                    delay: 3000,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true
-                }}
-                pagination={{
-                    clickable: true,
-                    bulletClass: `swiper-pagination-bullet ${styles['swiper-pagination-bullet']}`,
-                    bulletActiveClass: `swiper-pagination-bullet-active-custom ${styles['swiper-pagination-bullet-active-custom']}`,
-                }}
+                {...swiperConfig}
                 className={`mySwiper ${styles.swiperPagination}`}
             >
                 {images.map((image, index) => (
-                    <SwiperSlide key={index}>
+                    <SwiperSlide key={`${image.src}-${index}`}>
                         {/* Desktop image */}
                         <motion.div
                             className="relative w-full aspect-[2.627/1] hidden md:block"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ duration: 0.5, delay: index * 0.2 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
-                            <Image
+                            <OptimizedImage
                                 src={image.src}
                                 alt={image.alt}
-                                title={image.title}
-                                fill
-                                priority={!!image.priority}
+                                width={1920}
+                                height={731}
+                                priority={index === 0} // Chỉ ảnh đầu tiên có priority
                                 quality={85}
-                                sizes="120vw"
-                                style={{ objectFit: "cover" }}
-                                loading="eager"
+                                sizes="(max-width: 768px) 100vw, 120vw"
+                                className="object-cover"
                             />
                         </motion.div>
 
@@ -129,18 +133,17 @@ const ImageSlider = memo(() => {
                             className="relative w-full h-[80vh] block md:hidden"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ duration: 0.5, delay: index * 0.2 }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
-                            <Image
+                            <OptimizedImage
                                 src={imagesMobile[index]?.src || image.src}
                                 alt={imagesMobile[index]?.alt || image.alt}
-                                title={imagesMobile[index]?.title || image.title}
-                                fill
-                                priority={!!imagesMobile[index]?.priority}
+                                width={768}
+                                height={600}
+                                priority={index === 0} // Chỉ ảnh đầu tiên có priority
                                 quality={85}
                                 sizes="100vw"
-                                style={{ objectFit: "cover" }}
-                                loading="eager"
+                                className="object-cover"
                             />
                         </motion.div>
                     </SwiperSlide>
