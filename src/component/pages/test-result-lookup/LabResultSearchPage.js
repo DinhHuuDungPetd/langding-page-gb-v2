@@ -12,86 +12,204 @@ export default function LabResultSearchPage() {
     const [users, setUsers] = useState([]);
     const [result, setResult] = useState([]);
 
-    const getPatient = async (DoctorID, SID) => {
-        try {
+    // const getPatient = async (Token, DoctorID, SID, ShortURL) => {
+    //     try {
+    //         const params = new URLSearchParams();
 
-            const response = await dataTestAPI.get(`api/v1/Patient?ID=${DoctorID}&SearchInfo=${SID}`);
+    //         let encrypted = null;
+    //         if (ShortURL) {
+    //             encrypted = encrypt(ShortURL, secretKey, true);
+    //         }
 
-            if (response.status == 200) {
-                setUsers(response.data.data[0]);
-                const response2 = await dataTestAPI.get(`api/v1/Result?SID=${SID}`);
-                if (response2.status == 200) {
-                    setResult(response2.data.data);
-                }
-            }
+    //         if (DoctorID) params.append("ID", DoctorID);
+    //         if (SID) params.append("SearchInfo", SID);
+    //         if (encrypted) params.append("ShortURL", encodeURIComponent(encrypted));
 
-        } catch (error) {
-            console.error('Error fetching users:', error);
-        }
+    //         const response = await dataTestAPI.get(
+    //             `api/v1/Patient?${params.toString()}`,
+    //             {
+    //                 headers: {
+    //                     Authorization: `Bearer ${Token}`
+    //                 }
+    //             }
+    //         );
 
-    }
+    //         if (response.status === 200) {
+    //             const patient = response.data.data[0];
+    //             setUsers(patient);
 
-    const getPatientByCustomer = async (sid) => {
-        try {
+    //             if (patient?.sid) {
+    //                 const response2 = await dataTestAPI.get(
+    //                     `api/v1/Result?SID=${patient.sid}`,
+    //                     {
+    //                         headers: {
+    //                             Authorization: `Bearer ${Token}`
+    //                         }
+    //                     }
+    //                 );
+    //                 if (response2.status === 200) {
+    //                     setResult(response2.data.data);
+    //                 }
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.error("Error fetching users:", error);
+    //     }
+    // };
 
-            const response = await axios.post(`${loginAPI}/api/v1/Auth/loginForCustomer`, {
-                username: sid
-            }, {
-                headers: {
-                    Authorization: ``
-                }
-            });
 
-            if (response.status == 200) {
 
-                const encrypted = encrypt(sid, secretKey, true);
+    // const getPatientByCustomer = async (sid) => {
+    //     try {
 
-                const response2 = await axios.get(
-                    `${process.env.NEXT_PUBLIC_BASE_URL_DATA}/api/v1/Result/GetResultBySMS?Text=${encodeURIComponent(encrypted)}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${response.data.data.token}`
-                        }
-                    }
-                );
+    //         const response = await axios.post(`${loginAPI}/api/v1/Auth/loginForCustomer`, {
+    //             username: sid
+    //         }, {
+    //             headers: {
+    //                 Authorization: ``
+    //             }
+    //         });
 
-                if (response2.status == 200) {
-                    if (response2.data.isSucceeded === false) {
-                        alert(response2.data.messages[0]);
-                        return;
-                    }
-                    setResult(response2.data.data);
-                }
+    //         if (response.status == 200) {
 
-            }
-        } catch (error) {
-            console.error('Error fetching users:', error);
-        }
+    //             const encrypted = encrypt(sid, secretKey, true);
 
-    }
+    //             const response2 = await axios.get(
+    //                 `${process.env.NEXT_PUBLIC_BASE_URL_DATA}/api/v1/Result/GetResultBySMS?Text=${encodeURIComponent(encrypted)}`,
+    //                 {
+    //                     headers: {
+    //                         Authorization: `Bearer ${response.data.data.token}`
+    //                     }
+    //                 }
+    //             );
+
+    //             if (response2.status == 200) {
+    //                 if (response2.data.isSucceeded === false) {
+    //                     alert(response2.data.messages[0]);
+    //                     return;
+    //                 }
+    //                 setResult(response2.data.data);
+
+    //             }
+
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching users:', error);
+    //     }
+
+    // }
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            const fullUrl = window.location.href;
-            const parts = new URL(fullUrl).pathname.split("/");
+        if (typeof window === "undefined") return;
 
-            if (parts.length >= 4) {
+        const fetchData = async () => {
+            try {
+                const fullUrl = window.location.href;
+                const parts = new URL(fullUrl).pathname.split("/");
 
-                console.log
-                if (parts[2] === "kq") {
-                    getPatientByCustomer(parts[3]);
-                } else {
+                // URL dạng /r/:code
+                if (parts[1] === "r" && parts[2]) {
+                    const loginRes = await axios.post(`${loginAPI}/api/v1/Auth/loginForCustomer`, {
+                        username: parts[2]
+                    }, {
+                        headers: { Authorization: "" }
+                    });
+
+                    const token = loginRes.data?.data?.token;
+                    if (!token) {
+                        alert("Không lấy được token từ loginForCustomer");
+                        return;
+                    }
+
+                    getPatient(token, null, null, parts[2]);
+                    return;
+                }
+
+                // URL dạng /tra-cuu/r/:code
+                if (parts[1] === "tra-cuu" && parts[2] === "r" && parts[3]) {
+                    const loginRes = await axios.post(`${loginAPI}/api/v1/Auth/loginForCustomer`, {
+                        username: parts[3]
+                    }, {
+                        headers: { Authorization: "" }
+                    });
+
+                    const token = loginRes.data?.data?.token;
+                    if (!token) {
+                        alert("Không lấy được token từ loginForCustomer");
+                        return;
+                    }
+
+                    getPatient(token, null, null, parts[3]);
+                    return;
+                }
+
+                // URL dạng /tra-cuu/:id/:code
+                if (parts[1] === "tra-cuu" && parts[2] && parts[3]) {
                     const token = localStorage.getItem("accessToken");
                     if (!token) {
                         alert("Bạn chưa đăng nhập hoặc phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.");
                         window.location.href = `/tra-cuu`;
                         return;
                     }
-                    getPatient(parts[2], parts[3]);
+
+                    getPatient(token, parts[2], parts[3], null);
+                }
+            } catch (error) {
+                console.error("Error in useEffect:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // =========================
+    const getPatient = async (Token, DoctorID, SID, ShortURL) => {
+        try {
+            const params = new URLSearchParams();
+
+            let encrypted = null;
+            if (ShortURL) {
+                encrypted = encrypt(ShortURL, secretKey, true);
+            }
+
+            if (DoctorID) params.append("ID", DoctorID);
+            if (SID) params.append("SearchInfo", SID);
+            if (encrypted) params.append("ShortURL", encodeURIComponent(encrypted));
+
+            const response = await dataTestAPI.get(
+                `api/v1/Patient?${params.toString()}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${Token}`
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                const patient = response.data.data[0];
+                setUsers(patient);
+
+                if (patient?.sid) {
+                    const response2 = await dataTestAPI.get(
+                        `api/v1/Result?SID=${patient.sid}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${Token}`
+                            }
+                        }
+                    );
+                    if (response2.status === 200) {
+                        setResult(response2.data.data);
+                    }
                 }
             }
+        } catch (error) {
+            console.error("Error fetching users:", error);
         }
-    }, []);
+    };
+
+
+
 
     const formatDate = (isoDate) => {
         const date = new Date(isoDate);
@@ -105,7 +223,7 @@ export default function LabResultSearchPage() {
         <div className="overflow-x-auto p-4">
             {result ? (
                 <>
-                    <table className="min-w-full text-sm text-left border border-gray-200 shadow-md rounded-lg overflow-hidden hidden sm:table ">
+                    <table className="min-w-2/3 text-sm text-left border border-gray-200 shadow-md rounded-lg overflow-hidden hidden sm:table mx-auto">
                         <thead className="bg-primary text-white font-medium ">
                             {users?.sid && (
                                 <tr>
