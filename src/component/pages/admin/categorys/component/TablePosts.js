@@ -1,19 +1,19 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, memo, useCallback } from "react";
 import Image from "next/image";
 import { MdFirstPage, MdLastPage } from "react-icons/md";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
-export default function TablePosts({
+const TablePosts = memo(({
     blogs,
     selectedBlogIds,
     setSelectedBlogIds,
-}) {
+}) => {
     const [isAllChecked, setIsAllChecked] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
 
-    const handleCheckAll = (event) => {
+    const handleCheckAll = useCallback((event) => {
         const isChecked = event.target.checked;
         setIsAllChecked(isChecked);
 
@@ -23,9 +23,9 @@ export default function TablePosts({
         } else {
             setSelectedBlogIds([]);
         }
-    };
+    }, [blogs, setSelectedBlogIds]);
 
-    const handleCheckBlog = (event, id) => {
+    const handleCheckBlog = useCallback((event, id) => {
         const isChecked = event.target.checked;
 
         if (isChecked) {
@@ -33,7 +33,7 @@ export default function TablePosts({
         } else {
             setSelectedBlogIds((prev) => prev.filter((blog) => blog.id !== id));
         }
-    };
+    }, [setSelectedBlogIds]);
 
     useEffect(() => {
         if (blogs.length > 0) {
@@ -43,9 +43,9 @@ export default function TablePosts({
         }
     }, [blogs, selectedBlogIds]);
 
-    const isBlogSelected = (id) => {
+    const isBlogSelected = useCallback((id) => {
         return selectedBlogIds.some((blog) => blog.id === id);
-    };
+    }, [selectedBlogIds]);
 
     // Memoize sorted blogs to avoid unnecessary sorting on every render
     const sortedBlogs = useMemo(() => {
@@ -225,4 +225,8 @@ export default function TablePosts({
             </div>
         </>
     );
-}
+});
+
+TablePosts.displayName = 'TablePosts';
+
+export default TablePosts;
