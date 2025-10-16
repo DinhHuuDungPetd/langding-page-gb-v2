@@ -1,50 +1,57 @@
-.container h1 {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 1.25rem;
-    text-wrap: pretty;
-  }
-  
-  .container h2 {
-    font-size: 1.125rem;
-    font-weight: 700;
-    margin-bottom: 1.125rem;
-    text-wrap: pretty;
-  }
-  
-  .container h3 {
-    font-size: 1rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    text-wrap: pretty;
-  }
+/* Sửa .container thành .blogContent */
+.blogContent h1 {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  text-wrap: pretty;
+}
 
-  .container h4 {
-    font-size: 0.875rem;
-    font-weight: bold;
-    margin-bottom: 0.4rem;
-    text-wrap: pretty;
-  }
-  
-  .container p {
-    margin-bottom: 0.875rem;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 2rem;
-    text-wrap: pretty;
-  }
-  
-  .container a {
-    color: #cf4242ad;
-    text-decoration: underline;
-  }
-  
-  .container a:hover {
-    color: #ec7d7d7e;
-  }
-  
-  .image {
-    border-radius: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-  
+/* Sửa .container thành .blogContent */
+.blogContent h2 {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 600; /* semibold */
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  text-wrap: pretty;
+}
+
+/* Sửa .container thành .blogContent */
+.blogContent h3 {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-wrap: pretty;
+}
+
+/* Sửa .container thành .blogContent */
+.blogContent h4 {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  text-wrap: pretty;
+}
+
+/* Sửa .container thành .blogContent */
+.blogContent p {
+  margin-bottom: 1rem;
+  font-size: 1rem; /* 16px */
+  font-weight: 400; /* normal */
+  line-height: 1.75; /* line-height: 28px */
+  text-wrap: pretty;
+}
+
+/* Sửa .container thành .blogContent */
+.blogContent a {
+  color: #36803E; /* Một màu xanh dễ đọc hơn */
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.blogContent a:hover {
+  color: #1d4ed8;
+}
+
+.image {
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}

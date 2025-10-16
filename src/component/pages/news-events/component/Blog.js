@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import React from "react";
 import Image from "next/image";
+import parse, { domToReact } from 'html-react-parser';
 import styles from "@/component/style/BlogContent.module.css";
-import { FaCalendarAlt, FaUser, FaEye } from 'react-icons/fa';
-
+import { FaUser, FaEye } from "react-icons/fa";
+import { SiZalo } from 'react-icons/si';
 const slugify = (text) =>
     text
         .toLowerCase()
@@ -11,272 +12,145 @@ const slugify = (text) =>
         .trim()
         .replace(/\s+/g, "-");
 
+const getTextFromNode = (domNode) => {
+    let text = '';
+    if (!domNode) return text;
 
-const renderTextWithMarks = (textObj) => {
-    let content = textObj.text;
-    const marks = textObj.marks || [];
-    let style = {};
-
-    marks.forEach((mark) => {
-        switch (mark.type) {
-            case "bold":
-                content = <strong>{content}</strong>;
-                break;
-            case "italic":
-                content = <em>{content}</em>;
-                break;
-            case "underline":
-                content = <u>{content}</u>;
-                break;
-            case "strike":
-                content = <s>{content}</s>;
-                break;
-            case "code":
-                content = <code>{content}</code>;
-                break;
-            case "textStyle":
-                if (mark.attrs?.color) {
-                    style.color = mark.attrs.color;
-                }
-                break;
+    domNode.forEach(node => {
+        if (node.type === 'text') {
+            text += node.data;
+        } else if (node.type === 'tag' && node.children) {
+            text += getTextFromNode(node.children);
         }
     });
-
-    const linkMark = marks.find((m) => m.type === "link");
-    if (linkMark) {
-        return (
-            <a
-                href={linkMark.attrs.href}
-                target={linkMark.attrs.target || "_blank"}
-                rel={linkMark.attrs.rel || "noopener noreferrer"}
-                className="text-blue-400 underline"
-                style={style}
-            >
-                {content}
-            </a>
-        );
-    }
-
-    return <span style={style}>{content}</span>;
+    return text;
 };
 
 export default function Blog({ blog }) {
+    if (!blog) return null;
 
-    const renderContent = (section, index) => {
-        const textAlign = section.attrs?.textAlign || "left";
-        const alignStyle = textAlign ? { textAlign } : {};
+    const renderBodyItem = (item, index) => {
+        switch (item.type) {
+            case "text":
+                if (!item.content || item.content.trim() === "<p> </p>") {
+                    return null;
+                }
 
-        switch (section.type) {
-            case "heading": {
-                const level = section.attrs?.level || 2;
-                const contentArray = section.content || [];
-
-                const HeadingTag = `h${Math.min(level, 4)}`;
-                const headingClassMap = {
-                    1: "text-2xl font-bold mt-8 mb-4",
-                    2: "text-xl font-semibold mt-6 mb-3",
-                    3: "text-lg font-medium mt-5 mb-2",
-                    4: "text-md font-medium mt-4 mb-2",
+                const options = {
+                    replace: (domNode) => {
+                        if (domNode.name === 'h2') {
+                            const textContent = getTextFromNode(domNode.children);
+                            if (textContent) {
+                                const slug = slugify(textContent);
+                                const headingText = domToReact(domNode.children);
+                                return <h2 id={slug}>{headingText}</h2>;
+                            }
+                        }
+                    },
                 };
 
                 return (
-                    <HeadingTag
-                        key={index}
-                        id={contentArray[0]?.text}
-                        className={headingClassMap[level] || ""}
-                        style={alignStyle}
-                    >
-                        {contentArray.map((textObj, i) => (
-                            <React.Fragment key={i}>
-                                {renderTextWithMarks(textObj)}
-                            </React.Fragment>
-                        ))}
-                    </HeadingTag>
+                    <div key={index}>
+                        {parse(item.content, options)}
+                    </div>
                 );
-            }
 
-            case "paragraph": {
-                const contentArray = section.content;
-
-                const isEmpty =
-                    !contentArray ||
-                    contentArray.length === 0 ||
-                    contentArray.every(
-                        (part) =>
-                            (part.type === "text" && (!part.text || part.text.trim() === "")) ||
-                            part.type === "hardBreak"
-                    );
-
-                if (isEmpty) return null;
-
+            case "image":
                 return (
-                    <p key={index} className="mb-4 leading-relaxed text-sm sm:text-base" style={alignStyle}>
-                        {contentArray.map((part, idx) => {
-                            if (part.type === "hardBreak") return <br key={idx} />;
-                            return (
-                                <React.Fragment key={idx}>
-                                    {renderTextWithMarks(part)}
-                                </React.Fragment>
-                            );
-                        })}
-                    </p>
-                );
-            }
-
-
-            case "bulletList": {
-                return (
-                    <ul key={index} className="list-disc my-4 pl-5">
-                        {section.content?.map((item, itemIdx) => (
-                            <li key={itemIdx}>
-                                {item.content?.map((sub, subIdx) =>
-                                    renderContent(sub, `${index}-${itemIdx}-${subIdx}`)
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                );
-            }
-
-            case "orderedList": {
-                return (
-                    <ol key={index} className="list-decimal my-4 pl-5">
-                        {section.content?.map((item, itemIdx) => (
-                            <li key={itemIdx}>
-                                {item.content?.map((sub, subIdx) =>
-                                    renderContent(sub, `${index}-${itemIdx}-${subIdx}`)
-                                )}
-                            </li>
-                        ))}
-                    </ol >
-                );
-            }
-
-            case "image": {
-                return (
-                    <div key={index} className="my-6">
+                    <figure key={index} className="my-6 text-center">
                         <Image
-                            src={section.attrs?.src || "https://placehold.co/1000x600"}
-                            alt={section.attrs?.alt || "Green Lab image"}
-                            title={section.attrs?.title || "Green Lab image"}
+                            src={item.url || "https://placehold.co/1000x600"}
+                            alt={item.caption || "GreenLab image"}
                             width={1000}
                             height={600}
-                            className="rounded shadow"
+                            // Dùng class 'image' từ CSS module
+                            className={styles.image}
                         />
-                    </div>
-                );
-            }
-            case "greenBox": {
-                return (
-                    <div key={index} className="green-box bg-primary text-white p-4 rounded-md space-y-4">
-                        {section.content?.map((subSection, subIndex) =>
-                            renderContent(subSection, `${index}-greenbox-${subIndex}`)
+                        {item.caption && (
+                            <figcaption className="text-gray-500 italic text-sm mt-2">
+                                {item.caption}
+                            </figcaption>
                         )}
-                    </div>
+                    </figure>
                 );
-            }
 
             default:
                 return null;
         }
     };
 
-    const formatDate = (isoDate) => {
-        const date = new Date(isoDate);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // tháng bắt đầu từ 0
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-    };
+    const headings = blog.body
+        ?.filter((item) => item.type === "text" && /<h2[\s\S]*?>.*?<\/h2>/i.test(item.content))
+        ?.map((item) => {
+            const match = item.content.match(/<h2[\s\S]*?>(.*?)<\/h2>/i);
+            if (!match) return null;
+            const cleanText = match[1].replace(/<[^>]*>/g, "").trim();
+            if (!cleanText) return null;
+            return {
+                text: cleanText,
+                slug: slugify(cleanText),
+            };
+        })
+        .filter(Boolean);
 
     return (
         <div className={`${styles.blogContent} px-4 py-6 max-w-5xl mx-auto`}>
-
             <div className="flex flex-wrap items-center justify-center md:justify-start text-gray-400 text-sm border-b pb-4 mb-4 px-4 gap-x-4 gap-y-2">
                 <div className="flex items-center space-x-2">
-                    <FaCalendarAlt className="text-green-700" size={20} />
-                    <span>Ngày đăng: {formatDate(blog?.blogCreatedAt)}</span>
+                    <FaUser className="text-green-700" size={18} />
+                    <span>Tác giả: {blog.author || "Admin"}</span>
                 </div>
-
                 <div className="hidden md:block h-4 border-l border-gray-300 mx-2" />
-
                 <div className="flex items-center space-x-2">
-                    <FaUser className="text-green-700" size={20} />
-                    <span>Tác giả: admin</span>
+                    <FaEye className="text-green-700" size={18} />
+                    <span>{blog.totalView || 0}</span>
                 </div>
-
                 <div className="hidden md:block h-4 border-l border-gray-300 mx-2" />
-
-                <div className="flex items-center space-x-2">
-                    <FaEye className="text-green-700" size={20} />
-                    <span>{blog.blogView}</span>
-                </div>
+                <a href={blog.linkView} className="flex items-center space-x-2">
+                    <SiZalo className="text-green-700" size={30} />
+                    <span>Truy cập bài viết OA</span>
+                </a>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-3 uppercase">{blog?.blogTitle}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-3 uppercase">
 
-            <h5 className="mb-4 medium-italic text-sm sm:text-base text-pretty text-gray-500">
-                {blog?.blogDescription}
-            </h5>
+                {blog.title}
 
-            <ul className="bg-mint border border-primary text-primary p-4 rounded mb-8 text-sm md:text-base space-y-2">
-                {(() => {
-                    const numbering = { 2: 0, 3: 0, 4: 0 };
+            </h1>
 
-                    return blog.blogPostJson?.content
-                        ?.filter((section) => section.type === "heading" && section.content?.[0]?.text)
-                        .map((section, index) => {
-                            const level = section.attrs?.level || 2;
-                            const text = section.content?.[0]?.text || "";
-                            const slug = slugify(text);
+            {blog.description && (
+                <p className="mb-4 italic text-gray-500 text-base">
+                    {blog.description}
+                </p>
+            )}
 
-                            // Reset cấp thấp hơn khi có heading mới
-                            if (level === 2) {
-                                numbering[2]++;
-                                numbering[3] = 0;
-                                numbering[4] = 0;
-                            } else if (level === 3) {
-                                numbering[3]++;
-                                numbering[4] = 0;
-                            } else if (level === 4) {
-                                numbering[4]++;
-                            }
+            {blog.cover?.photoUrl && (
+                <div className="my-6 text-center">
+                    <Image
+                        src={blog.cover.photoUrl}
+                        alt="Cover"
+                        width={1000}
+                        height={600}
+                        className={styles.image}
+                    />
+                </div>
+            )}
 
-                            // Tạo chuỗi chỉ số
-                            const numberPrefix =
-                                level === 2
-                                    ? `${numbering[2]}.`
-                                    : level === 3
-                                        ? `${numbering[2]}.${numbering[3]}.`
-                                        : `${numbering[2]}.${numbering[3]}.${numbering[4]}.`;
+            {headings?.length > 0 && (
+                <ul className="bg-gray-100 border-l-4 border-green-600 p-4 rounded mb-8 text-sm md:text-base space-y-2">
+                    {headings.map((h, i) => (
+                        <li key={i}>
+                            <a href={`#${h.slug}`} className="hover:underline block font-medium text-gray-700 hover:text-green-700">
+                                {i + 1}. {h.text}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            )}
 
-                            // Tạo class thụt lề
-                            const indentClass = {
-                                2: "ml-0",
-                                3: "ml-4",
-                                4: "ml-8",
-                            }[level] || "ml-0";
-
-                            return (
-                                <li key={index} className={`${indentClass}`}>
-                                    <a
-                                        href={`#${text}`}
-                                        className="hover:underline block"
-                                        style={{
-                                            color: "var(--color-primary)",
-                                            fontWeight: 500,
-                                        }}
-                                    >
-                                        {numberPrefix} {text}
-                                    </a>
-                                </li>
-                            );
-                        });
-                })()}
-            </ul>
-
-            {blog.blogPostJson.content?.map((section, index) => renderContent(section, index))}
-        </div >
+            <div>
+                {blog.body?.map(renderBodyItem)}
+            </div>
+        </div>
     );
 }
-
