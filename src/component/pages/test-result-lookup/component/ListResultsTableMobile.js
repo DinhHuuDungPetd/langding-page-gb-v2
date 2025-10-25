@@ -17,17 +17,17 @@ export default function ListResultsTableMobile({ result }) {
                                     ? "text-blue-600 font-bold"
                                     : xn.color === 2
                                         ? "text-red-500 font-bold"
-                                        : "";
+                                        : "text-gray-800 font-bold";
                             const bold = xn.bold === 1 ? "text-primary font-bold" : "";
 
                             return (
                                 <div key={`${i}-${j}`} className="bg-white border rounded-lg shadow-sm p-3 mb-3">
-                                    <div className={`font-semibold ${bold}`}>{xn.testName || "-"}</div>
-                                    <div className="text-sm text-gray-700 mt-1">
-                                        <div><strong>Kết quả:</strong> <span className={color}>{xn.result || "-"}</span></div>
-                                        <div><strong>Đơn vị:</strong> {xn.unit?.trim() || "-"}</div>
-                                        <div><strong>Khoảng tham chiếu:</strong> {xn.normalRange || "-"}</div>
-                                        <div><strong>Ghi chú:</strong> {xn.comment || "-"}</div>
+                                    <div className={` ${bold}`}>{xn.testName || "-"}</div>
+                                    <div className="text-sm mt-1">
+                                        <div>Kết quả: <span className={color}>{xn.result || ""}</span></div>
+                                        <div>Đơn vị: <span className={"text-gray-800 font-bold"}>{xn.unit?.trim() || ""}</span></div>
+                                        <div>Khoảng tham chiếu: <span className={"text-gray-800 font-bold"}>{xn.normalRange || ""}</span></div>
+                                        <div>Ghi chú: <span className={color}>{xn.comment || ""}</span></div>
                                     </div>
                                 </div>
                             );

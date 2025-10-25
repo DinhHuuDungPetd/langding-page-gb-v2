@@ -3,6 +3,27 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { loginAPI } from "@/hooks/authorizeAxiosInstance";
 import FullScreenLoader from "@/component/FullScreenLoader";
+import {
+    IoKeyOutline
+} from 'react-icons/io5'
+
+const CloseIcon = () => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-6 h-6"
+    >
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+        />
+    </svg>
+);
+
 
 export default function ChangePassword() {
     const [isOpen, setIsOpen] = useState(false);
@@ -76,14 +97,21 @@ export default function ChangePassword() {
     };
 
 
+    const handleCloseModal = () => {
+        setIsOpen(false);
+        setErrors({});
+    };
+
     return (
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="border border-primary text-primary hover:bg-primary hover:text-white font-medium py-2 px-4 rounded transition-all duration-200"
+                className="flex items-center gap-3 px-4 py-2 text-sm text-primary hover:bg-gray-100"
             >
-                <span className="text-md font-medium">Đổi mật khẩu</span>
+                <IoKeyOutline className="text-lg" />
+                Đổi mật khẩu
             </button>
+
 
             <AnimatePresence>
                 {loading && <FullScreenLoader />}
@@ -92,19 +120,31 @@ export default function ChangePassword() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center"
-                        onClick={() => setIsOpen(false)}
+                        className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4" // Thêm padding p-4
+                        // Thay đổi onClick ở đây
+                        onClick={handleCloseModal}
                     >
                         <motion.div
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}
                             transition={{ duration: 0.3 }}
-                            className="bg-white rounded-2xl w-full max-w-xl p-6 shadow-lg"
+                            className="bg-white rounded-2xl w-full max-w-xl p-6 shadow-lg relative" // Thêm "relative"
                             onClick={(e) => e.stopPropagation()}
                         >
+                            {/* Nút "X" (Đóng) */}
+                            <button
+                                onClick={handleCloseModal}
+                                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                                aria-label="Đóng"
+                            >
+                                <CloseIcon />
+                            </button>
+
+                            {/* Tiêu đề Modal */}
                             <h2 className="text-xl font-bold text-gray-700 mb-4">Đổi mật khẩu:</h2>
-                            <div className="space-y-4 max-h-[80vh] overflow-y-auto">
+
+                            <div className="space-y-4 max-h-[80vh] overflow-y-auto pr-2"> {/* Thêm pr-2 để scrollbar không bị đè */}
 
                                 {/* Mật khẩu cũ */}
                                 <div>
@@ -151,12 +191,25 @@ export default function ChangePassword() {
                                     {errors.confirmNewPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmNewPassword}</p>}
                                 </div>
 
-                                <div className="flex justify-end">
+                                {/* Nút Hủy và Lưu */}
+                                <div className="flex justify-end gap-3 pt-2">
+                                    {/* Nút "Hủy" */}
                                     <button
-                                        onClick={handleSave}
-                                        className="px-4 py-2 bg-primary text-white rounded hover:bg-green-700 transition duration-200 active:scale-95"
+                                        type="button"
+                                        onClick={handleCloseModal}
+                                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition duration-200 active:scale-95"
                                     >
-                                        Lưu thông tin
+                                        Hủy
+                                    </button>
+
+                                    {/* Nút "Lưu" */}
+                                    <button
+                                        type="button"
+                                        onClick={handleSave}
+                                        disabled={loading} // Vô hiệu hóa khi đang loading
+                                        className="px-4 py-2 bg-primary text-white rounded hover:bg-green-700 transition duration-200 active:scale-95 disabled:opacity-50"
+                                    >
+                                        {loading ? "Đang lưu..." : "Lưu thông tin"}
                                     </button>
                                 </div>
                             </div>

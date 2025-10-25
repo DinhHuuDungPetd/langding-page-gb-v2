@@ -22,8 +22,7 @@ export default function SampleLookup() {
                 const refreshToken = response.data.data.refreshToken;
                 localStorage.setItem("accessToken", doctorToken);
                 localStorage.setItem("refreshToken", refreshToken);
-                alert("Đăng nhập thành công.");
-                setTimeout(() => (window.location.href = `/tra-cuu/${username}`), 1000);
+                window.location.href = `/tra-cuu/${username}`
             }
         } catch (error) {
             console.error("Login failed:", error);

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiX } from "react-icons/fi";
 import { useRouter } from 'next/navigation';
 
-export default function SearchModal() {
+export default function SearchModal({ isLoggedIn }) {
     const [isOpen, setIsOpen] = useState(false);
     const [query, setQuery] = useState("");
     const [history, setHistory] = useState([]);
@@ -42,10 +42,10 @@ export default function SearchModal() {
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-white"
+                className={`flex items-center ${!isLoggedIn ? " gap-2 px-4 py-2" : ""} bg-white`}
             >
                 <FiSearch className="text-xl text-gray-600" />
-                <span className="text-sm font-medium text-gray-600 hidden md:block">Tìm kiếm</span>
+                <span className="text-sm font-medium text-gray-600 hidden md:block">{!isLoggedIn ? "Tìm kiếm" : ""}</span>
             </button>
 
             <AnimatePresence>

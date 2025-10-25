@@ -1,10 +1,11 @@
 'use client'
-import Image from "next/image"
-import ItemLi from "@/component/layout/header/ItemLi";
-import TimelineProgressBar from "@/component/layout/header/TimelineProgressBar";
-import SearchModal from "@/component/layout/header/SearchModal";
-import Link from "next/link";
-import { Suspense, useState } from "react";
+import Image from 'next/image'
+import ItemLi from '@/component/layout/header/ItemLi'
+import TimelineProgressBar from '@/component/layout/header/TimelineProgressBar'
+
+import UserMenuDropdown from '@/component/layout/header/UserMenuDropdown' // 2. Thêm dòng này
+import Link from 'next/link'
+import { Suspense, useState } from 'react'
 
 import { IoMenu, IoClose } from 'react-icons/io5'
 const menuItems = [
@@ -24,8 +25,7 @@ export default function AppHeader() {
             <header className="bg-white text-black shadow-md sticky top-0 z-500">
                 <TimelineProgressBar />
                 <nav className="container flex justify-between items-center mx-auto px-2">
-                    <Link
-                        href="/">
+                    <Link href="/">
                         <div className="relative w-40 h-15">
                             <Image
                                 src="/images/logo/Green-Lab-Logo-03.png"
@@ -37,9 +37,7 @@ export default function AppHeader() {
                         </div>
                     </Link>
                     <div>
-                        <div
-                            id="nav-menu"
-                        >
+                        <div id="nav-menu">
                             <ul className="lg:flex flex-row items-center gap-0 w-full hidden">
                                 {menuItems.map((item, i) => (
                                     <ItemLi item={item} key={i} setMenuOpen={setMenuOpen} />
@@ -47,10 +45,12 @@ export default function AppHeader() {
                             </ul>
                         </div>
                     </div>
+
                     <div className="relative">
-                        <SearchModal />
+                        <UserMenuDropdown />
                     </div>
-                    <div className="lg:hidden" onClick={() => setMenuOpen(prev => !prev)}>
+
+                    <div className="lg:hidden" onClick={() => setMenuOpen((prev) => !prev)}>
                         {menuOpen ? (
                             <IoClose className="text-3xl cursor-pointer" />
                         ) : (

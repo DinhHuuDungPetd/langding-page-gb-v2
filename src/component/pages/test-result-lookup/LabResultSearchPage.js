@@ -12,93 +12,6 @@ export default function LabResultSearchPage() {
     const [users, setUsers] = useState([]);
     const [result, setResult] = useState([]);
 
-    // const getPatient = async (Token, DoctorID, SID, ShortURL) => {
-    //     try {
-    //         const params = new URLSearchParams();
-
-    //         let encrypted = null;
-    //         if (ShortURL) {
-    //             encrypted = encrypt(ShortURL, secretKey, true);
-    //         }
-
-    //         if (DoctorID) params.append("ID", DoctorID);
-    //         if (SID) params.append("SearchInfo", SID);
-    //         if (encrypted) params.append("ShortURL", encodeURIComponent(encrypted));
-
-    //         const response = await dataTestAPI.get(
-    //             `api/v1/Patient?${params.toString()}`,
-    //             {
-    //                 headers: {
-    //                     Authorization: `Bearer ${Token}`
-    //                 }
-    //             }
-    //         );
-
-    //         if (response.status === 200) {
-    //             const patient = response.data.data[0];
-    //             setUsers(patient);
-
-    //             if (patient?.sid) {
-    //                 const response2 = await dataTestAPI.get(
-    //                     `api/v1/Result?SID=${patient.sid}`,
-    //                     {
-    //                         headers: {
-    //                             Authorization: `Bearer ${Token}`
-    //                         }
-    //                     }
-    //                 );
-    //                 if (response2.status === 200) {
-    //                     setResult(response2.data.data);
-    //                 }
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.error("Error fetching users:", error);
-    //     }
-    // };
-
-
-
-    // const getPatientByCustomer = async (sid) => {
-    //     try {
-
-    //         const response = await axios.post(`${loginAPI}/api/v1/Auth/loginForCustomer`, {
-    //             username: sid
-    //         }, {
-    //             headers: {
-    //                 Authorization: ``
-    //             }
-    //         });
-
-    //         if (response.status == 200) {
-
-    //             const encrypted = encrypt(sid, secretKey, true);
-
-    //             const response2 = await axios.get(
-    //                 `${process.env.NEXT_PUBLIC_BASE_URL_DATA}/api/v1/Result/GetResultBySMS?Text=${encodeURIComponent(encrypted)}`,
-    //                 {
-    //                     headers: {
-    //                         Authorization: `Bearer ${response.data.data.token}`
-    //                     }
-    //                 }
-    //             );
-
-    //             if (response2.status == 200) {
-    //                 if (response2.data.isSucceeded === false) {
-    //                     alert(response2.data.messages[0]);
-    //                     return;
-    //                 }
-    //                 setResult(response2.data.data);
-
-    //             }
-
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching users:', error);
-    //     }
-
-    // }
-
     useEffect(() => {
         if (typeof window === "undefined") return;
 
@@ -227,7 +140,6 @@ export default function LabResultSearchPage() {
                         <thead className="bg-primary text-white font-medium ">
                             {users?.sid && (
                                 <tr>
-                                    <th className="p-2">STT</th>
                                     <th className="p-2 text-center">Mã</th>
                                     <th className="p-2 text-center">Tên</th>
                                     <th className="p-2 text-center">SĐT</th>
@@ -238,28 +150,26 @@ export default function LabResultSearchPage() {
                         </thead>
                         <tbody>
                             {users?.sid && (
-                                <tr className={`border-t hover:bg-gray-50`}>
-                                    <td className="p-2">1</td>
-                                    <td className="p-2 text-center">{users?.sid || "-"}</td>
-                                    <td className="p-2 text-center">{users?.patientName || "-"}</td>
-                                    <td className="p-2 text-center">{users?.phone || "-"}</td>
-                                    <td className="p-2 text-center">{formatDate(users?.dateIn || "-")}</td>
+                                <tr className={` hover:bg-gray-50`}>
+                                    <td className="p-2 text-center">{users?.sid || ""}</td>
+                                    <td className="p-2 text-center">{users?.patientName || ""}</td>
+                                    <td className="p-2 text-center">{users?.phone || ""}</td>
+                                    <td className="p-2 text-center">{formatDate(users?.dateIn || "")}</td>
                                 </tr>
                             )}
                             {users?.sid && (
-                                <tr>
-                                    <td className="p-2">-</td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Giới tính:</span> {users?.sex || "-"}</div></td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Năm sinh:</span> {users?.age || "-"}</div></td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Trạng thái:</span> {users?.status || "-"}</div></td>
-                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>SEQ:</span> {users?.seq || "-"}</div></td>
+                                <tr className={`border-t border-gray-300`}>
+                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Giới tính:</span> {users?.sex || ""}</div></td>
+                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Năm sinh:</span> {users?.age || ""}</div></td>
+                                    <td className="p-2 text-center"><div className="mx-auto"><span className='font-bold'>Trạng thái:</span> {users?.status || ""}</div></td>
+                                    <td className="p-2 text-center"><div className="mx-auto"><span className="font-bold text-blue-500 underline">Tải kết quả</span></div></td>
                                 </tr>
                             )}
-                            <tr className="border-t bg-mint">
+                            <tr className=" bg-mint">
                                 <td colSpan={6}>
                                     <div className="w-full flex justify-center">
-                                        <div className="w-full max-w-screen-lg">
-                                            <div className="my-5 mx-6">
+                                        <div className="w-full">
+                                            <div className="mb-5">
                                                 {result?.length > 0 &&
                                                     <TestResultsTable result={result} />
                                                 }
@@ -273,14 +183,23 @@ export default function LabResultSearchPage() {
                     <div className='max-w-full mx-auto block sm:hidden'>
                         <div className="mt-2 space-y-1 text-sm">
                             {users?.sid && (
-                                <div>
-                                    <div><strong>Tên:</strong> {users?.patientName}</div>
-                                    <div><strong>SĐT:</strong> {users?.phone}</div>
-                                    <div><span className='font-bold'>Giới tính:</span> {users?.sex || "-"}</div>
-                                    <div><span className='font-bold'>Năm sinh:</span> {users?.age || "-"}</div>
-                                    <div><span className='font-bold'>Trạng thái:</span> {users?.status || "-"}</div>
-                                    <div><span className='font-bold'>SEQ:</span> {users?.seq || "-"}</div>
+                                <div className="grid grid-cols-2 gap-2 bg-white rounded-lg shadow">
+                                    {/* Cột trái */}
+                                    <div className="space-y-2">
+                                        <div><span className="font-bold">Mã:</span> {users?.sid}</div>
+                                        <div><span className="font-bold">Tên:</span> {users?.patientName}</div>
+                                        <div><span className="font-bold">SĐT:</span> {users?.phone}</div>
+                                        <div><span className="font-bold">Năm sinh:</span> {users?.age || ""}</div>
+                                    </div>
+
+                                    {/* Cột phải */}
+                                    <div className="space-y-2">
+                                        <div><span className="font-bold">Trạng thái:</span> {users?.status || ""}</div>
+                                        <div><span className="font-bold">Giới tính:</span> {users?.sex || ""}</div>
+                                        <div><span className="font-bold text-blue-500 underline">Tải kết quả</span></div>
+                                    </div>
                                 </div>
+
                             )}
                             {result?.length > 0 &&
                                 <ListResultsTableMobile result={result} />

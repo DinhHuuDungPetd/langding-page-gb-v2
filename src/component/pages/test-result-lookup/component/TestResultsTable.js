@@ -1,9 +1,7 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { dataTestAPI } from "@/hooks/authorizeAxiosInstance";
+import React from 'react';
 
 export default function TestResultsTable({ result }) {
-
 
     return (
         <div className="overflow-x-auto">
@@ -19,7 +17,7 @@ export default function TestResultsTable({ result }) {
                         </tr>
                     </thead>
 
-                    <tbody className="relative z-10">
+                    <tbody>
                         {result?.length > 0 ? (
                             result.map((item, i) => (
                                 <React.Fragment key={i}>
@@ -37,12 +35,12 @@ export default function TestResultsTable({ result }) {
                                                     : "";
                                         const bold = r.bold === 1 ? "font-bold" : "";
                                         return (
-                                            <tr key={`${i}-${j}`}>
-                                                <td className={`p-2 border border-gray-300 ${bold}`}>{r.testName}</td>
-                                                <td className={`p-2 border border-gray-300 text-center ${color}`}>{r.result || "-"}</td>
-                                                <td className="p-2 border border-gray-300 text-center">{r.unit?.trim() || "-"}</td>
-                                                <td className="p-2 border border-gray-300 text-center">{r.normalRange || "-"}</td>
-                                                <td className="p-2 border border-gray-300 text-center">{r.comment || "-"}</td>
+                                            <tr key={`${i}-${j}`} className="hover:bg-green-100">
+                                                <td className={`p-4 border border-gray-300 ${bold}`}>{r.testName}</td>
+                                                <td className={`p-4 border border-gray-300 text-center ${color}`}>{r.result || ""}</td>
+                                                <td className=" p-4 border border-gray-300 text-center">{r.unit?.trim() || ""}</td>
+                                                <td className=" p-4 border border-gray-300 text-center">{r.normalRange || ""}</td>
+                                                <td className={`p-4 border border-gray-300 text-center ${color}`}>{r.comment || ""}</td>
                                             </tr>
                                         );
                                     })}
