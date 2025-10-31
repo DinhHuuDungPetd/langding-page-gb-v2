@@ -133,7 +133,7 @@ export default function LabResultSearchPage() {
     };
 
     return (
-        <div className="overflow-x-auto p-4">
+        <div className="overflow-x-auto p-4 bg-mint special-page">
             {result ? (
                 <>
                     <table className="min-w-2/3 text-sm text-left border border-gray-200 shadow-md rounded-lg overflow-hidden hidden sm:table mx-auto">
@@ -183,23 +183,42 @@ export default function LabResultSearchPage() {
                     <div className='max-w-full mx-auto block sm:hidden'>
                         <div className="mt-2 space-y-1 text-sm">
                             {users?.sid && (
-                                <div className="grid grid-cols-2 gap-2 bg-white rounded-lg shadow">
-                                    {/* Cột trái */}
-                                    <div className="space-y-2">
-                                        <div><span className="font-bold">Mã:</span> {users?.sid}</div>
-                                        <div><span className="font-bold">Tên:</span> {users?.patientName}</div>
-                                        <div><span className="font-bold">SĐT:</span> {users?.phone}</div>
-                                        <div><span className="font-bold">Năm sinh:</span> {users?.age || ""}</div>
-                                    </div>
+                                <div className="bg-white rounded-lg shadow p-4">
+                                    <div className="grid grid-cols-[auto_1fr] gap-x-20 gap-y-2 text-sm items-baseline">
 
-                                    {/* Cột phải */}
-                                    <div className="space-y-2">
-                                        <div><span className="font-bold">Trạng thái:</span> {users?.status || ""}</div>
-                                        <div><span className="font-bold">Giới tính:</span> {users?.sex || ""}</div>
-                                        <div><span className="font-bold text-blue-500 underline">Tải kết quả</span></div>
+                                        {/* Mã */}
+                                        <span className="text-gray-600">Mã:</span>
+                                        <span className="font-medium text-gray-900">{users?.sid}</span>
+
+                                        {/* Tên */}
+                                        <span className="text-gray-600">Tên:</span>
+                                        <span className="font-medium text-gray-900 uppercase">{users?.patientName}</span>
+
+                                        {/* SĐT */}
+                                        <span className="text-gray-600">SĐT:</span>
+                                        <span className="font-medium text-gray-900">{users?.phone || "-"}</span>
+
+                                        {/* Trạng thái (Tạo kiểu badge) */}
+                                        <span className="text-gray-600">Trạng thái:</span>
+                                        <div>
+                                            <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                                {users?.status || "N/A"}
+                                            </span>
+                                        </div>
+
+                                        {/* Giới tính */}
+                                        <span className="text-gray-600">Giới tính:</span>
+                                        <span className="font-medium text-gray-900">{users?.sex || ""}</span>
+
+                                        {/* Năm sinh */}
+                                        <span className="text-gray-600">Năm sinh:</span>
+                                        <span className="font-medium text-gray-900">{users?.age || ""}</span>
+
+                                        {/* Đã xoá "Tải kết quả" vì không có trong ảnh */}
+                                        <span className="text-gray-600">Thao tác:</span>
+                                        <span className="font-bold text-blue-500 underline">Tải kết quả</span>
                                     </div>
                                 </div>
-
                             )}
                             {result?.length > 0 &&
                                 <ListResultsTableMobile result={result} />

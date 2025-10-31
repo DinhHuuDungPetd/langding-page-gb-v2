@@ -11,7 +11,7 @@ export default function TableUsers({ itemsPerPage, currentPage, expandedRow, use
     };
 
     return (
-        <div className="overflow-x-auto bg-mint px-2">
+        <div className="overflow-x-aut px-2">
             <div className="relative">
                 <table
                     className="min-w-full text-sm text-left border border-red-400 shadow-lg rounded-lg overflow-hidden bg-white hidden sm:table"

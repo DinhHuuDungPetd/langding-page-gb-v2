@@ -174,7 +174,7 @@ export default function LabPatientSearchPage({ params }) {
     };
 
     return (
-        <div className="overflow-x-auto p-4">
+        <div className="overflow-x-auto p-4 bg-mint">
             <div className="flex flex-col items-center justify-center gap-4 py-6">
                 <h1 className="text-2xl font-bold text-primary text-center">
                     Tra cứu kết quả xét nghiệm
