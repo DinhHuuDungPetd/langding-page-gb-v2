@@ -27,9 +27,9 @@ export default function ListResultsTableMobile({ result }) {
                                 // Vì ảnh có thể chỉ là 1 trường hợp bình thường (màu đen)
                                 const resultColorClass =
                                     xn.color === 1
-                                        ? "text-blue-600 font-bold"
+                                        ? "bg-blue-100 text-blue-600 font-bold"
                                         : xn.color === 2
-                                            ? "text-red-500 font-bold"
+                                            ? "bg-red-100 text-red-500 font-bold"
                                             : "text-gray-900 font-bold"; // Màu đen/xám đậm mặc định
 
                                 return (
@@ -47,8 +47,8 @@ export default function ListResultsTableMobile({ result }) {
                                             {/* 4a. Kết quả */}
                                             <div>
                                                 <div className="text-gray-500">Kết quả:</div>
-                                                <div className={`text-base ${resultColorClass}`}>
-                                                    {xn.result || ""}
+                                                <div>
+                                                    <span className={`text-base ${resultColorClass} px-2.5 py-0.5 rounded-full`}>{xn.result || ""}</span>
                                                 </div>
                                             </div>
 
