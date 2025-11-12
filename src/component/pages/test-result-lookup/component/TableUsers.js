@@ -44,14 +44,16 @@ export default function TableUsers({ itemsPerPage, currentPage, expandedRow, use
                                             {formatDate(item.dateIn || "")}
                                         </td>
                                         <td className="px-3 py-4 text-center">
-                                            <a
-                                                href={`/tra-cuu/${String(item.id).padStart(5, "0")}/${item.sid}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-blue-500 underline hover:text-blue-700"
-                                            >
-                                                Chi tiết
-                                            </a>
+                                            {item.status !== "Chưa có kết quả" && (
+                                                <a
+                                                    href={`/tra-cuu/${String(item.id).padStart(5, "0")}/${item.sid}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-500 underline hover:text-blue-700"
+                                                >
+                                                    Chi tiết
+                                                </a>
+                                            )}
                                         </td>
                                     </tr>
                                 </React.Fragment>

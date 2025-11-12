@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react'; // NEW: Thêm useCallback
 import ListUsersMobile from '@/component/pages/test-result-lookup/component/ListUsersMobile';
 import TableUsers from '@/component/pages/test-result-lookup/component/TableUsers';
 import { MdFirstPage } from "react-icons/md";
@@ -20,11 +20,11 @@ const formatDate = (date) => {
     return [year, month, day].join('-');
 }
 
-// Hàm lấy 10 ngày gần nhất
+// Hàm lấy 30 ngày gần nhất
 const getDefaultDateRange = () => {
     const toDate = new Date();
     const fromDate = new Date();
-    fromDate.setDate(toDate.getDate() - 9); // 9 ngày trước + hôm nay = 10 ngày
+    fromDate.setDate(toDate.getDate() - 29); // 29 ngày trước + hôm nay = 30 ngày
 
     return {
         fromDate: formatDate(fromDate),
@@ -46,7 +46,11 @@ export default function LabPatientSearchPage({ params }) {
     const DoctorID = slug;
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 70;
+    // NEW: Quản lý itemsPerPage và totalCount từ state
+    const [itemsPerPage, setItemsPerPage] = useState(20); // Đặt giá trị này khớp với PageSize của API
+    const [totalCount, setTotalCount] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+
     const [expandedRow, setExpandedRow] = useState(null);
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -65,8 +69,9 @@ export default function LabPatientSearchPage({ params }) {
     /**
      * Hàm lấy dữ liệu từ API, đã bao gồm validate
      * @param {object} filters - Đối tượng chứa { fromDate, toDate, search }
+     * @param {number} page - Số trang cần lấy
      */
-    const fetchData = async (filters) => {
+    const fetchData = useCallback(async (filters, page = 1) => {
         const { fromDate, toDate, search } = filters;
 
         // --- 1. VALIDATION DỮ LIỆU ---
@@ -78,7 +83,6 @@ export default function LabPatientSearchPage({ params }) {
         const dFrom = new Date(fromDate);
         const dTo = new Date(toDate);
 
-        // So sánh ngày (bỏ qua giờ)
         dFrom.setHours(0, 0, 0, 0);
         dTo.setHours(0, 0, 0, 0);
 
@@ -90,20 +94,31 @@ export default function LabPatientSearchPage({ params }) {
         // --- 2. GỌI API ---
         setIsLoading(true);
         try {
-            const trimmedSearch = search.trim(); // "Validation" tìm kiếm
-            const response = await dataTestAPI.get(`api/v1/Patient?ID=${DoctorID}&FromTime=${fromDate}&ToTime=${toDate}&SearchInfo=${trimmedSearch}`);
+            const trimmedSearch = search.trim();
+            const response = await dataTestAPI.get(
+                `api/v1/Patient/GetPatientPagination?ID=${DoctorID}&FromTime=${fromDate}&ToTime=${toDate}&SearchInfo=${trimmedSearch}&PageNumber=${page}&PageSize=${itemsPerPage}`
+            );
 
-            if (response.status == 200) {
-                setUsers(response.data.data || []);
-                setCurrentPage(1); // Reset về trang 1
+            if (response.status == 200 && response.data.data) {
+                setUsers(response.data.data.items || []);
+                const total = response.data.data.totalCount || 0;
+                setTotalCount(total);
+                setTotalPages(Math.ceil(total / itemsPerPage));
+                setCurrentPage(page);
+            } else {
+                setUsers([]);
+                setTotalCount(0);
+                setTotalPages(0);
             }
         } catch (error) {
             console.error('Error fetching users:', error);
             setUsers([]); // Xóa dữ liệu cũ nếu lỗi
+            setTotalCount(0); // Reset
+            setTotalPages(0); // Reset
         } finally {
             setIsLoading(false);
         }
-    }
+    }, [DoctorID, itemsPerPage]); // NEW: Thêm dependencies cho useCallback
 
     // useEffect này CHỈ chạy 1 lần để xác thực và tải dữ liệu ban đầu
     useEffect(() => {
@@ -122,37 +137,34 @@ export default function LabPatientSearchPage({ params }) {
                 alert("Bạn không có quyền truy cập vào trang này.");
                 window.location.href = `/tra-cuu/${username}`;
             } else {
-                // Xác thực thành công, tải dữ liệu lần đầu với bộ lọc mặc định
-                fetchData(defaultFilters);
+                // Xác thực thành công, tải dữ liệu lần đầu với bộ lọc mặc định, trang 1
+                fetchData(defaultFilters, 1);
             }
         } catch (error) {
             console.error("Lỗi giải mã token:", error);
             alert("Token không hợp lệ, vui lòng đăng nhập lại.");
             window.location.href = `/login`;
         }
-    }, [DoctorID]); // Chỉ chạy lại nếu DoctorID thay đổi
+    }, [DoctorID, fetchData]);
 
     // Hàm xử lý khi nhấn nút "Lọc"
     const handleSearch = () => {
-        fetchData(formData); // Gọi API với state hiện tại của form
+        fetchData(formData, 1);
     }
 
     // Hàm xử lý khi nhấn nút "Làm mới"
     const handleReset = () => {
         setFormData(defaultFilters); // 1. Reset state của form
-        fetchData(defaultFilters);  // 2. Tải lại dữ liệu với bộ lọc mặc định
+        fetchData(defaultFilters, 1);
     }
 
     // --- Logic phân trang ---
-    const displayUsers = Array.isArray(users) ? users : [];
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = displayUsers.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(displayUsers.length / itemsPerPage);
-
-    const handleClickPage = (number) => {
-        setCurrentPage(number);
+    const handleClickPage = (pageNumber) => {
+        if (pageNumber < 1 || pageNumber > totalPages || pageNumber === currentPage) {
+            return; // Không làm gì nếu trang không hợp lệ hoặc là trang hiện tại
+        }
         setExpandedRow(null);
+        fetchData(formData, pageNumber); // Tải dữ liệu cho trang mới với bộ lọc hiện tại
     };
 
     const getPaginationItems = () => {
@@ -170,6 +182,17 @@ export default function LabPatientSearchPage({ params }) {
             startPage = currentPage - 1;
             endPage = currentPage + 1;
         }
+        // Đảm bảo startPage không nhỏ hơn 1
+        if (startPage < 1) {
+            startPage = 1;
+            endPage = Math.min(3, totalPages);
+        }
+        // Đảm bảo endPage không lớn hơn totalPages
+        if (endPage > totalPages) {
+            endPage = totalPages;
+            startPage = Math.max(1, totalPages - 2);
+        }
+
         return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
     };
 
@@ -247,23 +270,27 @@ export default function LabPatientSearchPage({ params }) {
             {!isLoading && (
                 <>
                     <div className='max-w-2/3 mx-auto'>
-                        <TableUsers itemsPerPage={itemsPerPage} currentPage={currentPage} expandedRow={expandedRow} users={currentItems} />
+                        <TableUsers itemsPerPage={itemsPerPage} currentPage={currentPage} expandedRow={expandedRow} users={users} />
                     </div>
-                    <ListUsersMobile users={currentItems} />
+                    <ListUsersMobile users={users} />
 
-                    {/* Xử lý hiển thị phân trang hoặc thông báo "Không có dữ liệu" */}
-                    {displayUsers.length > 0 ? (
+                    {users.length > 0 ? (
                         totalPages > 1 && expandedRow === null && (
                             <div className="flex flex-col items-center justify-center py-8 px-4">
                                 <div className="flex gap-2">
-                                    <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1}
+                                    <button onClick={() => handleClickPage(1)} disabled={currentPage === 1}
                                         className={`w-10 h-10 border border-primary flex items-center justify-center rounded-full ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-central hover:text-white"}`}>
                                         <MdFirstPage />
                                     </button>
-                                    <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}
+                                    <button onClick={() => handleClickPage(currentPage - 1)} disabled={currentPage === 1}
                                         className={`w-10 h-10 border border-primary flex items-center justify-center rounded-full ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-central hover:text-white"}`}>
                                         <GrFormPrevious />
                                     </button>
+
+                                    {getPaginationItems()[0] > 1 && (
+                                        <span className="w-10 h-10 flex items-center justify-center">...</span>
+                                    )}
+
                                     {getPaginationItems().map((page) => (
                                         <button key={page} onClick={() => handleClickPage(page)}
                                             className={`w-10 h-10 border rounded-full flex items-center justify-center transition 
@@ -271,16 +298,24 @@ export default function LabPatientSearchPage({ params }) {
                                             {page}
                                         </button>
                                     ))}
-                                    <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}
+
+                                    {getPaginationItems()[getPaginationItems().length - 1] < totalPages && (
+                                        <span className="w-10 h-10 flex items-center justify-center">...</span>
+                                    )}
+
+                                    <button onClick={() => handleClickPage(currentPage + 1)} disabled={currentPage === totalPages}
                                         className={`w-10 h-10 border border-primary flex items-center justify-center rounded-full transition 
                                     ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-central hover:text-white"}`}>
                                         <GrFormNext />
                                     </button>
-                                    <button onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages}
+                                    <button onClick={() => handleClickPage(totalPages)} disabled={currentPage === totalPages}
                                         className={`w-10 h-10 border border-primary flex items-center justify-center rounded-full transition 
                                     ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-central hover:text-white"}`}>
                                         <MdLastPage />
                                     </button>
+                                </div>
+                                <div className="mt-4 text-sm text-gray-600">
+                                    Trang {currentPage} / {totalPages} (Tổng số: {totalCount} bệnh nhân từ ngày {formData.fromDate} đến {formData.toDate})
                                 </div>
                             </div>
                         )
